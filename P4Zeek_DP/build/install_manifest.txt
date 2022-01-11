@@ -1,7 +1,0 @@
-/root/9.7.0/bf-sde-9.7.0/install/share/p4/targets/tofino/P4Zeek.conf
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/events.json
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/frontend-ir.json
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/source.json
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/bf-rt.json
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/pipe/tofino.bin
-/root/9.7.0/bf-sde-9.7.0/install/share/tofinopd/P4Zeek/pipe/context.json

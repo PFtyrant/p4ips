@@ -1,9 +1,0 @@
-digraph parser {
-size="8,5"
-subgraph cluster_0 {style=invis;
-State0x5d1c2a0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{\$entry_point\.start:\l\l}"];
-Match0x163a8a80 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
-}
-State0x5d1c2a0 -> Match0x163a8a80
-Match0x163a8a80 -> egress_pipe
-}
