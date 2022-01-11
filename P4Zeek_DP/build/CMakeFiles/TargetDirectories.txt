@@ -1,0 +1,10 @@
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/rebuild_cache.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/edit_cache.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/bf-p4c.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/install.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/list_install_components.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/P4Zeek.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/install/strip.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/install/local.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/driver.dir
+/root/p4ips_test/P4Zeek_DP/build/CMakeFiles/P4Zeek-tofino.dir

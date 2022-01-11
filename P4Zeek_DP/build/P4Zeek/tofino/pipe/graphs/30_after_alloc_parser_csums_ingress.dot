@@ -1,0 +1,22 @@
+digraph parser {
+size="8,5"
+State0x15597e00 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_udp}"];
+State0x15d63000 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_tcp\.\$split_0}"];
+State0x15d63380 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_tcp}"];
+State0x15d63540 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_ipv4\.\$split_0}"];
+State0x15d638c0 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_ipv4}"];
+State0x15d63c40 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_record}"];
+State0x162b2000 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{start}"];
+State0x162b2380 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{\$entry_point}"];
+State0x162b2380 -> State0x162b2000 [  ]
+State0x162b2000 -> State0x15d63c40 [  ]
+State0x162b2000 -> State0x15d638c0 [  ]
+State0x15d63c40 -> State0x15d638c0 [  ]
+State0x15d638c0 -> State0x15d63540 [  ]
+State0x15d63540 -> State0x15d63380 [  ]
+State0x15d63540 -> State0x15597e00 [  ]
+State0x15d63380 -> State0x15d63000 [  ]
+State0x15597e00 -> ingress_pipe [  ]
+State0x15d63000 -> ingress_pipe [  ]
+State0x15d63540 -> ingress_pipe [  ]
+}

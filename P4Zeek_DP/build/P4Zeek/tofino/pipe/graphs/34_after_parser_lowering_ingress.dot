@@ -1,0 +1,60 @@
+digraph parser {
+size="8,5"
+subgraph cluster_0 {style=invis;
+State0x5d162a0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{start:\l\l}"];
+Match0x163dd2a0 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: 0xbf03: \l\l}"];
+Match0x163dd000 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: 0x0800: \l\l}"];
+}
+subgraph cluster_1 {style=invis;
+State0x5d16380 [style=filled, fillcolor=lightskyblue1, shape=record, label="{\$entry_point:\l\l}"];
+Match0x163a8d20 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+subgraph cluster_2 {style=invis;
+State0x5d5c000 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_tcp:\l\l}"];
+Match0x15d0c540 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+subgraph cluster_3 {style=invis;
+State0x5d5c0e0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_tcp\.\$split_0:\l\l}"];
+Match0x15d0c7e0 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+subgraph cluster_4 {style=invis;
+State0x5d5c1c0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_udp:\l\l}"];
+Match0x15d0c2a0 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+subgraph cluster_5 {style=invis;
+State0x5d5c540 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_ipv4\.\$split_0:\l\l}"];
+Match0x15d0c000 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: 0x06: \l\l}"];
+Match0x163ddd20 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: 0x11: \l\l}"];
+Match0x163dda80 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: 0x**: \l\l}"];
+}
+subgraph cluster_6 {style=invis;
+State0x5d5c8c0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_ipv4:\l\l}"];
+Match0x163dd7e0 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+subgraph cluster_7 {style=invis;
+State0x5d5c9a0 [style=filled, fillcolor=lightskyblue1, shape=record, label="{parse_record:\l\l}"];
+Match0x163dd540 [style=filled, fillcolor=aliceblue, shape=record, label="{match const: *: \l\l}"];
+}
+State0x5d162a0 -> Match0x163dd2a0
+Match0x163dd2a0 -> State0x5d5c9a0
+State0x5d162a0 -> Match0x163dd000
+Match0x163dd000 -> State0x5d5c8c0
+State0x5d16380 -> Match0x163a8d20
+Match0x163a8d20 -> State0x5d162a0
+State0x5d5c000 -> Match0x15d0c540
+Match0x15d0c540 -> State0x5d5c0e0
+State0x5d5c0e0 -> Match0x15d0c7e0
+Match0x15d0c7e0 -> ingress_pipe
+State0x5d5c1c0 -> Match0x15d0c2a0
+Match0x15d0c2a0 -> ingress_pipe
+State0x5d5c540 -> Match0x15d0c000
+Match0x15d0c000 -> State0x5d5c000
+State0x5d5c540 -> Match0x163ddd20
+Match0x163ddd20 -> State0x5d5c1c0
+State0x5d5c540 -> Match0x163dda80
+Match0x163dda80 -> ingress_pipe
+State0x5d5c8c0 -> Match0x163dd7e0
+Match0x163dd7e0 -> State0x5d5c540
+State0x5d5c9a0 -> Match0x163dd540
+Match0x163dd540 -> State0x5d5c8c0
+}

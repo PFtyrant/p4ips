@@ -1,0 +1,5 @@
+digraph parser {
+size="8,5"
+State0x150ee000 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{\$entry_point\.start}"];
+State0x150ee000 -> egress_pipe [  ]
+}

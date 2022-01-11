@@ -1,0 +1,422 @@
+rewrite extract inbuf(metadata) bit[432..479] to ingress::ig_intr_md_from_prsr.global_tstamp; as:
+  PHV: extract inbuf(metadata) bit[448..479] to PHV-allocated ingress::ig_intr_md_from_prsr.global_tstamp[31:0];
+  PHV: extract inbuf(metadata) bit[432..447] to PHV-allocated ingress::ig_intr_md_from_prsr.global_tstamp[47:32];
+rewrite extract inbuf bit[128..175] to ingress::hdr.ethernet.dst_addr; as:
+  PHV: extract inbuf bit[144..175] to PHV-allocated ingress::hdr.ethernet.dst_addr[31:0];
+  PHV: extract inbuf bit[128..143] to PHV-allocated ingress::hdr.ethernet.dst_addr[47:32];
+rewrite extract inbuf bit[176..223] to ingress::hdr.ethernet.src_addr; as:
+  PHV: extract inbuf bit[192..223] to PHV-allocated ingress::hdr.ethernet.src_addr[31:0];
+  PHV: extract inbuf bit[176..191] to PHV-allocated ingress::hdr.ethernet.src_addr[47:32];
+rewrite extract inbuf bit[224..239] to ingress::hdr.ethernet.ether_type; as:
+  PHV: extract inbuf bit[224..239] to PHV-allocated ingress::hdr.ethernet.ether_type;
+rewrite extract constant 1 to ingress::hdr.ethernet.$valid; as:
+  PHV: extract constant 1 to PHV-allocated ingress::hdr.ethernet.$valid;
+rewrite extract inbuf bit[0..47] to ingress::hdr.record.in_time; as:
+  PHV: extract inbuf bit[16..47] to PHV-allocated ingress::hdr.record.in_time[31:0];
+  PHV: extract inbuf bit[0..15] to PHV-allocated ingress::hdr.record.in_time[47:32];
+rewrite extract constant 1 to ingress::hdr.record.$valid; as:
+  PHV: extract constant 1 to PHV-allocated ingress::hdr.record.$valid;
+rewrite extract inbuf bit[0..3] to ingress::hdr.ipv4.version; as:
+  PHV: extract inbuf bit[0..3] to PHV-allocated ingress::hdr.ipv4.version;
+rewrite extract inbuf bit[4..7] to ingress::hdr.ipv4.ihl; as:
+  PHV: extract inbuf bit[4..7] to PHV-allocated ingress::hdr.ipv4.ihl;
+rewrite extract inbuf bit[8..15] to ingress::hdr.ipv4.diffserv; as:
+  PHV: extract inbuf bit[8..15] to PHV-allocated ingress::hdr.ipv4.diffserv;
+rewrite extract inbuf bit[16..31] to ingress::hdr.ipv4.total_len; as:
+  PHV: extract inbuf bit[16..31] to PHV-allocated ingress::hdr.ipv4.total_len;
+rewrite extract inbuf bit[32..47] to ingress::hdr.ipv4.identification; as:
+  PHV: extract inbuf bit[32..47] to PHV-allocated ingress::hdr.ipv4.identification;
+rewrite extract inbuf bit[48..50] to ingress::hdr.ipv4.flags; as:
+  PHV: extract inbuf bit[48..50] to PHV-allocated ingress::hdr.ipv4.flags;
+rewrite extract inbuf bit[51..63] to ingress::hdr.ipv4.frag_offset; as:
+  PHV: extract inbuf bit[51..63] to PHV-allocated ingress::hdr.ipv4.frag_offset;
+rewrite extract inbuf bit[64..71] to ingress::hdr.ipv4.ttl; as:
+  PHV: extract inbuf bit[64..71] to PHV-allocated ingress::hdr.ipv4.ttl;
+rewrite extract inbuf bit[72..79] to ingress::hdr.ipv4.protocol; as:
+  PHV: extract inbuf bit[72..79] to PHV-allocated ingress::hdr.ipv4.protocol;
+rewrite extract inbuf bit[80..95] to ingress::hdr.ipv4.hdr_checksum; as:
+  PHV: extract inbuf bit[80..95] to PHV-allocated ingress::hdr.ipv4.hdr_checksum;
+rewrite extract inbuf bit[96..127] to ingress::hdr.ipv4.src_addr; as:
+  PHV: extract inbuf bit[96..127] to PHV-allocated ingress::hdr.ipv4.src_addr;
+rewrite extract inbuf bit[128..159] to ingress::hdr.ipv4.dst_addr; as:
+  PHV: extract inbuf bit[128..159] to PHV-allocated ingress::hdr.ipv4.dst_addr;
+rewrite extract constant 1 to ingress::hdr.ipv4.$valid; as:
+  PHV: extract constant 1 to PHV-allocated ingress::hdr.ipv4.$valid;
+rewrite extract inbuf bit[0..15] to ingress::hdr.tcp.src_port; as:
+  PHV: extract inbuf bit[0..15] to PHV-allocated ingress::hdr.tcp.src_port;
+rewrite extract inbuf bit[16..31] to ingress::hdr.tcp.dst_port; as:
+  PHV: extract inbuf bit[16..31] to PHV-allocated ingress::hdr.tcp.dst_port;
+rewrite extract inbuf bit[32..63] to ingress::hdr.tcp.seq_no; as:
+  PHV: extract inbuf bit[48..63] to PHV-allocated ingress::hdr.tcp.seq_no[15:0];
+  PHV: extract inbuf bit[32..47] to PHV-allocated ingress::hdr.tcp.seq_no[31:16];
+rewrite extract inbuf bit[64..95] to ingress::hdr.tcp.ack_no; as:
+  PHV: extract inbuf bit[80..95] to PHV-allocated ingress::hdr.tcp.ack_no[15:0];
+  PHV: extract inbuf bit[64..79] to PHV-allocated ingress::hdr.tcp.ack_no[31:16];
+rewrite extract inbuf bit[96..99] to ingress::hdr.tcp.data_offset; as:
+  PHV: extract inbuf bit[96..99] to PHV-allocated ingress::hdr.tcp.data_offset;
+rewrite extract inbuf bit[100..103] to ingress::hdr.tcp.res; as:
+  PHV: extract inbuf bit[100..103] to PHV-allocated ingress::hdr.tcp.res;
+rewrite extract inbuf bit[104] to ingress::hdr.tcp.cwr; as:
+  PHV: extract inbuf bit[104] to PHV-allocated ingress::hdr.tcp.cwr;
+rewrite extract inbuf bit[105] to ingress::hdr.tcp.ecn; as:
+  PHV: extract inbuf bit[105] to PHV-allocated ingress::hdr.tcp.ecn;
+rewrite extract inbuf bit[106] to ingress::hdr.tcp.urg; as:
+  PHV: extract inbuf bit[106] to PHV-allocated ingress::hdr.tcp.urg;
+rewrite extract inbuf bit[107] to ingress::hdr.tcp.ack; as:
+  PHV: extract inbuf bit[107] to PHV-allocated ingress::hdr.tcp.ack;
+rewrite extract inbuf bit[108] to ingress::hdr.tcp.push; as:
+  PHV: extract inbuf bit[108] to PHV-allocated ingress::hdr.tcp.push;
+rewrite extract inbuf bit[109] to ingress::hdr.tcp.reset; as:
+  PHV: extract inbuf bit[109] to PHV-allocated ingress::hdr.tcp.reset;
+rewrite extract inbuf bit[110] to ingress::hdr.tcp.syn; as:
+  PHV: extract inbuf bit[110] to PHV-allocated ingress::hdr.tcp.syn;
+rewrite extract inbuf bit[111] to ingress::hdr.tcp.fin; as:
+  PHV: extract inbuf bit[111] to PHV-allocated ingress::hdr.tcp.fin;
+rewrite extract inbuf bit[112..127] to ingress::hdr.tcp.window; as:
+  PHV: extract inbuf bit[112..127] to PHV-allocated ingress::hdr.tcp.window;
+rewrite extract inbuf bit[128..143] to ingress::hdr.tcp.checksum; as:
+  PHV: extract inbuf bit[128..143] to PHV-allocated ingress::hdr.tcp.checksum;
+rewrite extract inbuf bit[144..159] to ingress::hdr.tcp.urgent_ptr; as:
+  PHV: extract inbuf bit[144..159] to PHV-allocated ingress::hdr.tcp.urgent_ptr;
+rewrite extract constant 1 to ingress::hdr.tcp.$valid; as:
+  PHV: extract constant 1 to PHV-allocated ingress::hdr.tcp.$valid;
+rewrite extract inbuf bit[0..15] to ingress::hdr.udp.src_port; as:
+  PHV: extract inbuf bit[0..15] to PHV-allocated ingress::hdr.udp.src_port;
+rewrite extract inbuf bit[16..31] to ingress::hdr.udp.dst_port; as:
+  PHV: extract inbuf bit[16..31] to PHV-allocated ingress::hdr.udp.dst_port;
+rewrite extract inbuf bit[32..47] to ingress::hdr.udp.hdr_length; as:
+  PHV: extract inbuf bit[32..47] to PHV-allocated ingress::hdr.udp.hdr_length;
+rewrite extract inbuf bit[48..63] to ingress::hdr.udp.checksum; as:
+  PHV: extract inbuf bit[48..63] to PHV-allocated ingress::hdr.udp.checksum;
+rewrite extract constant 1 to ingress::hdr.udp.$valid; as:
+  PHV: extract constant 1 to PHV-allocated ingress::hdr.udp.$valid;
+rewrite extract inbuf bit[7..15] to egress::eg_intr_md.egress_port; as:
+  PHV: extract inbuf bit[7..15] to PHV-allocated egress::eg_intr_md.egress_port;
+split_parser_state(ingress::parse_tcp, ingress::parse_tcp, 0)
+  spill extract inbuf bit[64..79] to PHV-allocated ingress::hdr.tcp.ack_no[31:16]; { (ran out of extractors) }
+  spill extract inbuf bit[80..95] to PHV-allocated ingress::hdr.tcp.ack_no[15:0]; { (ran out of extractors) }
+  spill extract inbuf bit[112..127] to PHV-allocated ingress::hdr.tcp.window; { (ran out of extractors) }
+  constant: 8
+  extractors needed: 8 : 1
+  created split state ingress parser state ingress::parse_tcp.$split_0:
+  computed max shift = 64 for split iteration 0 of ingress::parse_tcp
+  3 split, 17 current
+split_parser_state(ingress::parse_tcp.$split_0, ingress::parse_tcp, 1)
+  no need to split ingress::parse_tcp.$split_0 (nothing spilled)
+ingress::parse_tcp is split into 2 states:
+  ingress::parse_tcp
+  ingress::parse_tcp.$split_0
+split_parser_state(ingress::parse_udp, ingress::parse_udp, 0)
+  constant: 16
+  extractors needed: 8 : 1
+  no need to split ingress::parse_udp (nothing spilled)
+split_parser_state(ingress::parse_ipv4, ingress::parse_ipv4, 0)
+  constant: 4
+  extractors needed: 8 : 1
+  spill extract constant 1 to PHV-allocated ingress::hdr.ipv4.$valid; { (ran out of extractors) }
+  created split state ingress parser state ingress::parse_ipv4.$split_0:
+  computed max shift = 160 for split iteration 0 of ingress::parse_ipv4
+  1 split, 12 current
+split_parser_state(ingress::parse_ipv4.$split_0, ingress::parse_ipv4, 1)
+  constant: 4
+  extractors needed: 8 : 1
+  no need to split ingress::parse_ipv4.$split_0 (nothing spilled)
+ingress::parse_ipv4 is split into 2 states:
+  ingress::parse_ipv4
+  ingress::parse_ipv4.$split_0
+split_parser_state(ingress::parse_record, ingress::parse_record, 0)
+  constant: 2
+  extractors needed: 8 : 1
+  no need to split ingress::parse_record (nothing spilled)
+split_parser_state(ingress::start, ingress::start, 0)
+  constant: 1
+  extractors needed: 8 : 1
+  no need to split ingress::start (nothing spilled)
+split_parser_state(ingress::$entry_point, ingress::$entry_point, 0)
+  no need to split ingress::$entry_point (nothing spilled)
+split_parser_state($entry_point.start, $entry_point.start, 0)
+  no need to split $entry_point.start (nothing spilled)
+group: {  [ ingress::start : inbuf bit[224..239] hdr.ethernet/ethernet.ether_type; ] } has 1 def sets:
+def set 0:
+ingress::$entry_point -> ingress::start
+group: {  [ ingress::parse_ipv4.$split_0 : inbuf bit[-88..-81] hdr.ipv4/ipv4.protocol; ] } has 1 def sets:
+def set 0:
+ingress::parse_ipv4 -> ingress::parse_ipv4.$split_0
+created 2 coalesced groups:
+group 0: {  [ ingress::start : inbuf bit[224..239] hdr.ethernet/ethernet.ether_type; ] }
+group 1: {  [ ingress::parse_ipv4.$split_0 : inbuf bit[-88..-81] hdr.ipv4/ipv4.protocol; ] }
+try allocating top down:
+>>>>>>>>>>>>>>>>
+allocating {  [ ingress::start : inbuf bit[224..239] hdr.ethernet/ethernet.ether_type; ] }
+try def set 0
+available regs are:
+half
+byte0
+byte1
+allocated { $half } to {  [ ingress::start : inbuf bit[224..239] hdr.ethernet/ethernet.ether_type; ] }
+success
+<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>
+allocating {  [ ingress::parse_ipv4.$split_0 : inbuf bit[-88..-81] hdr.ipv4/ipv4.protocol; ] }
+try def set 0
+available regs are:
+half
+byte0
+byte1
+allocated { $byte1 } to {  [ ingress::parse_ipv4.$split_0 : inbuf bit[-88..-81] hdr.ipv4/ipv4.protocol; ] }
+success
+<<<<<<<<<<<<<<<<
+top down allocation successful!
+created 0 coalesced groups:
+try allocating top down:
+top down allocation successful!
+removed empty parser start state on ingress
+removed empty parser start state on egress
+ComputeLoweredParserIR preorder on Header : header ethernet_h {
+  bit<48> dst_addr;
+  bit<48> src_addr;
+  bit<16> ether_type; }
+ComputeLoweredParserIR preorder on Header : header record_h {
+  bit<48> in_time; }
+ComputeLoweredParserIR preorder on Header : header ipv4_h {
+  bit<4> version;
+  bit<4> ihl;
+  bit<8> diffserv;
+  bit<16> total_len;
+  bit<16> identification;
+  bit<3> flags;
+  bit<13> frag_offset;
+  bit<8> ttl;
+  bit<8> protocol;
+  bit<16> hdr_checksum;
+  bit<32> src_addr;
+  bit<32> dst_addr; }
+ComputeLoweredParserIR preorder on Header : header tcp_h {
+  bit<16> src_port;
+  bit<16> dst_port;
+  bit<32> seq_no;
+  bit<32> ack_no;
+  bit<4> data_offset;
+  bit<4> res;
+  bit<1> cwr;
+  bit<1> ecn;
+  bit<1> urg;
+  bit<1> ack;
+  bit<1> push;
+  bit<1> reset;
+  bit<1> syn;
+  bit<1> fin;
+  bit<16> window;
+  bit<16> checksum;
+  bit<16> urgent_ptr; }
+[ComputeLoweredParserIR] lowering state ingress::parse_tcp.$split_0
+mapping input buffer field slice bit[0..15] into TH1 bit[0..15] named ingress::hdr.tcp.ack_no[31:16];. Final buffer range: bit[0..15]
+mapping input buffer field slice bit[16..31] into TH0 bit[0..15] named ingress::hdr.tcp.ack_no[15:0];. Final buffer range: bit[16..31]
+mapping input buffer field slice bit[48..63] into TH7 bit[0..15] named ingress::hdr.tcp.window;. Final buffer range: bit[48..63]
+[ComputeLoweredParserIR] lowering state ingress::parse_tcp
+mapping input buffer field slice bit[0..15] into H4 bit[0..15] named ingress::hdr.tcp.src_port;. Final buffer range: bit[0..15]
+mapping input buffer field slice bit[16..31] into H2 bit[0..15] named ingress::hdr.tcp.dst_port;. Final buffer range: bit[16..31]
+mapping input buffer field slice bit[32..47] into TH3 bit[0..15] named ingress::hdr.tcp.seq_no[31:16];. Final buffer range: bit[32..47]
+mapping input buffer field slice bit[48..63] into TH2 bit[0..15] named ingress::hdr.tcp.seq_no[15:0];. Final buffer range: bit[48..63]
+mapping input buffer field slice bit[96..99] into B2 bit[0..3] named ingress::hdr.tcp.data_offset;. Final buffer range: bit[96..103]
+mapping input buffer field slice bit[100..103] into B2 bit[4..7] named ingress::hdr.tcp.res;. Final buffer range: bit[96..103]
+mapping input buffer field slice bit[104] into TB0 bit[0] named ingress::hdr.tcp.cwr;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[105] into TB0 bit[1] named ingress::hdr.tcp.ecn;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[106] into TB0 bit[2] named ingress::hdr.tcp.urg;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[107] into TB0 bit[3] named ingress::hdr.tcp.ack;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[108] into TB0 bit[4] named ingress::hdr.tcp.push;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[109] into TB0 bit[5] named ingress::hdr.tcp.reset;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[110] into TB0 bit[6] named ingress::hdr.tcp.syn;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[111] into TB0 bit[7] named ingress::hdr.tcp.fin;. Final buffer range: bit[104..111]
+mapping input buffer field slice bit[128..143] into TW1 bit[0..15] named ingress::hdr.tcp.checksum;. Final buffer range: bit[128..159]
+mapping input buffer field slice bit[144..159] into TW1 bit[16..31] named ingress::hdr.tcp.urgent_ptr;. Final buffer range: bit[128..159]
+extract 8 into B7
+ComputeLoweredParserIR preorder on Header : header udp_h {
+  bit<16> src_port;
+  bit<16> dst_port;
+  bit<16> hdr_length;
+  bit<16> checksum; }
+[ComputeLoweredParserIR] lowering state ingress::parse_udp
+mapping input buffer field slice bit[0..15] into H4 bit[0..15] named ingress::hdr.udp.src_port;. Final buffer range: bit[0..15]
+mapping input buffer field slice bit[16..31] into H2 bit[0..15] named ingress::hdr.udp.dst_port;. Final buffer range: bit[16..31]
+mapping input buffer field slice bit[32..47] into TW1 bit[0..15] named ingress::hdr.udp.hdr_length;. Final buffer range: bit[32..63]
+mapping input buffer field slice bit[48..63] into TW1 bit[16..31] named ingress::hdr.udp.checksum;. Final buffer range: bit[32..63]
+extract 16 into B7
+[ComputeLoweredParserIR] lowering state ingress::parse_ipv4.$split_0
+extract 4 into B7
+[ComputeLoweredParserIR] lowering state ingress::parse_ipv4
+mapping input buffer field slice bit[0..3] into B4 bit[0..3] named ingress::hdr.ipv4.version;. Final buffer range: bit[0..7]
+mapping input buffer field slice bit[4..7] into B4 bit[4..7] named ingress::hdr.ipv4.ihl;. Final buffer range: bit[0..7]
+mapping input buffer field slice bit[8..15] into TB2 bit[0..7] named ingress::hdr.ipv4.diffserv;. Final buffer range: bit[8..15]
+mapping input buffer field slice bit[16..31] into H10 bit[0..15] named ingress::hdr.ipv4.total_len;. Final buffer range: bit[16..31]
+mapping input buffer field slice bit[32..47] into TW0 bit[0..15] named ingress::hdr.ipv4.identification;. Final buffer range: bit[32..63]
+mapping input buffer field slice bit[48..50] into TW0 bit[16..18] named ingress::hdr.ipv4.flags;. Final buffer range: bit[32..63]
+mapping input buffer field slice bit[51..63] into TW0 bit[19..31] named ingress::hdr.ipv4.frag_offset;. Final buffer range: bit[32..63]
+mapping input buffer field slice bit[64..71] into TB1 bit[0..7] named ingress::hdr.ipv4.ttl;. Final buffer range: bit[64..71]
+mapping input buffer field slice bit[72..79] into B5 bit[0..7] named ingress::hdr.ipv4.protocol;. Final buffer range: bit[72..79]
+mapping input buffer field slice bit[80..95] into TH6 bit[0..15] named ingress::hdr.ipv4.hdr_checksum;. Final buffer range: bit[80..95]
+mapping input buffer field slice bit[96..127] into W3 bit[0..31] named ingress::hdr.ipv4.src_addr;. Final buffer range: bit[96..127]
+mapping input buffer field slice bit[128..159] into W4 bit[0..31] named ingress::hdr.ipv4.dst_addr;. Final buffer range: bit[128..159]
+[ComputeLoweredParserIR] lowering state ingress::parse_record
+mapping input buffer field slice bit[0..15] into H7 bit[0..15] named ingress::hdr.record.in_time[47:32];. Final buffer range: bit[0..15]
+mapping input buffer field slice bit[16..47] into W1 bit[0..31] named ingress::hdr.record.in_time[31:0];. Final buffer range: bit[16..47]
+extract 2 into B7
+[ComputeLoweredParserIR] lowering state ingress::start
+mapping input buffer field slice bit[128..143] into TH5 bit[0..15] named ingress::hdr.ethernet.dst_addr[47:32];. Final buffer range: bit[128..143]
+mapping input buffer field slice bit[144..175] into TW3 bit[0..31] named ingress::hdr.ethernet.dst_addr[31:0];. Final buffer range: bit[144..175]
+mapping input buffer field slice bit[176..191] into TH4 bit[0..15] named ingress::hdr.ethernet.src_addr[47:32];. Final buffer range: bit[176..191]
+mapping input buffer field slice bit[192..223] into TW2 bit[0..31] named ingress::hdr.ethernet.src_addr[31:0];. Final buffer range: bit[192..223]
+mapping input buffer field slice bit[224..239] into H9 bit[0..15] named ingress::hdr.ethernet.ether_type;. Final buffer range: bit[224..239]
+extract 1 into B7
+[ComputeLoweredParserIR] lowering state ingress::$entry_point
+mapping input buffer field slice bit[448..479] into W0 bit[0..31] named ingress::ig_intr_md_from_prsr.global_tstamp[31:0];. Final buffer range: bit[448..479]
+mapping input buffer field slice bit[432..447] into H6 bit[0..15] named ingress::ig_intr_md_from_prsr.global_tstamp[47:32];. Final buffer range: bit[432..447]
+ComputeLoweredParserIR preorder on Header : header egress_intrinsic_metadata_t @__intrinsic_metadata {
+  @padding @__intrinsic_metadata bit<7> _pad0;
+  @__intrinsic_metadata bit<9> egress_port;
+  @padding @__intrinsic_metadata bit<5> _pad1;
+  @__intrinsic_metadata bit<19> enq_qdepth;
+  @padding @__intrinsic_metadata bit<6> _pad2;
+  @__intrinsic_metadata bit<2> enq_congest_stat;
+  @padding @__intrinsic_metadata bit<14> _pad3;
+  @__intrinsic_metadata bit<18> enq_tstamp;
+  @padding @__intrinsic_metadata bit<5> _pad4;
+  @__intrinsic_metadata bit<19> deq_qdepth;
+  @padding @__intrinsic_metadata bit<6> _pad5;
+  @__intrinsic_metadata bit<2> deq_congest_stat;
+  @__intrinsic_metadata bit<8> app_pool_congest_stat;
+  @padding @__intrinsic_metadata bit<14> _pad6;
+  @__intrinsic_metadata bit<18> deq_timedelta;
+  @__intrinsic_metadata bit<16> egress_rid;
+  @padding @__intrinsic_metadata bit<7> _pad7;
+  @__intrinsic_metadata bit<1> egress_rid_first;
+  @padding @__intrinsic_metadata bit<3> _pad8;
+  @__intrinsic_metadata bit<5> egress_qid;
+  @padding @__intrinsic_metadata bit<5> _pad9;
+  @__intrinsic_metadata bit<3> egress_cos;
+  @padding @__intrinsic_metadata bit<7> _pad10;
+  @__intrinsic_metadata bit<1> deflection_flag;
+  @__intrinsic_metadata bit<16> pkt_length; }
+meta_opt: 8191
+meta_size: 27
+[ComputeLoweredParserIR] lowering state $entry_point.start
+mapping input buffer field slice bit[7..15] into H16 bit[7..15] named egress::eg_intr_md.egress_port;. Final buffer range: bit[0..15]
+Grouping deparser primitives:
+ - Starting new emit group: emit ingress::hdr.ethernet.dst_addr if ingress::hdr.ethernet.$valid
+ - Adding emit to group: emit ingress::hdr.ethernet.src_addr if ingress::hdr.ethernet.$valid
+ - Adding emit to group: emit ingress::hdr.ethernet.ether_type if ingress::hdr.ethernet.$valid
+ - Starting new emit group: emit ingress::hdr.record.in_time if ingress::hdr.record.$valid
+ - Starting new emit group: emit ingress::hdr.ipv4.version if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.ihl if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.diffserv if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.total_len if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.identification if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.flags if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.frag_offset if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.ttl if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.protocol if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.hdr_checksum if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.src_addr if ingress::hdr.ipv4.$valid
+ - Adding emit to group: emit ingress::hdr.ipv4.dst_addr if ingress::hdr.ipv4.$valid
+ - Starting new emit group: emit ingress::hdr.tcp.src_port if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.dst_port if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.seq_no if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.ack_no if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.data_offset if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.res if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.cwr if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.ecn if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.urg if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.ack if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.push if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.reset if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.syn if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.fin if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.window if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.checksum if ingress::hdr.tcp.$valid
+ - Adding emit to group: emit ingress::hdr.tcp.urgent_ptr if ingress::hdr.tcp.$valid
+ - Starting new emit group: emit ingress::hdr.udp.src_port if ingress::hdr.udp.$valid
+ - Adding emit to group: emit ingress::hdr.udp.dst_port if ingress::hdr.udp.$valid
+ - Adding emit to group: emit ingress::hdr.udp.hdr_length if ingress::hdr.udp.$valid
+ - Adding emit to group: emit ingress::hdr.udp.checksum if ingress::hdr.udp.$valid
+Deparser: lowering field ingress::hdr.ethernet.dst_addr; to TH5
+Deparser: lowering field ingress::hdr.ethernet.dst_addr; to TW3
+Deparser: lowering field ingress::hdr.ethernet.src_addr; to TH4
+Deparser: lowering field ingress::hdr.ethernet.src_addr; to TW2
+Deparser: lowering field ingress::hdr.ethernet.ether_type; to H9
+Mapping bit field ingress::hdr.ethernet.$valid; to B7(0)
+Deparser: lowering field ingress::hdr.record.in_time; to H7
+Deparser: lowering field ingress::hdr.record.in_time; to W1
+Mapping bit field ingress::hdr.record.$valid; to B7(1)
+Deparser: lowering field ingress::hdr.ipv4.version; to B4
+ - Merging in ingress::hdr.ipv4.ihl;
+Deparser: lowering field ingress::hdr.ipv4.diffserv; to TB2
+Deparser: lowering field ingress::hdr.ipv4.total_len; to H10
+Deparser: lowering field ingress::hdr.ipv4.identification; to TW0
+ - Merging in ingress::hdr.ipv4.flags;
+ - Merging in ingress::hdr.ipv4.frag_offset;
+Deparser: lowering field ingress::hdr.ipv4.ttl; to TB1
+Deparser: lowering field ingress::hdr.ipv4.protocol; to B5
+Deparser: lowering field ingress::hdr.ipv4.hdr_checksum; to TH6
+Deparser: lowering field ingress::hdr.ipv4.src_addr; to W3
+Deparser: lowering field ingress::hdr.ipv4.dst_addr; to W4
+Mapping bit field ingress::hdr.ipv4.$valid; to B7(2)
+Deparser: lowering field ingress::hdr.tcp.src_port; to H4
+Deparser: lowering field ingress::hdr.tcp.dst_port; to H2
+Deparser: lowering field ingress::hdr.tcp.seq_no; to TH3
+Deparser: lowering field ingress::hdr.tcp.seq_no; to TH2
+Deparser: lowering field ingress::hdr.tcp.ack_no; to TH1
+Deparser: lowering field ingress::hdr.tcp.ack_no; to TH0
+Deparser: lowering field ingress::hdr.tcp.data_offset; to B2
+ - Merging in ingress::hdr.tcp.res;
+Deparser: lowering field ingress::hdr.tcp.cwr; to TB0
+ - Merging in ingress::hdr.tcp.ecn;
+ - Merging in ingress::hdr.tcp.urg;
+ - Merging in ingress::hdr.tcp.ack;
+ - Merging in ingress::hdr.tcp.push;
+ - Merging in ingress::hdr.tcp.reset;
+ - Merging in ingress::hdr.tcp.syn;
+ - Merging in ingress::hdr.tcp.fin;
+Deparser: lowering field ingress::hdr.tcp.window; to TH7
+Deparser: lowering field ingress::hdr.tcp.checksum; to TW1
+ - Merging in ingress::hdr.tcp.urgent_ptr;
+Mapping bit field ingress::hdr.tcp.$valid; to B7(3)
+Deparser: lowering field ingress::hdr.udp.src_port; to H4
+Deparser: lowering field ingress::hdr.udp.dst_port; to H2
+Deparser: lowering field ingress::hdr.udp.hdr_length; to TW1
+ - Merging in ingress::hdr.udp.checksum;
+Mapping bit field ingress::hdr.udp.$valid; to B7(4)
+Deparser: lowering field ingress::ig_intr_md_for_tm.ucast_egress_port; to H0
+Deparser: lowering field ingress::ig_intr_md_for_tm.bypass_egress; to B1
+Deparser: lowering field ingress::ig_intr_md_for_dprsr.drop_ctl; to B1
+Deparser: lowering field ingress::ig_intr_md_for_dprsr.mirror_type; to B0
+	emit fieldlist 0 :[ ingress::meta.mirror_session, ingress::hdr.ipv4.src_addr, ingress::hdr.ipv4.dst_addr, ingress::meta.src_port, ingress::meta.dst_port, ingress::hdr.ipv4.protocol, ingress::$pad3, ingress::hdr.ipv4.ihl, ingress::$pad4, ingress::meta.data_offset, ingress::meta.in_time, ingress::meta.times ]
+Deparser: lowering field ingress::meta.mirror_session; to H1
+Deparser: lowering field ingress::hdr.ipv4.src_addr; to W3
+Deparser: lowering field ingress::hdr.ipv4.dst_addr; to W4
+Deparser: lowering field ingress::meta.src_port; to H5
+Deparser: lowering field ingress::meta.dst_port; to H3
+Deparser: lowering field ingress::hdr.ipv4.protocol; to B5
+Deparser: lowering field ingress::hdr.ipv4.ihl; to B4
+Deparser: lowering field ingress::meta.data_offset; to B3
+Deparser: lowering field ingress::meta.in_time; to H8
+Deparser: lowering field ingress::meta.in_time; to W2
+Deparser: lowering field ingress::meta.times; to B6
+Grouping deparser primitives:
+Deparser: lowering field egress::eg_intr_md.egress_port; to H16
+B0 contains intrinsic invalidate fields
+H0 contains intrinsic invalidate fields
+parser init W0
+parser init H6
+parser init B1
+parser init H1
+parser init B7
+parser init H5
+parser init H3
+parser init H11
+parser init H12
+parser init W5
+parser init W2
+parser init H8
+parser init B6
+mark B7 as bitwise-or

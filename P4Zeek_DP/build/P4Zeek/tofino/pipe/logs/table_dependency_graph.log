@@ -1,0 +1,4186 @@
+FindDependencyGraph : After Instruction Selection
+ingress: [2457866] 0 00 000 0000 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 00
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 000 0000 00000 000000
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 000 0000 00000 000000 0000000
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+              tbl_P4Zeek617
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek617
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_TRUE --> tbl_P4Zeek617
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek617 -- ACTION_READ --> cond-30
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek617 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek617 1 1
+	- Edge CONTROL_COND_TRUE cond-29
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek617
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : Just Before PHV allocation
+ingress: [2457866] 0 00 000 0000 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 00
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 000 0000 00000 000000
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 000 0000 00000 000000 0000000
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : Before Table Placement
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : Before Table Placement
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : Just Before PHV allocation
+ingress: [2457866] 0 00 000 0000 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 00
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 000 0000 00000 000000
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 000 0000 00000 000000 0000000
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 7
+     tbl_remove_header 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 3
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 7
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 6
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 5
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 4
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 4
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 3
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 3
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : Before Table Placement
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : cond-16
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : cond-18
+DepStagesThruDomFrontier postorder : cond-17
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : cond-19
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : cond-20
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : cond-29
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : cond-28
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : cond-30
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : cond-23
+DepStagesThruDomFrontier postorder : cond-22
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : cond-26
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : cond-25
+DepStagesThruDomFrontier postorder : cond-24
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : cond-27
+DepStagesThruDomFrontier postorder : cond-21
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    cond-16 -- CONTROL_COND_TRUE --> tbl_remove_header
+    cond-16 -- CONTROL_COND_TRUE --> tbl_mirror
+    cond-16 -- CONTROL_COND_TRUE --> tbl_P4Zeek512
+    cond-16 -- CONTROL_COND_TRUE --> tbl_bypass
+    cond-17 -- CONTROL_COND_TRUE --> tbl_take_UDP_port
+    cond-17 -- CONTROL_COND_FALSE --> cond-18
+    cond-18 -- CONTROL_COND_TRUE --> tbl_take_TCP_port
+    cond-18 -- CONTROL_COND_FALSE --> tbl_bypass_0
+    cond-19 -- CONTROL_COND_TRUE --> malware_detection_0
+    cond-20 -- CONTROL_COND_TRUE --> Payload_check_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash2_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_hash3_do_hash_0
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek609
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek610
+    cond-21 -- CONTROL_COND_FALSE --> tbl_P4Zeek611
+    cond-21 -- CONTROL_COND_FALSE --> cond-28
+    cond-21 -- CONTROL_COND_FALSE --> cond-30
+    cond-28 -- CONTROL_COND_TRUE --> cond-29
+    cond-29 -- CONTROL_COND_FALSE --> tbl_P4Zeek620
+    cond-28 -- CONTROL_COND_FALSE --> tbl_P4Zeek624
+    cond-30 -- CONTROL_COND_TRUE --> tbl_mirror_0
+    cond-30 -- CONTROL_COND_TRUE --> tbl_P4Zeek629
+    cond-30 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    cond-21 -- CONTROL_COND_TRUE --> cond-22
+    cond-21 -- CONTROL_COND_TRUE --> cond-24
+    cond-21 -- CONTROL_COND_TRUE --> cond-27
+    cond-22 -- CONTROL_COND_TRUE --> L3_forward_0
+    cond-22 -- CONTROL_COND_FALSE --> cond-23
+    cond-23 -- CONTROL_COND_TRUE --> tbl_drop
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash2_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek576
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek577
+    cond-24 -- CONTROL_COND_TRUE --> tbl_P4Zeek578
+    cond-24 -- CONTROL_COND_TRUE --> cond-25
+    cond-25 -- CONTROL_COND_TRUE --> cond-26
+    cond-26 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    cond-26 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    cond-25 -- CONTROL_COND_FALSE --> tbl_P4Zeek591
+    cond-27 -- CONTROL_COND_TRUE --> tbl_add_header
+    cond-27 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    cond-16 -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> cond-20
+    tbl_bypass_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- ACTION_READ --> cond-20
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> cond-21
+    malware_detection_0 -- ACTION_READ --> cond-21
+    tbl_bypass -- ACTION_READ --> cond-21
+    tbl_bypass_0 -- ACTION_READ --> cond-21
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_P4Zeek609 -- ACTION_READ --> cond-28
+    tbl_P4Zeek610 -- ACTION_READ --> cond-28
+    tbl_P4Zeek611 -- ACTION_READ --> cond-29
+    tbl_P4Zeek620 -- ACTION_READ --> cond-30
+    tbl_P4Zeek624 -- ACTION_READ --> cond-30
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    Payload_check_0 -- ACTION_READ --> cond-22
+    malware_detection_0 -- ACTION_READ --> cond-22
+    tbl_bypass -- ACTION_READ --> cond-22
+    tbl_bypass_0 -- ACTION_READ --> cond-22
+    Payload_check_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-23
+    tbl_bypass -- ACTION_READ --> cond-23
+    tbl_bypass_0 -- ACTION_READ --> cond-23
+    malware_detection_0 -- ACTION_READ --> cond-24
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_P4Zeek576 -- ACTION_READ --> cond-25
+    tbl_P4Zeek577 -- ACTION_READ --> cond-25
+    tbl_P4Zeek578 -- ACTION_READ --> cond-26
+    tbl_P4Zeek584 -- ACTION_READ --> cond-27
+    tbl_P4Zeek587 -- ACTION_READ --> cond-27
+    tbl_P4Zeek591 -- ACTION_READ --> cond-27
+    cond-16 -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> cond-28
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> cond-25
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek611
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek578
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-17
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_bypass -- ANTI_NEXT_TABLE_DATA --> cond-20
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_UDP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-19
+    tbl_take_TCP_port -- ANTI_NEXT_TABLE_DATA --> cond-21
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    tbl_P4Zeek624 -- ANTI_NEXT_TABLE_DATA --> cond-30
+    L3_forward_0 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek584 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> cond-27
+    tbl_P4Zeek591 -- ANTI_NEXT_TABLE_DATA --> cond-27
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     cond-16 7 8
+     tbl_remove_header 3 4
+	- Edge CONTROL_COND_TRUE cond-16
+	- Edge ANTI_ACTION_READ cond-16
+     tbl_mirror 3 4
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_P4Zeek512 3 4
+	- Edge CONTROL_COND_TRUE cond-16
+     tbl_bypass 7 8
+	- Edge CONTROL_COND_TRUE cond-16
+     cond-17 6 7
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass
+     tbl_take_UDP_port 6 7
+	- Edge CONTROL_COND_TRUE cond-17
+     cond-18 6 7
+	- Edge CONTROL_COND_FALSE cond-17
+     tbl_take_TCP_port 6 7
+	- Edge CONTROL_COND_TRUE cond-18
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 7
+	- Edge OUTPUT tbl_bypass
+     cond-19 5 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_bypass_0
+ Stage #2
+     malware_detection_0 5 6
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     cond-20 4 5
+	- Edge ACTION_READ malware_detection_0
+     Payload_check_0 4 5
+	- Edge CONTROL_COND_TRUE cond-20
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     cond-21 3 4
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     tbl_hash3_do_hash_0 3 3
+	- Edge CONTROL_COND_FALSE cond-21
+     cond-22 1 1
+	- Edge CONTROL_COND_TRUE cond-21
+	- Edge ACTION_READ Payload_check_0
+     cond-24 3 4
+	- Edge CONTROL_COND_TRUE cond-21
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE cond-22
+     cond-23 1 1
+	- Edge CONTROL_COND_FALSE cond-22
+	- Edge ACTION_READ Payload_check_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_TRUE cond-23
+     tbl_hash_do_hash 3 4
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash2_do_hash 3 4
+	- Edge CONTROL_COND_TRUE cond-24
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE cond-24
+ Stage #5
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek576 2 3
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek577 2 3
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+ Stage #6
+     cond-28 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     cond-29 1 1
+	- Edge CONTROL_COND_TRUE cond-28
+	- Edge ACTION_READ tbl_P4Zeek611
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_FALSE cond-29
+     tbl_P4Zeek624 1 1
+	- Edge CONTROL_COND_FALSE cond-28
+     cond-25 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     cond-26 1 1
+	- Edge CONTROL_COND_TRUE cond-25
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE cond-26
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE cond-26
+     tbl_P4Zeek591 1 1
+	- Edge CONTROL_COND_FALSE cond-25
+ Stage #7
+     cond-30 0 0
+	- Edge ACTION_READ tbl_P4Zeek620
+	- Edge ACTION_READ tbl_P4Zeek624
+     tbl_mirror_0 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_P4Zeek629 0 0
+	- Edge CONTROL_COND_TRUE cond-30
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE cond-30
+     cond-27 0 0
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+	- Edge ACTION_READ tbl_P4Zeek591
+     tbl_add_header 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+     tbl_P4Zeek596 0 0
+	- Edge CONTROL_COND_TRUE cond-27
+
+FindDependencyGraph : After Table Placement
+ingress: [2457866] 0 10 101 1011 10111
+  0: tbl_bypass(ingress::hdr.record.$valid == 1;, 1 => $false)
+    $default: [2457872] 0 00
+      1: tbl_P4Zeek512
+      2: tbl_mirror
+      10: tbl_remove_header
+    $false: [2792770]
+  11: tbl_P4Zeek636
+  12: tbl_take_UDP_port(ingress::hdr.ipv4.protocol == 17;, 1 => $false)
+    $false: [2458415]
+      13: tbl_take_TCP_port(ingress::hdr.ipv4.protocol == 6;, 1 => $false)
+        $false: [2458411]
+          20: tbl_bypass_0
+  30: malware_detection_0(ingress::hdr.ipv4.protocol == 17;, ingress::hdr.ipv4.protocol == 6;, 1 => $false){ GE 94+4, 1 [4x5 20K 20K 20K 20K 20K] }
+    $false: [2793214]
+  40: Payload_check_0(ingress::meta.next_table == 1;, 1 => $false){ GE 14+3, 1 [1x1 1K 1K 1K 1K] }
+    $false: [2793345]
+  50: tbl_hash3_do_hash_0(ingress::meta.do_action == 0;, 1 => $true)
+    $true: [2458691] 0 11
+      53: L3_forward_0(ingress::meta.do_action == 1;, 1 => $false){ GE 22+9, 2 [1x1 1K 1K 1K 1K] }
+        $false: [2458863]
+          54: tbl_drop(ingress::meta.do_action == 2;, 1 => $false)
+            $false: [2793452]
+      60: tbl_hash3_do_hash(ingress::meta.set_rule == 1;, 1 => $false)
+        $default: [2458869] 0 00 100 0100 11111
+          61: tbl_hash2_do_hash
+          62: tbl_hash_do_hash
+          70: tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          80: tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          90: tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          a0: tbl_P4Zeek591(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1)
+            $true: [2459573]
+              a1: tbl_P4Zeek584(ingress::first_out3_0 == 0;, 1 => $false)
+                $false: [2459510]
+                  a2: tbl_P4Zeek587
+        $false: [2793571]
+      b3: tbl_P4Zeek596(ingress::meta.first_out == 1;, 1 => $false)
+        $default: [2459581]
+          b4: tbl_add_header{ E 0+9, 2 0K }
+        $false: [2794068]
+    $default: [2459737] 0 00 100 0100 11111 111111
+      51: tbl_hash2_do_hash_0
+      52: tbl_hash_do_hash_0
+      71: tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      81: tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      91: tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      a3: tbl_P4Zeek624(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1)
+        $true: [2460441]
+          a4: tbl_P4Zeek620(ingress::first_in3_0 != 0; => $true, 1)
+            $true: [2460376]
+      b0: tbl_P4Zeek629(ingress::meta.first_in == 1;, 1 => $false){ GE 0+9, 2 0K }
+        $false: [2460664]
+          b1: tbl_set_recirculate{ E 0+9, 2 0K }
+        $default: [2460449]
+          b2: tbl_mirror_0
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek512
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_mirror
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_remove_header
+    tbl_take_UDP_port -- CONTROL_COND_FALSE --> tbl_take_TCP_port
+    tbl_take_TCP_port -- CONTROL_COND_FALSE --> tbl_bypass_0
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> L3_forward_0
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    L3_forward_0 -- CONTROL_COND_FALSE --> tbl_drop
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash2_do_hash
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash_do_hash
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek578
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek576
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek591
+    tbl_P4Zeek591 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    tbl_P4Zeek584 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    tbl_P4Zeek596 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_add_header
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash2_do_hash_0
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash_do_hash_0
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek611
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek609
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek624
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek629
+    tbl_P4Zeek624 -- CONTROL_COND_TRUE --> tbl_P4Zeek620
+    tbl_P4Zeek629 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    tbl_P4Zeek629 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_mirror_0
+    tbl_bypass -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> Payload_check_0
+    tbl_bypass_0 -- ACTION_READ --> Payload_check_0
+    malware_detection_0 -- ACTION_READ --> Payload_check_0
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    malware_detection_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_bypass -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_bypass_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    Payload_check_0 -- ACTION_READ --> L3_forward_0
+    malware_detection_0 -- ACTION_READ --> L3_forward_0
+    tbl_bypass -- ACTION_READ --> L3_forward_0
+    tbl_bypass_0 -- ACTION_READ --> L3_forward_0
+    Payload_check_0 -- ACTION_READ --> tbl_drop
+    malware_detection_0 -- ACTION_READ --> tbl_drop
+    tbl_bypass -- ACTION_READ --> tbl_drop
+    tbl_bypass_0 -- ACTION_READ --> tbl_drop
+    malware_detection_0 -- ACTION_READ --> tbl_hash3_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_P4Zeek576 -- ACTION_READ --> tbl_P4Zeek591
+    tbl_P4Zeek577 -- ACTION_READ --> tbl_P4Zeek591
+    tbl_P4Zeek578 -- ACTION_READ --> tbl_P4Zeek584
+    tbl_P4Zeek591 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_P4Zeek584 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_P4Zeek587 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    tbl_bypass -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_P4Zeek609 -- ACTION_READ --> tbl_P4Zeek624
+    tbl_P4Zeek610 -- ACTION_READ --> tbl_P4Zeek624
+    tbl_P4Zeek611 -- ACTION_READ --> tbl_P4Zeek620
+    tbl_P4Zeek624 -- ACTION_READ --> tbl_P4Zeek629
+    tbl_P4Zeek620 -- ACTION_READ --> tbl_P4Zeek629
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek629
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek596
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek596
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     tbl_bypass 7 7
+     tbl_P4Zeek512 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+     tbl_mirror 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+     tbl_remove_header 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+	- Edge ANTI_ACTION_READ tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_P4Zeek512
+	- Edge ANTI_NEXT_TABLE_DATA tbl_mirror
+	- Edge ANTI_NEXT_TABLE_DATA tbl_remove_header
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_FALSE tbl_take_UDP_port
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     Payload_check_0 4 4
+	- Edge ACTION_READ malware_detection_0
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     tbl_hash3_do_hash_0 3 3
+	- Edge ACTION_READ Payload_check_0
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE tbl_hash3_do_hash_0
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE tbl_hash3_do_hash_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_FALSE L3_forward_0
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash_0
+ Stage #5
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+ Stage #6
+     tbl_P4Zeek591 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE tbl_P4Zeek591
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE tbl_P4Zeek584
+     tbl_P4Zeek624 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_TRUE tbl_P4Zeek624
+	- Edge ACTION_READ tbl_P4Zeek611
+ Stage #7
+     tbl_P4Zeek596 0 0
+	- Edge ACTION_READ tbl_P4Zeek591
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+     tbl_add_header 0 0
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_P4Zeek596
+     tbl_P4Zeek629 0 0
+	- Edge ACTION_READ tbl_P4Zeek624
+	- Edge ACTION_READ tbl_P4Zeek620
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE tbl_P4Zeek629
+     tbl_mirror_0 0 0
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_P4Zeek629
+
+FindDependencyGraph : Power Calculation
+ingress: [2457866] 0 10 101 1011 10111
+  0: tbl_bypass(ingress::hdr.record.$valid == 1;, 1 => $false)
+    $default: [2457872] 0 00
+      1: tbl_P4Zeek512
+      2: tbl_mirror
+      10: tbl_remove_header
+    $false: [2792770]
+  11: tbl_P4Zeek636
+  12: tbl_take_UDP_port(ingress::hdr.ipv4.protocol == 17;, 1 => $false)
+    $false: [2458415]
+      13: tbl_take_TCP_port(ingress::hdr.ipv4.protocol == 6;, 1 => $false)
+        $false: [2458411]
+          20: tbl_bypass_0
+  30: malware_detection_0(ingress::hdr.ipv4.protocol == 17;, ingress::hdr.ipv4.protocol == 6;, 1 => $false){ GE 94+4, 1 [4x5 20K 20K 20K 20K 20K] }
+    $false: [2793214]
+  40: Payload_check_0(ingress::meta.next_table == 1;, 1 => $false){ GE 14+3, 1 [1x1 1K 1K 1K 1K] }
+    $false: [2793345]
+  50: tbl_hash3_do_hash_0(ingress::meta.do_action == 0;, 1 => $true)
+    $true: [2458691] 0 11
+      53: L3_forward_0(ingress::meta.do_action == 1;, 1 => $false){ GE 22+9, 2 [1x1 1K 1K 1K 1K] }
+        $false: [2458863]
+          54: tbl_drop(ingress::meta.do_action == 2;, 1 => $false)
+            $false: [2793452]
+      60: tbl_hash3_do_hash(ingress::meta.set_rule == 1;, 1 => $false)
+        $default: [2458869] 0 00 100 0100 11111
+          61: tbl_hash2_do_hash
+          62: tbl_hash_do_hash
+          70: tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          80: tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          90: tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          a0: tbl_P4Zeek591(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1)
+            $true: [2459573]
+              a1: tbl_P4Zeek584(ingress::first_out3_0 == 0;, 1 => $false)
+                $false: [2459510]
+                  a2: tbl_P4Zeek587
+        $false: [2793571]
+      b3: tbl_P4Zeek596(ingress::meta.first_out == 1;, 1 => $false)
+        $default: [2459581]
+          b4: tbl_add_header{ E 0+9, 2 0K }
+        $false: [2794068]
+    $default: [2459737] 0 00 100 0100 11111 111111
+      51: tbl_hash2_do_hash_0
+      52: tbl_hash_do_hash_0
+      71: tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      81: tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      91: tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      a3: tbl_P4Zeek624(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1)
+        $true: [2460441]
+          a4: tbl_P4Zeek620(ingress::first_in3_0 != 0; => $true, 1)
+            $true: [2460376]
+      b0: tbl_P4Zeek629(ingress::meta.first_in == 1;, 1 => $false){ GE 0+9, 2 0K }
+        $false: [2460664]
+          b1: tbl_set_recirculate{ E 0+9, 2 0K }
+        $default: [2460449]
+          b2: tbl_mirror_0
+egress: [2467200]
+
+DepStagesThruDomFrontier postorder : tbl_P4Zeek512
+DepStagesThruDomFrontier postorder : tbl_mirror
+DepStagesThruDomFrontier postorder : tbl_remove_header
+DepStagesThruDomFrontier postorder : tbl_bypass
+DepStagesThruDomFrontier postorder : tbl_P4Zeek636
+DepStagesThruDomFrontier postorder : tbl_bypass_0
+DepStagesThruDomFrontier postorder : tbl_take_TCP_port
+DepStagesThruDomFrontier postorder : tbl_take_UDP_port
+DepStagesThruDomFrontier postorder : malware_detection_0
+DepStagesThruDomFrontier postorder : Payload_check_0
+DepStagesThruDomFrontier postorder : tbl_drop
+DepStagesThruDomFrontier postorder : L3_forward_0
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash
+DepStagesThruDomFrontier postorder : tbl_P4Zeek578
+DepStagesThruDomFrontier postorder : tbl_P4Zeek577
+DepStagesThruDomFrontier postorder : tbl_P4Zeek576
+DepStagesThruDomFrontier postorder : tbl_P4Zeek587
+DepStagesThruDomFrontier postorder : tbl_P4Zeek584
+DepStagesThruDomFrontier postorder : tbl_P4Zeek591
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash
+DepStagesThruDomFrontier postorder : tbl_add_header
+DepStagesThruDomFrontier postorder : tbl_P4Zeek596
+DepStagesThruDomFrontier postorder : tbl_hash2_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_hash_do_hash_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek611
+DepStagesThruDomFrontier postorder : tbl_P4Zeek610
+DepStagesThruDomFrontier postorder : tbl_P4Zeek609
+DepStagesThruDomFrontier postorder : tbl_P4Zeek620
+DepStagesThruDomFrontier postorder : tbl_P4Zeek624
+DepStagesThruDomFrontier postorder : tbl_set_recirculate
+DepStagesThruDomFrontier postorder : tbl_mirror_0
+DepStagesThruDomFrontier postorder : tbl_P4Zeek629
+DepStagesThruDomFrontier postorder : tbl_hash3_do_hash_0
+    Maximum stage number according to dependences: 
+      INGRESS: 7
+      EGRESS: -1
+GRAPH
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek512
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_mirror
+    tbl_bypass -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_remove_header
+    tbl_take_UDP_port -- CONTROL_COND_FALSE --> tbl_take_TCP_port
+    tbl_take_TCP_port -- CONTROL_COND_FALSE --> tbl_bypass_0
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> L3_forward_0
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> tbl_hash3_do_hash
+    tbl_hash3_do_hash_0 -- CONTROL_COND_TRUE --> tbl_P4Zeek596
+    L3_forward_0 -- CONTROL_COND_FALSE --> tbl_drop
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash2_do_hash
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash_do_hash
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek578
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek577
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek576
+    tbl_hash3_do_hash -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek591
+    tbl_P4Zeek591 -- CONTROL_COND_TRUE --> tbl_P4Zeek584
+    tbl_P4Zeek584 -- CONTROL_COND_FALSE --> tbl_P4Zeek587
+    tbl_P4Zeek596 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_add_header
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash2_do_hash_0
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_hash_do_hash_0
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek611
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek610
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek609
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek624
+    tbl_hash3_do_hash_0 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_P4Zeek629
+    tbl_P4Zeek624 -- CONTROL_COND_TRUE --> tbl_P4Zeek620
+    tbl_P4Zeek629 -- CONTROL_COND_FALSE --> tbl_set_recirculate
+    tbl_P4Zeek629 -- CONTROL_DEFAULT_NEXT_TABLE --> tbl_mirror_0
+    tbl_bypass -- ANTI_ACTION_READ --> tbl_remove_header
+    tbl_bypass -- OUTPUT --> tbl_bypass_0
+    tbl_take_UDP_port -- IXBAR_READ --> malware_detection_0
+    tbl_take_TCP_port -- IXBAR_READ --> malware_detection_0
+    tbl_bypass -- OUTPUT --> malware_detection_0
+    tbl_bypass_0 -- OUTPUT --> malware_detection_0
+    tbl_bypass -- ACTION_READ --> Payload_check_0
+    tbl_bypass_0 -- ACTION_READ --> Payload_check_0
+    malware_detection_0 -- ACTION_READ --> Payload_check_0
+    malware_detection_0 -- OUTPUT --> Payload_check_0
+    tbl_bypass -- OUTPUT --> Payload_check_0
+    tbl_bypass_0 -- OUTPUT --> Payload_check_0
+    Payload_check_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    malware_detection_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_bypass -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_bypass_0 -- ACTION_READ --> tbl_hash3_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash_0
+    Payload_check_0 -- ACTION_READ --> L3_forward_0
+    malware_detection_0 -- ACTION_READ --> L3_forward_0
+    tbl_bypass -- ACTION_READ --> L3_forward_0
+    tbl_bypass_0 -- ACTION_READ --> L3_forward_0
+    Payload_check_0 -- ACTION_READ --> tbl_drop
+    malware_detection_0 -- ACTION_READ --> tbl_drop
+    tbl_bypass -- ACTION_READ --> tbl_drop
+    tbl_bypass_0 -- ACTION_READ --> tbl_drop
+    malware_detection_0 -- ACTION_READ --> tbl_hash3_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash3_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash
+    tbl_hash3_do_hash -- IXBAR_READ --> tbl_P4Zeek578
+    tbl_hash2_do_hash -- IXBAR_READ --> tbl_P4Zeek577
+    tbl_hash_do_hash -- IXBAR_READ --> tbl_P4Zeek576
+    tbl_P4Zeek576 -- ACTION_READ --> tbl_P4Zeek591
+    tbl_P4Zeek577 -- ACTION_READ --> tbl_P4Zeek591
+    tbl_P4Zeek578 -- ACTION_READ --> tbl_P4Zeek584
+    tbl_P4Zeek591 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_P4Zeek584 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_P4Zeek587 -- ACTION_READ --> tbl_P4Zeek596
+    tbl_drop -- OUTPUT --> tbl_P4Zeek596
+    tbl_bypass -- ANTI_ACTION_READ --> tbl_add_header
+    tbl_remove_header -- OUTPUT --> tbl_add_header
+    L3_forward_0 -- OUTPUT --> tbl_add_header
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash2_do_hash_0
+    tbl_take_UDP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_take_TCP_port -- IXBAR_READ --> tbl_hash_do_hash_0
+    tbl_hash3_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek611
+    tbl_hash2_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek610
+    tbl_hash_do_hash_0 -- IXBAR_READ --> tbl_P4Zeek609
+    tbl_P4Zeek609 -- ACTION_READ --> tbl_P4Zeek624
+    tbl_P4Zeek610 -- ACTION_READ --> tbl_P4Zeek624
+    tbl_P4Zeek611 -- ACTION_READ --> tbl_P4Zeek620
+    tbl_P4Zeek624 -- ACTION_READ --> tbl_P4Zeek629
+    tbl_P4Zeek620 -- ACTION_READ --> tbl_P4Zeek629
+    tbl_P4Zeek512 -- OUTPUT --> tbl_P4Zeek629
+    tbl_mirror -- OUTPUT --> tbl_mirror_0
+    tbl_P4Zeek620 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek629
+    tbl_P4Zeek587 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek596
+    tbl_P4Zeek611 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    tbl_drop -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek596
+    tbl_P4Zeek578 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    Payload_check_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_P4Zeek577 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    tbl_P4Zeek576 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek591
+    tbl_P4Zeek610 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    tbl_P4Zeek609 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek624
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    malware_detection_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_bypass_0 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_hash2_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek577
+    tbl_hash_do_hash -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek576
+    tbl_hash2_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek610
+    tbl_hash_do_hash_0 -- ANTI_NEXT_TABLE_DATA --> tbl_P4Zeek609
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> tbl_take_UDP_port
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> malware_detection_0
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_remove_header -- ANTI_NEXT_TABLE_DATA --> Payload_check_0
+    tbl_P4Zeek512 -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+    tbl_mirror -- ANTI_NEXT_TABLE_DATA --> tbl_hash3_do_hash_0
+MIN STAGE INFO
+    Each table also indicates its dependency chain length
+    First number refers to a dependency chain from which each tables are not split
+    Second number refers to a dependency chain from which each tables are split as on  last allocation pass
+ Stage #0
+     tbl_bypass 7 7
+     tbl_P4Zeek512 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+     tbl_mirror 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+     tbl_remove_header 6 6
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_bypass
+	- Edge ANTI_ACTION_READ tbl_bypass
+     tbl_take_UDP_port 6 6
+	- Edge ANTI_NEXT_TABLE_DATA tbl_P4Zeek512
+	- Edge ANTI_NEXT_TABLE_DATA tbl_mirror
+	- Edge ANTI_NEXT_TABLE_DATA tbl_remove_header
+     tbl_take_TCP_port 6 6
+	- Edge CONTROL_COND_FALSE tbl_take_UDP_port
+     tbl_P4Zeek636 0 0
+ Stage #1
+     tbl_bypass_0 6 6
+	- Edge OUTPUT tbl_bypass
+ Stage #2
+     malware_detection_0 5 5
+	- Edge OUTPUT tbl_bypass_0
+ Stage #3
+     Payload_check_0 4 4
+	- Edge ACTION_READ malware_detection_0
+	- Edge OUTPUT malware_detection_0
+ Stage #4
+     tbl_hash3_do_hash_0 3 3
+	- Edge ACTION_READ Payload_check_0
+     L3_forward_0 1 1
+	- Edge CONTROL_COND_TRUE tbl_hash3_do_hash_0
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash3_do_hash 3 3
+	- Edge CONTROL_COND_TRUE tbl_hash3_do_hash_0
+     tbl_drop 1 1
+	- Edge CONTROL_COND_FALSE L3_forward_0
+	- Edge ACTION_READ Payload_check_0
+     tbl_hash2_do_hash 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash
+     tbl_hash_do_hash 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash
+     tbl_hash2_do_hash_0 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash_0
+     tbl_hash_do_hash_0 3 3
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_hash3_do_hash_0
+ Stage #5
+     tbl_P4Zeek578 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash
+     tbl_P4Zeek577 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash
+     tbl_P4Zeek576 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash
+     tbl_P4Zeek611 2 2
+	- Edge IXBAR_READ tbl_hash3_do_hash_0
+     tbl_P4Zeek610 2 2
+	- Edge IXBAR_READ tbl_hash2_do_hash_0
+     tbl_P4Zeek609 2 2
+	- Edge IXBAR_READ tbl_hash_do_hash_0
+ Stage #6
+     tbl_P4Zeek591 1 1
+	- Edge ACTION_READ tbl_P4Zeek576
+	- Edge ACTION_READ tbl_P4Zeek577
+     tbl_P4Zeek584 1 1
+	- Edge CONTROL_COND_TRUE tbl_P4Zeek591
+	- Edge ACTION_READ tbl_P4Zeek578
+     tbl_P4Zeek587 1 1
+	- Edge CONTROL_COND_FALSE tbl_P4Zeek584
+     tbl_P4Zeek624 1 1
+	- Edge ACTION_READ tbl_P4Zeek609
+	- Edge ACTION_READ tbl_P4Zeek610
+     tbl_P4Zeek620 1 1
+	- Edge CONTROL_COND_TRUE tbl_P4Zeek624
+	- Edge ACTION_READ tbl_P4Zeek611
+ Stage #7
+     tbl_P4Zeek596 0 0
+	- Edge ACTION_READ tbl_P4Zeek591
+	- Edge ACTION_READ tbl_P4Zeek584
+	- Edge ACTION_READ tbl_P4Zeek587
+     tbl_add_header 0 0
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_P4Zeek596
+     tbl_P4Zeek629 0 0
+	- Edge ACTION_READ tbl_P4Zeek624
+	- Edge ACTION_READ tbl_P4Zeek620
+     tbl_set_recirculate 0 0
+	- Edge CONTROL_COND_FALSE tbl_P4Zeek629
+     tbl_mirror_0 0 0
+	- Edge CONTROL_DEFAULT_NEXT_TABLE tbl_P4Zeek629
+

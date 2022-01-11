@@ -1,0 +1,20 @@
+digraph IngressParser{
+start [shape=rectangle,label="start
+(hdr.ethernet.ether_type)"]
+parse_record [shape=rectangle,label="parse_record"]
+parse_ipv4 [shape=rectangle,label="parse_ipv4
+(hdr.ipv4.protocol)"]
+parse_tcp [shape=rectangle,label="parse_tcp"]
+parse_udp [shape=rectangle,label="parse_udp"]
+accept [shape=rectangle,label="accept"]
+reject [shape=rectangle,label="reject"]
+start -> parse_record [label="16w0xbf03"]
+start -> parse_ipv4 [label="16w0x800"]
+start -> reject [label="fallthrough"]
+parse_record -> parse_ipv4 [label="always"]
+parse_ipv4 -> parse_tcp [label="8w6"]
+parse_ipv4 -> parse_udp [label="8w17"]
+parse_ipv4 -> accept [label="default"]
+parse_tcp -> accept [label="always"]
+parse_udp -> accept [label="always"]
+}

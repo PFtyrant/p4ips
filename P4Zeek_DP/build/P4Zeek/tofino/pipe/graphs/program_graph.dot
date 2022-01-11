@@ -1,0 +1,162 @@
+digraph table_deps {
+  splines=ortho; rankdir=LR;
+  label="Program: P4Zeek
+RunId: e4788498aaa87c1a
+";
+  labelloc=t; labeljust=l;
+  { "cond-16"; "tbl_remove_header"; "tbl_mirror"; "tbl_P4Zeek512"; "tbl_bypass"; "cond-17"; "tbl_take_UDP_port"; "cond-18"; "tbl_take_TCP_port"; "tbl_P4Zeek636"; }
+  { rank = same; "tbl_bypass_0"; "cond-19"; }
+  { rank = same; "Ingress.malware_detection"; }
+  { rank = same; "cond-20"; "Ingress.Payload_check"; }
+  { rank = same; "cond-21"; "tbl_hash_do_hash_0"; "tbl_hash2_do_hash_0"; "tbl_hash3_do_hash_0"; "cond-22"; "cond-24"; "Ingress.L3_forward"; "cond-23"; "tbl_drop"; "tbl_hash_do_hash"; "tbl_hash2_do_hash"; "tbl_hash3_do_hash"; }
+  { rank = same; "tbl_P4Zeek609"; "tbl_P4Zeek610"; "tbl_P4Zeek611"; "tbl_P4Zeek576"; "tbl_P4Zeek577"; "tbl_P4Zeek578"; }
+  { rank = same; "cond-28"; "cond-29"; "tbl_P4Zeek617"; "tbl_P4Zeek620"; "tbl_P4Zeek624"; "cond-25"; "cond-26"; "tbl_P4Zeek584"; "tbl_P4Zeek587"; "tbl_P4Zeek591"; }
+  { rank = same; "cond-30"; "tbl_mirror_0"; "tbl_P4Zeek629"; "tbl_set_recirculate"; "cond-27"; "tbl_add_header"; "tbl_P4Zeek596"; }
+   "cond-16" -> "tbl_remove_header" [ label= "",color=green ];
+   "cond-16" -> "tbl_mirror" [ label= "",color=green ];
+   "cond-16" -> "tbl_P4Zeek512" [ label= "",color=green ];
+   "cond-16" -> "tbl_bypass" [ label= "",color=green ];
+   "cond-17" -> "tbl_take_UDP_port" [ label= "",color=green ];
+   "cond-17" -> "cond-18" [ label= "",color=green ];
+   "cond-18" -> "tbl_take_TCP_port" [ label= "",color=green ];
+   "cond-18" -> "tbl_bypass_0" [ label= "",color=green ];
+   "cond-19" -> "Ingress.malware_detection" [ label= "",color=green ];
+   "cond-20" -> "Ingress.Payload_check" [ label= "",color=green ];
+   "cond-21" -> "tbl_hash_do_hash_0" [ label= "",color=green ];
+   "cond-21" -> "tbl_hash2_do_hash_0" [ label= "",color=green ];
+   "cond-21" -> "tbl_hash3_do_hash_0" [ label= "",color=green ];
+   "cond-21" -> "tbl_P4Zeek609" [ label= "",color=green ];
+   "cond-21" -> "tbl_P4Zeek610" [ label= "",color=green ];
+   "cond-21" -> "tbl_P4Zeek611" [ label= "",color=green ];
+   "cond-21" -> "cond-28" [ label= "",color=green ];
+   "cond-21" -> "cond-30" [ label= "",color=green ];
+   "cond-28" -> "cond-29" [ label= "",color=green ];
+   "cond-29" -> "tbl_P4Zeek617" [ label= "",color=green ];
+   "cond-29" -> "tbl_P4Zeek620" [ label= "",color=green ];
+   "cond-28" -> "tbl_P4Zeek624" [ label= "",color=green ];
+   "cond-30" -> "tbl_mirror_0" [ label= "",color=green ];
+   "cond-30" -> "tbl_P4Zeek629" [ label= "",color=green ];
+   "cond-30" -> "tbl_set_recirculate" [ label= "",color=green ];
+   "cond-21" -> "cond-22" [ label= "",color=green ];
+   "cond-21" -> "cond-24" [ label= "",color=green ];
+   "cond-21" -> "cond-27" [ label= "",color=green ];
+   "cond-22" -> "Ingress.L3_forward" [ label= "",color=green ];
+   "cond-22" -> "cond-23" [ label= "",color=green ];
+   "cond-23" -> "tbl_drop" [ label= "",color=green ];
+   "cond-24" -> "tbl_hash_do_hash" [ label= "",color=green ];
+   "cond-24" -> "tbl_hash2_do_hash" [ label= "",color=green ];
+   "cond-24" -> "tbl_hash3_do_hash" [ label= "",color=green ];
+   "cond-24" -> "tbl_P4Zeek576" [ label= "",color=green ];
+   "cond-24" -> "tbl_P4Zeek577" [ label= "",color=green ];
+   "cond-24" -> "tbl_P4Zeek578" [ label= "",color=green ];
+   "cond-24" -> "cond-25" [ label= "",color=green ];
+   "cond-25" -> "cond-26" [ label= "",color=green ];
+   "cond-26" -> "tbl_P4Zeek584" [ label= "",color=green ];
+   "cond-26" -> "tbl_P4Zeek587" [ label= "",color=green ];
+   "cond-25" -> "tbl_P4Zeek591" [ label= "",color=green ];
+   "cond-27" -> "tbl_add_header" [ label= "",color=green ];
+   "cond-27" -> "tbl_P4Zeek596" [ label= "",color=green ];
+   "cond-16" -> "tbl_remove_header" [ label= "",color=pink ];
+   "tbl_bypass" -> "tbl_bypass_0" [ label= "",color=red ];
+   "tbl_take_UDP_port" -> "Ingress.malware_detection" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "Ingress.malware_detection" [ label= "",color=gold ];
+   "tbl_bypass" -> "Ingress.malware_detection" [ label= "",color=red ];
+   "tbl_bypass_0" -> "Ingress.malware_detection" [ label= "",color=red ];
+   "tbl_bypass" -> "cond-20" [ label= "",color=blue ];
+   "tbl_bypass_0" -> "cond-20" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "cond-20" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "Ingress.Payload_check" [ label= "",color=red ];
+   "tbl_bypass" -> "Ingress.Payload_check" [ label= "",color=red ];
+   "tbl_bypass_0" -> "Ingress.Payload_check" [ label= "",color=red ];
+   "Ingress.Payload_check" -> "cond-21" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "cond-21" [ label= "",color=blue ];
+   "tbl_bypass" -> "cond-21" [ label= "",color=blue ];
+   "tbl_bypass_0" -> "cond-21" [ label= "",color=blue ];
+   "tbl_take_UDP_port" -> "tbl_hash_do_hash_0" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash_do_hash_0" [ label= "",color=gold ];
+   "tbl_take_UDP_port" -> "tbl_hash2_do_hash_0" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash2_do_hash_0" [ label= "",color=gold ];
+   "tbl_take_UDP_port" -> "tbl_hash3_do_hash_0" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash3_do_hash_0" [ label= "",color=gold ];
+   "tbl_hash_do_hash_0" -> "tbl_P4Zeek609" [ label= "",color=gold ];
+   "tbl_hash2_do_hash_0" -> "tbl_P4Zeek610" [ label= "",color=gold ];
+   "tbl_hash3_do_hash_0" -> "tbl_P4Zeek611" [ label= "",color=gold ];
+   "tbl_P4Zeek609" -> "cond-28" [ label= "",color=blue ];
+   "tbl_P4Zeek610" -> "cond-28" [ label= "",color=blue ];
+   "tbl_P4Zeek611" -> "cond-29" [ label= "",color=blue ];
+   "tbl_P4Zeek617" -> "cond-30" [ label= "",color=blue ];
+   "tbl_P4Zeek620" -> "cond-30" [ label= "",color=blue ];
+   "tbl_P4Zeek624" -> "cond-30" [ label= "",color=blue ];
+   "tbl_mirror" -> "tbl_mirror_0" [ label= "",color=red ];
+   "tbl_P4Zeek512" -> "tbl_P4Zeek629" [ label= "",color=red ];
+   "Ingress.Payload_check" -> "cond-22" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "cond-22" [ label= "",color=blue ];
+   "tbl_bypass" -> "cond-22" [ label= "",color=blue ];
+   "tbl_bypass_0" -> "cond-22" [ label= "",color=blue ];
+   "Ingress.Payload_check" -> "cond-23" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "cond-23" [ label= "",color=blue ];
+   "tbl_bypass" -> "cond-23" [ label= "",color=blue ];
+   "tbl_bypass_0" -> "cond-23" [ label= "",color=blue ];
+   "Ingress.malware_detection" -> "cond-24" [ label= "",color=blue ];
+   "tbl_take_UDP_port" -> "tbl_hash_do_hash" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash_do_hash" [ label= "",color=gold ];
+   "tbl_take_UDP_port" -> "tbl_hash2_do_hash" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash2_do_hash" [ label= "",color=gold ];
+   "tbl_take_UDP_port" -> "tbl_hash3_do_hash" [ label= "",color=gold ];
+   "tbl_take_TCP_port" -> "tbl_hash3_do_hash" [ label= "",color=gold ];
+   "tbl_hash_do_hash" -> "tbl_P4Zeek576" [ label= "",color=gold ];
+   "tbl_hash2_do_hash" -> "tbl_P4Zeek577" [ label= "",color=gold ];
+   "tbl_hash3_do_hash" -> "tbl_P4Zeek578" [ label= "",color=gold ];
+   "tbl_P4Zeek576" -> "cond-25" [ label= "",color=blue ];
+   "tbl_P4Zeek577" -> "cond-25" [ label= "",color=blue ];
+   "tbl_P4Zeek578" -> "cond-26" [ label= "",color=blue ];
+   "tbl_P4Zeek584" -> "cond-27" [ label= "",color=blue ];
+   "tbl_P4Zeek587" -> "cond-27" [ label= "",color=blue ];
+   "tbl_P4Zeek591" -> "cond-27" [ label= "",color=blue ];
+   "cond-16" -> "tbl_add_header" [ label= "",color=pink ];
+   "tbl_remove_header" -> "tbl_add_header" [ label= "",color=red ];
+   "Ingress.L3_forward" -> "tbl_add_header" [ label= "",color=red ];
+   "tbl_drop" -> "tbl_P4Zeek596" [ label= "",color=red ];
+   "Ingress.Payload_check" -> "cond-21" [ label= "",color=pink ];
+   "Ingress.malware_detection" -> "cond-20" [ label= "",color=pink ];
+   "Ingress.malware_detection" -> "cond-21" [ label= "",color=pink ];
+   "tbl_P4Zeek609" -> "cond-28" [ label= "",color=pink ];
+   "tbl_P4Zeek610" -> "cond-28" [ label= "",color=pink ];
+   "tbl_P4Zeek611" -> "cond-28" [ label= "",color=pink ];
+   "tbl_P4Zeek576" -> "cond-25" [ label= "",color=pink ];
+   "tbl_P4Zeek577" -> "cond-25" [ label= "",color=pink ];
+   "tbl_P4Zeek578" -> "cond-25" [ label= "",color=pink ];
+   "tbl_remove_header" -> "cond-21" [ label= "",color=pink ];
+   "tbl_bypass_0" -> "cond-19" [ label= "",color=pink ];
+   "tbl_bypass_0" -> "cond-20" [ label= "",color=pink ];
+   "tbl_bypass_0" -> "cond-21" [ label= "",color=pink ];
+   "tbl_hash_do_hash_0" -> "tbl_P4Zeek609" [ label= "",color=pink ];
+   "tbl_hash2_do_hash_0" -> "tbl_P4Zeek610" [ label= "",color=pink ];
+   "tbl_hash3_do_hash_0" -> "tbl_P4Zeek611" [ label= "",color=pink ];
+   "tbl_hash_do_hash" -> "tbl_P4Zeek576" [ label= "",color=pink ];
+   "tbl_hash2_do_hash" -> "tbl_P4Zeek577" [ label= "",color=pink ];
+   "tbl_hash3_do_hash" -> "tbl_P4Zeek578" [ label= "",color=pink ];
+   "tbl_mirror" -> "cond-21" [ label= "",color=pink ];
+   "tbl_P4Zeek512" -> "cond-21" [ label= "",color=pink ];
+   "tbl_bypass" -> "cond-21" [ label= "",color=pink ];
+   "tbl_bypass" -> "cond-17" [ label= "",color=pink ];
+   "tbl_bypass" -> "cond-19" [ label= "",color=pink ];
+   "tbl_bypass" -> "cond-20" [ label= "",color=pink ];
+   "tbl_take_UDP_port" -> "cond-19" [ label= "",color=pink ];
+   "tbl_take_UDP_port" -> "cond-21" [ label= "",color=pink ];
+   "tbl_take_TCP_port" -> "cond-19" [ label= "",color=pink ];
+   "tbl_take_TCP_port" -> "cond-21" [ label= "",color=pink ];
+   "tbl_P4Zeek617" -> "cond-30" [ label= "",color=pink ];
+   "tbl_P4Zeek620" -> "cond-30" [ label= "",color=pink ];
+   "tbl_P4Zeek624" -> "cond-30" [ label= "",color=pink ];
+   "Ingress.L3_forward" -> "cond-27" [ label= "",color=pink ];
+   "tbl_drop" -> "cond-27" [ label= "",color=pink ];
+   "tbl_P4Zeek584" -> "cond-27" [ label= "",color=pink ];
+   "tbl_P4Zeek587" -> "cond-27" [ label= "",color=pink ];
+   "tbl_P4Zeek591" -> "cond-27" [ label= "",color=pink ];
+  { rank=max;
+    subgraph cluster_legend { node [ shape=record; fontsize=10];
+      empty [label=<<table border="0" cellborder="0"><tr><td colspan="8">Edge colors</td></tr><tr><td><font color="gold">ixbar_read</font></td><td><font color="blue">action_read</font></td><td><font color="red">output</font></td><td><font color="navy">cont_conflict</font></td><td><font color="cyan">reduction_or_read</font></td><td><font color="cyan">reduction_or_output</font></td><td><font color="pink">anti_table_read</font></td><td><font color="pink">anti_next_action_read</font></td><td><font color="pink">anti_next_table_data</font></td><td><font color="pink">anti_next_table_control</font></td><td><font color="pink">anti_next_table_metadata</font></td><td><font color="black">exit</font></td><td><font color="green">control_action</font></td><td><font color="green">control_condition_true</font></td><td><font color="green">control_condition_false</font></td><td><font color="green">control_table_hit</font></td><td><font color="green">control_table_miss</font></td><td><font color="green">control_default_next_table</font></td><td><font color="green">control_exit</font></td></tr></table>>;]
+    }
+  }
+}

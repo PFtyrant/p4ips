@@ -1,0 +1,13 @@
+digraph EgressParser{
+start [shape=rectangle,label="start"]
+accept [shape=rectangle,label="accept"]
+reject [shape=rectangle,label="reject"]
+min_parse_depth_accept_initial [shape=rectangle,label="min_parse_depth_accept_initial
+((bit<1>)pad_ctr_0/pad_ctr.is_negative(), (bit<1>)pad_ctr_0/pad_ctr.is_zero())"]
+min_parse_depth_accept_loop [shape=rectangle,label="min_parse_depth_accept_loop
+((bit<1>)pad_ctr_0/pad_ctr.is_negative(), (bit<1>)pad_ctr_0/pad_ctr.is_zero())"]
+start -> accept [label="always"]
+min_parse_depth_accept_initial -> min_parse_depth_accept_loop [label="(1w0, 1w0)"]
+min_parse_depth_accept_initial -> accept [label="(default, default)"]
+min_parse_depth_accept_initial -> reject [label="fallthrough"]
+}

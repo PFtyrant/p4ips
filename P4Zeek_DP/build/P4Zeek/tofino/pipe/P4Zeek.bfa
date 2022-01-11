@@ -1,0 +1,1790 @@
+version:
+  version: 1.0.1
+  run_id: "e4788498aaa87c1a"
+  target: Tofino
+phv ingress:
+  ig_intr_md_from_prsr.global_tstamp.0-31: W0
+  ig_intr_md_from_prsr.global_tstamp.32-47: H6
+  hdr.ethernet.dst_addr.0-31: TW3
+  hdr.ethernet.dst_addr.32-47: TH5
+  hdr.ethernet.src_addr.0-31: TW2
+  hdr.ethernet.src_addr.32-47: TH4
+  hdr.ethernet.ether_type: H9
+  hdr.record.in_time.0-31: W1
+  hdr.record.in_time.32-47: H7
+  hdr.ipv4.version: B4(4..7)
+  hdr.ipv4.ihl: B4(0..3)
+  hdr.ipv4.diffserv: TB2
+  hdr.ipv4.total_len: H10
+  hdr.ipv4.identification: TW0(16..31)
+  hdr.ipv4.flags: TW0(13..15)
+  hdr.ipv4.frag_offset: TW0(0..12)
+  hdr.ipv4.ttl: TB1
+  hdr.ipv4.protocol: B5
+  hdr.ipv4.hdr_checksum: TH6
+  hdr.ipv4.src_addr: W3
+  hdr.ipv4.dst_addr: W4
+  hdr.tcp.src_port: H4
+  hdr.tcp.dst_port: H2
+  hdr.tcp.seq_no.0-15: TH2
+  hdr.tcp.seq_no.16-31: TH3
+  hdr.tcp.ack_no.0-15: TH0
+  hdr.tcp.ack_no.16-31: TH1
+  hdr.tcp.data_offset: B2(4..7)
+  hdr.tcp.res: B2(0..3)
+  hdr.tcp.cwr: TB0(7)
+  hdr.tcp.ecn: TB0(6)
+  hdr.tcp.urg: TB0(5)
+  hdr.tcp.ack: TB0(4)
+  hdr.tcp.push: TB0(3)
+  hdr.tcp.reset: TB0(2)
+  hdr.tcp.syn: TB0(1)
+  hdr.tcp.fin: TB0(0)
+  hdr.tcp.window: TH7
+  hdr.tcp.checksum: TW1(16..31)
+  hdr.tcp.urgent_ptr: TW1(0..15)
+  hdr.udp.src_port: H4
+  hdr.udp.dst_port: H2
+  hdr.udp.hdr_length: TW1(16..31)
+  hdr.udp.checksum: TW1(0..15)
+  ig_intr_md_for_dprsr.drop_ctl: B1(0..2)
+  ig_intr_md_for_dprsr.mirror_type: B0(0..2)
+  meta.mirror_session: H1(0..9)
+  meta.do_action: B1(4..5)
+  meta.next_table: B7(5)
+  meta.first_in: B1(6)
+  meta.first_out: B1(6)
+  meta.set_rule: B7(6)
+  meta.src_port: H5
+  meta.dst_port: H3
+  meta.hash_value.0-15: H11
+  meta.hash_value.16-16: B1(7)
+  meta.hash_value2.0-15: H12
+  meta.hash_value2.16-16: B7(7)
+  meta.hash_value3: W5(0..16)
+  meta.in_time.0-31: W2
+  meta.in_time.32-47: H8
+  meta.data_offset: B3(0..3)
+  meta.times: B6
+  first_in1_0: W5(17)
+  first_in2_0: W5(18)
+  first_in3_0: W5(19)
+  ig_intr_md_for_tm.ucast_egress_port: H0(0..8)
+  ig_intr_md_for_tm.bypass_egress: B1(3)
+  first_out1_0: W5(17)
+  first_out2_0: W5(18)
+  first_out3_0: W5(19)
+  $pad4: B3(4..7)
+  hdr.ethernet.$valid: B7(0)
+  hdr.record.$valid: B7(1)
+  hdr.ipv4.$valid: B7(2)
+  hdr.tcp.$valid: B7(3)
+  hdr.udp.$valid: B7(4)
+  context_json:
+    B0:
+    - { name : ig_intr_md_for_dprsr.mirror_type, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
+    B1:
+    - { name : ig_intr_md_for_dprsr.drop_ctl, live_start : 6, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : meta.do_action, live_start : 1, live_end : 5, mutually_exclusive_with: [  ] }
+    - { name : meta.first_in, live_start : 11, live_end : 11, mutually_exclusive_with: [ meta.first_out ] }
+    - { name : meta.first_out, live_start : 11, live_end : 11, mutually_exclusive_with: [ meta.first_in ] }
+    - { name : meta.hash_value, live_start : 6, live_end : 9, mutually_exclusive_with: [  ] }
+    - { name : ig_intr_md_for_tm.bypass_egress, live_start : 2, live_end : deparser, mutually_exclusive_with: [  ] }
+    B2:
+    - { name : hdr.tcp.data_offset, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.tcp.res, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B3:
+    - { name : meta.data_offset, live_start : 2, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : $pad4, live_start : deparser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B4:
+    - { name : hdr.ipv4.version, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.ipv4.ihl, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B5:
+    - { name : hdr.ipv4.protocol, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    B6:
+    - { name : meta.times, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
+    B7:
+    - { name : meta.next_table, live_start : 1, live_end : 4, mutually_exclusive_with: [  ] }
+    - { name : meta.set_rule, live_start : 4, live_end : 6, mutually_exclusive_with: [  ] }
+    - { name : meta.hash_value2, live_start : 6, live_end : 8, mutually_exclusive_with: [  ] }
+    - { name : hdr.ethernet.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.record.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.ipv4.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.tcp.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    - { name : hdr.udp.$valid, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    H0:
+    - { name : ig_intr_md_for_tm.ucast_egress_port, live_start : 6, live_end : deparser, mutually_exclusive_with: [  ] }
+    H1:
+    - { name : meta.mirror_session, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
+    H2:
+    - { name : hdr.tcp.dst_port, live_start : parser, live_end : deparser, mutually_exclusive_with: [ hdr.udp.dst_port ] }
+    - { name : hdr.udp.dst_port, live_start : parser, live_end : deparser, mutually_exclusive_with: [ hdr.tcp.dst_port ] }
+    H3:
+    - { name : meta.dst_port, live_start : 2, live_end : deparser, mutually_exclusive_with: [  ] }
+    H4:
+    - { name : hdr.tcp.src_port, live_start : parser, live_end : deparser, mutually_exclusive_with: [ hdr.udp.src_port ] }
+    - { name : hdr.udp.src_port, live_start : parser, live_end : deparser, mutually_exclusive_with: [ hdr.tcp.src_port ] }
+    H5:
+    - { name : meta.src_port, live_start : 2, live_end : deparser, mutually_exclusive_with: [  ] }
+    H6:
+    - { name : ig_intr_md_from_prsr.global_tstamp, live_start : parser, live_end : 11, mutually_exclusive_with: [  ] }
+    H7:
+    - { name : hdr.record.in_time, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    H8:
+    - { name : meta.in_time, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
+    H9:
+    - { name : hdr.ethernet.ether_type, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    H10:
+    - { name : hdr.ipv4.total_len, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    H11:
+    - { name : meta.hash_value, live_start : 6, live_end : 9, mutually_exclusive_with: [  ] }
+    H12:
+    - { name : meta.hash_value2, live_start : 6, live_end : 8, mutually_exclusive_with: [  ] }
+    W0:
+    - { name : ig_intr_md_from_prsr.global_tstamp, live_start : parser, live_end : 11, mutually_exclusive_with: [  ] }
+    W1:
+    - { name : hdr.record.in_time, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    W2:
+    - { name : meta.in_time, live_start : 1, live_end : deparser, mutually_exclusive_with: [  ] }
+    W3:
+    - { name : hdr.ipv4.src_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    W4:
+    - { name : hdr.ipv4.dst_addr, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+    W5:
+    - { name : meta.hash_value3, live_start : 6, live_end : 7, mutually_exclusive_with: [  ] }
+    - { name : first_in1_0, live_start : 10, live_end : 10, mutually_exclusive_with: [ first_out1_0, first_out2_0, first_out3_0 ] }
+    - { name : first_in2_0, live_start : 9, live_end : 10, mutually_exclusive_with: [ first_out1_0, first_out2_0, first_out3_0 ] }
+    - { name : first_in3_0, live_start : 8, live_end : 10, mutually_exclusive_with: [ first_out1_0, first_out2_0, first_out3_0 ] }
+    - { name : first_out1_0, live_start : 10, live_end : 10, mutually_exclusive_with: [ first_in1_0, first_in2_0, first_in3_0 ] }
+    - { name : first_out2_0, live_start : 9, live_end : 10, mutually_exclusive_with: [ first_in1_0, first_in2_0, first_in3_0 ] }
+    - { name : first_out3_0, live_start : 8, live_end : 10, mutually_exclusive_with: [ first_in1_0, first_in2_0, first_in3_0 ] }
+phv egress:
+  eg_intr_md.egress_port: H16(0..8)
+  context_json:
+    H16:
+    - { name : eg_intr_md.egress_port, live_start : parser, live_end : deparser, mutually_exclusive_with: [  ] }
+parser ingress:
+  start: $entry_point
+  init_zero: [ W0, H6, B1, H1, B7, H5, H3, H11, H12, W5, W2, H8, B6 ]
+  bitwise_or: [ B7 ]
+  hdr_len_adj: 16
+  states:
+    $entry_point:
+      *:
+        56..59: W0  # buffer mapped I/O: bit[448..479] -> W0 bit[31..0]: ingress::ig_intr_md_from_prsr.global_tstamp[31:0].0-31
+        54..55: H6  # buffer mapped I/O: bit[432..447] -> H6 bit[15..0]: ingress::ig_intr_md_from_prsr.global_tstamp[47:32].32-47
+        load: { half : 28..29 }
+        buf_req: 30
+        next: start
+    start:
+      match: [ half ]
+      0xbf03:
+        16..17: TH5  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        18..21: TW3  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        22..23: TH4  # ingress::hdr.ethernet.src_addr[47:32].32-47
+        24..27: TW2  # ingress::hdr.ethernet.src_addr[31:0].0-31
+        28..29: H9  # ingress::hdr.ethernet.ether_type
+        B7: 1  # value 1 -> B7 bit[0]: ingress::hdr.ethernet.$valid
+        shift: 30
+        buf_req: 30
+        next: parse_record
+      0x0800:
+        16..17: TH5  # ingress::hdr.ethernet.dst_addr[47:32].32-47
+        18..21: TW3  # ingress::hdr.ethernet.dst_addr[31:0].0-31
+        22..23: TH4  # ingress::hdr.ethernet.src_addr[47:32].32-47
+        24..27: TW2  # ingress::hdr.ethernet.src_addr[31:0].0-31
+        28..29: H9  # ingress::hdr.ethernet.ether_type
+        B7: 1  # value 1 -> B7 bit[0]: ingress::hdr.ethernet.$valid
+        shift: 30
+        buf_req: 30
+        next: parse_ipv4
+    parse_record:
+      *:
+        0..1: H7  # ingress::hdr.record.in_time[47:32].32-47
+        2..5: W1  # ingress::hdr.record.in_time[31:0].0-31
+        B7: 2  # value 1 -> B7 bit[1]: ingress::hdr.record.$valid
+        shift: 6
+        buf_req: 6
+        next: parse_ipv4
+    parse_ipv4:
+      *:
+        0: B4
+            # - bit[0..3] -> B4 bit[7..4]: ingress::hdr.ipv4.version
+            # - bit[4..7] -> B4 bit[3..0]: ingress::hdr.ipv4.ihl
+        1: TB2  # ingress::hdr.ipv4.diffserv
+        2..3: H10  # ingress::hdr.ipv4.total_len
+        4..7: TW0
+            # - bit[32..47] -> TW0 bit[31..16]: ingress::hdr.ipv4.identification
+            # - bit[48..50] -> TW0 bit[15..13]: ingress::hdr.ipv4.flags
+            # - bit[51..63] -> TW0 bit[12..0]: ingress::hdr.ipv4.frag_offset
+        8: TB1  # ingress::hdr.ipv4.ttl
+        9: B5  # ingress::hdr.ipv4.protocol
+        10..11: TH6  # ingress::hdr.ipv4.hdr_checksum
+        12..15: W3  # ingress::hdr.ipv4.src_addr
+        16..19: W4  # ingress::hdr.ipv4.dst_addr
+        load: { byte1 : 9 }
+        shift: 20
+        buf_req: 20
+        next: parse_ipv4.$split_0
+    parse_ipv4.$split_0:
+      match: [ byte1 ]
+      0x06:
+        B7: 4  # value 1 -> B7 bit[2]: ingress::hdr.ipv4.$valid
+        buf_req: 0
+        next: parse_tcp
+      0x11:
+        B7: 4  # value 1 -> B7 bit[2]: ingress::hdr.ipv4.$valid
+        buf_req: 0
+        next: parse_udp
+      0x**:
+        B7: 4  # value 1 -> B7 bit[2]: ingress::hdr.ipv4.$valid
+        buf_req: 0
+        next: end
+    parse_tcp:
+      *:
+        0..1: H4  # ingress::hdr.tcp.src_port
+        2..3: H2  # ingress::hdr.tcp.dst_port
+        4..5: TH3  # ingress::hdr.tcp.seq_no[31:16].16-31
+        6..7: TH2  # ingress::hdr.tcp.seq_no[15:0].0-15
+        12: B2
+            # - bit[96..99] -> B2 bit[7..4]: ingress::hdr.tcp.data_offset
+            # - bit[100..103] -> B2 bit[3..0]: ingress::hdr.tcp.res
+        13: TB0
+            # - bit[104] -> TB0 bit[7]: ingress::hdr.tcp.cwr
+            # - bit[105] -> TB0 bit[6]: ingress::hdr.tcp.ecn
+            # - bit[106] -> TB0 bit[5]: ingress::hdr.tcp.urg
+            # - bit[107] -> TB0 bit[4]: ingress::hdr.tcp.ack
+            # - bit[108] -> TB0 bit[3]: ingress::hdr.tcp.push
+            # - bit[109] -> TB0 bit[2]: ingress::hdr.tcp.reset
+            # - bit[110] -> TB0 bit[1]: ingress::hdr.tcp.syn
+            # - bit[111] -> TB0 bit[0]: ingress::hdr.tcp.fin
+        16..19: TW1
+            # - bit[128..143] -> TW1 bit[31..16]: ingress::hdr.tcp.checksum
+            # - bit[144..159] -> TW1 bit[15..0]: ingress::hdr.tcp.urgent_ptr
+        B7: 8  # value 1 -> B7 bit[3]: ingress::hdr.tcp.$valid
+        shift: 8
+        buf_req: 20
+        next: parse_tcp.$split_0
+    parse_tcp.$split_0:
+      *:
+        0..1: TH1  # ingress::hdr.tcp.ack_no[31:16].16-31
+        2..3: TH0  # ingress::hdr.tcp.ack_no[15:0].0-15
+        6..7: TH7  # ingress::hdr.tcp.window
+        shift: 12
+        buf_req: 12
+        next: end
+    parse_udp:
+      *:
+        0..1: H4  # ingress::hdr.udp.src_port
+        2..3: H2  # ingress::hdr.udp.dst_port
+        4..7: TW1
+            # - bit[32..47] -> TW1 bit[31..16]: ingress::hdr.udp.hdr_length
+            # - bit[48..63] -> TW1 bit[15..0]: ingress::hdr.udp.checksum
+        B7: 16  # value 1 -> B7 bit[4]: ingress::hdr.udp.$valid
+        shift: 8
+        buf_req: 8
+        next: end
+deparser ingress:
+  dictionary:
+    TH5: B7(0)  # ingress::hdr.ethernet.dst_addr.32-47 if ingress::hdr.ethernet.$valid
+    TW3: B7(0)  # ingress::hdr.ethernet.dst_addr.0-31 if ingress::hdr.ethernet.$valid
+    TH4: B7(0)  # ingress::hdr.ethernet.src_addr.32-47 if ingress::hdr.ethernet.$valid
+    TW2: B7(0)  # ingress::hdr.ethernet.src_addr.0-31 if ingress::hdr.ethernet.$valid
+    H9: B7(0)  # ingress::hdr.ethernet.ether_type if ingress::hdr.ethernet.$valid
+    H7: B7(1)  # ingress::hdr.record.in_time.32-47 if ingress::hdr.record.$valid
+    W1: B7(1)  # ingress::hdr.record.in_time.0-31 if ingress::hdr.record.$valid
+    B4: B7(2)
+        # - bit[7..4]: ingress::hdr.ipv4.version if ingress::hdr.ipv4.$valid
+        # - bit[3..0]: ingress::hdr.ipv4.ihl if ingress::hdr.ipv4.$valid
+    TB2: B7(2)  # ingress::hdr.ipv4.diffserv if ingress::hdr.ipv4.$valid
+    H10: B7(2)  # ingress::hdr.ipv4.total_len if ingress::hdr.ipv4.$valid
+    TW0: B7(2)
+        # - bit[31..16]: ingress::hdr.ipv4.identification if ingress::hdr.ipv4.$valid
+        # - bit[15..13]: ingress::hdr.ipv4.flags if ingress::hdr.ipv4.$valid
+        # - bit[12..0]: ingress::hdr.ipv4.frag_offset if ingress::hdr.ipv4.$valid
+    TB1: B7(2)  # ingress::hdr.ipv4.ttl if ingress::hdr.ipv4.$valid
+    B5: B7(2)  # ingress::hdr.ipv4.protocol if ingress::hdr.ipv4.$valid
+    TH6: B7(2)  # ingress::hdr.ipv4.hdr_checksum if ingress::hdr.ipv4.$valid
+    W3: B7(2)  # ingress::hdr.ipv4.src_addr if ingress::hdr.ipv4.$valid
+    W4: B7(2)  # ingress::hdr.ipv4.dst_addr if ingress::hdr.ipv4.$valid
+    H4: B7(3)  # ingress::hdr.tcp.src_port if ingress::hdr.tcp.$valid
+    H2: B7(3)  # ingress::hdr.tcp.dst_port if ingress::hdr.tcp.$valid
+    TH3: B7(3)  # ingress::hdr.tcp.seq_no.16-31 if ingress::hdr.tcp.$valid
+    TH2: B7(3)  # ingress::hdr.tcp.seq_no.0-15 if ingress::hdr.tcp.$valid
+    TH1: B7(3)  # ingress::hdr.tcp.ack_no.16-31 if ingress::hdr.tcp.$valid
+    TH0: B7(3)  # ingress::hdr.tcp.ack_no.0-15 if ingress::hdr.tcp.$valid
+    B2: B7(3)
+        # - bit[7..4]: ingress::hdr.tcp.data_offset if ingress::hdr.tcp.$valid
+        # - bit[3..0]: ingress::hdr.tcp.res if ingress::hdr.tcp.$valid
+    TB0: B7(3)
+        # - bit[7]: ingress::hdr.tcp.cwr if ingress::hdr.tcp.$valid
+        # - bit[6]: ingress::hdr.tcp.ecn if ingress::hdr.tcp.$valid
+        # - bit[5]: ingress::hdr.tcp.urg if ingress::hdr.tcp.$valid
+        # - bit[4]: ingress::hdr.tcp.ack if ingress::hdr.tcp.$valid
+        # - bit[3]: ingress::hdr.tcp.push if ingress::hdr.tcp.$valid
+        # - bit[2]: ingress::hdr.tcp.reset if ingress::hdr.tcp.$valid
+        # - bit[1]: ingress::hdr.tcp.syn if ingress::hdr.tcp.$valid
+        # - bit[0]: ingress::hdr.tcp.fin if ingress::hdr.tcp.$valid
+    TH7: B7(3)  # ingress::hdr.tcp.window if ingress::hdr.tcp.$valid
+    TW1: B7(3)
+        # - bit[31..16]: ingress::hdr.tcp.checksum if ingress::hdr.tcp.$valid
+        # - bit[15..0]: ingress::hdr.tcp.urgent_ptr if ingress::hdr.tcp.$valid
+    H4: B7(4)  # ingress::hdr.udp.src_port if ingress::hdr.udp.$valid
+    H2: B7(4)  # ingress::hdr.udp.dst_port if ingress::hdr.udp.$valid
+    TW1: B7(4)
+        # - bit[31..16]: ingress::hdr.udp.hdr_length if ingress::hdr.udp.$valid
+        # - bit[15..0]: ingress::hdr.udp.checksum if ingress::hdr.udp.$valid
+  egress_unicast_port: H0(0..8)  # bit[8..0]: ingress::ig_intr_md_for_tm.ucast_egress_port
+  bypss_egr: B1(3..3)  # bit[3]: ingress::ig_intr_md_for_tm.bypass_egress
+  drop_ctl: B1(0..2)  # bit[2..0]: ingress::ig_intr_md_for_dprsr.drop_ctl
+  mirror:
+    select: B0(0..2)  # bit[2..0]: ingress::ig_intr_md_for_dprsr.mirror_type
+    0:
+      - H1(0..9)  # bit[9..0]: ingress::meta.mirror_session
+      - W3  # ingress::hdr.ipv4.src_addr
+      - W4  # ingress::hdr.ipv4.dst_addr
+      - H5  # ingress::meta.src_port
+      - H3  # ingress::meta.dst_port
+      - B5  # ingress::hdr.ipv4.protocol
+      - B4(0..3)  # bit[3..0]: ingress::hdr.ipv4.ihl
+      - B3(0..3)  # bit[3..0]: ingress::meta.data_offset
+      - H8  # ingress::meta.in_time.32-47
+      - W2  # ingress::meta.in_time.0-31
+      - B6  # ingress::meta.times
+parser egress:
+  start: $entry_point.start
+  hdr_len_adj: 27
+  meta_opt: 8191
+  states:
+    $entry_point.start:
+      *:
+        counter:
+          imm: 38
+        0..1: H16  # bit[7..15] -> H16 bit[8..0]: egress::eg_intr_md.egress_port
+        intr_md: 9
+        shift: 27
+        buf_req: 27
+        next: end
+deparser egress:
+  dictionary: {}
+  egress_unicast_port: H16(0..8)  # bit[8..0]: egress::eg_intr_md.egress_port
+stage 0 ingress:
+  phase0_match IngressParser.$PORT_METADATA:
+    p4:
+      name: IngressParser.$PORT_METADATA
+      size: 288
+      preferred_match_type: exact
+      match_type: exact
+    size: 288
+    p4_param_order:
+      ig_intr_md.ingress_port: { type: exact, size: 9 }
+    format: {ig_intr_md: 0..63}
+    constant_value: 0
+    actions:
+      set_port_metadata:
+      - handle: 0x20000000
+      - p4_param_order: { ig_intr_md: 64 } 
+  ternary_match tbl_bypass 0:
+    p4: { name: tbl_bypass, hidden: true }
+    gateway:
+      name: cond-16
+      input_xbar:
+        exact group 0: { 1: hdr.record.$valid }
+      row: 0
+      bus: 0
+      unit: 0
+      match: { 1: hdr.record.$valid }
+      0b******1: run_table
+      miss:  tbl_P4Zeek636
+      condition: 
+        expression: "(hdr.record.$valid == 1)"
+        true:  tbl_bypass
+        false:  tbl_P4Zeek636
+    hit: [  tbl_P4Zeek512 ]
+    miss:  tbl_P4Zeek512
+    indirect: tbl_bypass$tind
+  ternary_indirect tbl_bypass$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_bypass$tind(action, $DEFAULT)
+    actions:
+      Ingress.bypass(1, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000004
+      - next_table: 0
+      - set meta.next_table, 0
+      - set meta.do_action, 1
+    default_action: Ingress.bypass
+  ternary_match tbl_P4Zeek512 1:
+    p4: { name: tbl_P4Zeek512, hidden: true }
+    hit: [  tbl_mirror ]
+    miss:  tbl_mirror
+    indirect: tbl_P4Zeek512$tind
+  ternary_indirect tbl_P4Zeek512$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek512$tind(action, $DEFAULT)
+    actions:
+      P4Zeek512(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000003
+      - next_table: 0
+      - set meta.times, 2
+    default_action: P4Zeek512
+  ternary_match tbl_mirror 2:
+    p4: { name: tbl_mirror, hidden: true }
+    hit: [  tbl_remove_header ]
+    miss:  tbl_remove_header
+    indirect: tbl_mirror$tind
+  ternary_indirect tbl_mirror$tind:
+    row: 1
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_mirror$tind(action, $DEFAULT)
+    actions:
+      Ingress.mirror(0, 3):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000002
+      - next_table: 0
+      - set ig_intr_md_for_dprsr.mirror_type, 0
+      - set meta.mirror_session, 5
+      - set meta.in_time.0-31, ig_intr_md_from_prsr.global_tstamp.0-31
+      - set meta.in_time.32-47, ig_intr_md_from_prsr.global_tstamp.32-47
+    default_action: Ingress.mirror
+stage 1 ingress:
+  dependency: action
+  ternary_match tbl_remove_header 0:
+    p4: { name: tbl_remove_header, hidden: true }
+    hit: [  tbl_P4Zeek636 ]
+    miss:  tbl_P4Zeek636
+    indirect: tbl_remove_header$tind
+  ternary_indirect tbl_remove_header$tind:
+    row: 1
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_remove_header$tind(action, $DEFAULT)
+    actions:
+      Ingress.remove_header(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000001
+      - next_table: 0
+      - set hdr.record.$valid, 0
+      - set hdr.ethernet.ether_type, 2048
+    default_action: Ingress.remove_header
+  ternary_match tbl_P4Zeek636 1:
+    p4: { name: tbl_P4Zeek636, hidden: true }
+    hit: [  tbl_take_UDP_port ]
+    miss:  tbl_take_UDP_port
+    indirect: tbl_P4Zeek636$tind
+  ternary_indirect tbl_P4Zeek636$tind:
+    row: 1
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek636$tind(action, $DEFAULT)
+    actions:
+      P4Zeek636(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000026
+      - next_table: 0
+      - set ig_intr_md_for_tm.bypass_egress, 1
+    default_action: P4Zeek636
+  ternary_match tbl_take_UDP_port 2:
+    p4: { name: tbl_take_UDP_port, hidden: true }
+    gateway:
+      name: cond-17
+      input_xbar:
+        exact group 0: { 0: hdr.ipv4.protocol }
+      row: 0
+      bus: 1
+      unit: 1
+      match: { 0: hdr.ipv4.protocol }
+      0x11: run_table
+      miss:  tbl_take_TCP_port
+      condition: 
+        expression: "(hdr.ipv4.protocol == 17)"
+        true:  tbl_take_UDP_port
+        false:  tbl_take_TCP_port
+    hit: [  malware_detection_0 ]
+    miss:  malware_detection_0
+    indirect: tbl_take_UDP_port$tind
+  ternary_indirect tbl_take_UDP_port$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_take_UDP_port$tind(action, $DEFAULT)
+    actions:
+      Ingress.take_UDP_port(1, 3):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000005
+      - next_table: 0
+      - set meta.src_port, hdr.udp.src_port
+      - set meta.dst_port, hdr.udp.dst_port
+      - set meta.data_offset, 2
+    default_action: Ingress.take_UDP_port
+  ternary_match tbl_take_TCP_port 3:
+    p4: { name: tbl_take_TCP_port, hidden: true }
+    gateway:
+      name: cond-18
+      input_xbar:
+        exact group 0: { 0: hdr.ipv4.protocol }
+      row: 0
+      bus: 0
+      unit: 0
+      match: { 0: hdr.ipv4.protocol }
+      0x06: run_table
+      miss:  tbl_bypass_0
+      condition: 
+        expression: "(hdr.ipv4.protocol == 6)"
+        true:  tbl_take_TCP_port
+        false:  tbl_bypass_0
+    hit: [  malware_detection_0 ]
+    miss:  malware_detection_0
+    indirect: tbl_take_TCP_port$tind
+  ternary_indirect tbl_take_TCP_port$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_take_TCP_port$tind(action, $DEFAULT)
+    actions:
+      Ingress.take_TCP_port(1, 4):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000006
+      - next_table: 0
+      - set meta.src_port, hdr.tcp.src_port
+      - set meta.dst_port, hdr.tcp.dst_port
+      - set meta.data_offset, hdr.tcp.data_offset
+    default_action: Ingress.take_TCP_port
+stage 2 ingress:
+  dependency: action
+  ternary_match tbl_bypass_0 0:
+    p4: { name: tbl_bypass_0, hidden: true }
+    hit: [  malware_detection_0 ]
+    miss:  malware_detection_0
+    indirect: tbl_bypass_0$tind
+  ternary_indirect tbl_bypass_0$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_bypass_0$tind(action, $DEFAULT)
+    actions:
+      Ingress.bypass(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000007
+      - next_table: 0
+      - set meta.next_table, 0
+      - set meta.do_action, 1
+    default_action: Ingress.bypass
+stage 3 ingress:
+  dependency: match
+  exact_match malware_detection_0 0:
+    p4: { name: Ingress.malware_detection, size: 100000 }
+    p4_param_order: 
+      hdr.ipv4.src_addr: { type: exact, size: 32, full_size: 32 }
+      hdr.ipv4.dst_addr: { type: exact, size: 32, full_size: 32 }
+      meta.src_port: { type: exact, size: 16, full_size: 16 }
+      meta.dst_port: { type: exact, size: 16, full_size: 16 }
+      hdr.ipv4.protocol: { type: exact, size: 8, full_size: 8 }
+    row: [ 4, 5, 6, 7, 0, 1, 2, 3 ]
+    bus: [ 0, 0, 0, 0, 0, 0, 0, 0 ]
+    column:
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    - [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+    stash: 
+      row: [ 4, 5, 6, 7 ]
+      col: [ 2, 2, 2, 2 ]
+      unit: [ 0, 0, 0, 0 ]
+    ways:
+      - [0, 0, 0x3, [7, 2], [6, 2], [5, 2], [4, 2], [7, 3], [6, 3], [5, 3], [4, 3], [7, 4], [6, 4], [5, 4], [4, 4], [7, 5], [6, 5], [5, 5], [4, 5]]
+      - [0, 1, 0xc, [7, 6], [6, 6], [5, 6], [4, 6], [7, 7], [6, 7], [5, 7], [4, 7], [7, 8], [6, 8], [5, 8], [4, 8], [7, 9], [6, 9], [5, 9], [4, 9]]
+      - [0, 2, 0x30, [7, 10], [6, 10], [5, 10], [4, 10], [7, 11], [6, 11], [5, 11], [4, 11], [3, 2], [2, 2], [1, 2], [0, 2], [3, 3], [2, 3], [1, 3], [0, 3]]
+      - [0, 3, 0xc0, [3, 4], [2, 4], [1, 4], [0, 4], [3, 5], [2, 5], [1, 5], [0, 5], [3, 6], [2, 6], [1, 6], [0, 6], [3, 7], [2, 7], [1, 7], [0, 7]]
+      - [0, 0, 0x3, [3, 8], [2, 8], [1, 8], [0, 8], [3, 9], [2, 9], [1, 9], [0, 9], [3, 10], [2, 10], [1, 10], [0, 10], [3, 11], [2, 11], [1, 11], [0, 11]]
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        0..9: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        40..41: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        10..19: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        42..43: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        20..29: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        44..45: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        30..39: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+        46..47: random(hdr.ipv4.src_addr, hdr.ipv4.dst_addr)
+      hash 1:
+        0..3: random(meta.dst_port(4..15), meta.src_port) ^ meta.dst_port(0..3)
+        4..9: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(0..5)
+        40..41: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(6..7)
+        11..14: random(meta.dst_port(4..15), meta.src_port) ^ meta.dst_port(0..3)
+        15..19: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(0..4)
+        10: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(7)
+        42..43: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(5..6)
+        22..25: random(meta.dst_port(4..15), meta.src_port) ^ meta.dst_port(0..3)
+        26..29: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(0..3)
+        20..21: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(6..7)
+        44..45: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(4..5)
+        33..36: random(meta.dst_port(4..15), meta.src_port) ^ meta.dst_port(0..3)
+        37..39: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(0..2)
+        30..32: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(5..7)
+        46..47: random(meta.dst_port(4..15), meta.src_port) ^ hdr.ipv4.protocol(3..4)
+      hash group 0:
+        table: [0, 1]
+        seed: 0xf4b2084a6ba8
+    format: { action(0): 0..1, immediate(0): 4..5, version(0): 96..99, match(0): [100..103, 8..95 ], action(1): 2..3, immediate(1): 6..7, version(1): 372..375, match(1): [244..247, 104..127, 224..239, 248..255, 352..367, 376..383, 480..495 ], action(2): 128..129, immediate(2): 130..131, version(2): 240..243, match(2): 132..223, action(3): 256..257, immediate(3): 258..259, version(3): 368..371, match(3): 260..351, action(4): 384..385, immediate(4): 386..387, version(4): 496..499, match(4): 388..479 }
+    match: [ meta.dst_port(4..7), meta.dst_port(8..15), meta.src_port(0..7), meta.src_port(8..15), hdr.ipv4.src_addr(0..7), hdr.ipv4.src_addr(8..15), hdr.ipv4.src_addr(16..23), hdr.ipv4.src_addr(24..31), hdr.ipv4.dst_addr(0..7), hdr.ipv4.dst_addr(8..15), hdr.ipv4.dst_addr(16..23), hdr.ipv4.dst_addr(24..31) ]
+    match_group_map: [ [ 1, 0 ], [ 1, 2 ], [ 1, 3 ], [ 1, 4 ] ]
+    gateway:
+      name: cond-19
+      input_xbar:
+        exact group 0: { 96: hdr.ipv4.protocol }
+      row: 0
+      bus: 0
+      unit: 0
+      match: { 0: hdr.ipv4.protocol }
+      0x11: run_table
+      0x06: run_table
+      miss:  Payload_check_0
+      condition: 
+        expression: "(hdr.ipv4.protocol == 17 || hdr.ipv4.protocol == 6)"
+        true:  malware_detection_0
+        false:  Payload_check_0
+    hit: [  Payload_check_0 ]
+    miss:  Payload_check_0
+    action_bus: { 0 : immediate(0..1) }
+    instruction: malware_detection_0(action, $DEFAULT)
+    actions:
+      Ingress.set_drop(1, 1):
+      - p4_param_order: { yes: 2 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: false, reason: has_const_default_action }
+      - handle: 0x20000008
+      - next_table: 0
+      - { yes: immediate(0..1) }
+      - set meta.do_action, yes
+      - set meta.set_rule, 1
+      Ingress.set_forward(2, 2):
+      - p4_param_order: { yes: 2 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: false, reason: has_const_default_action }
+      - handle: 0x20000009
+      - next_table: 0
+      - { yes_3: immediate(0..1), yes: yes_3 }
+      - set meta.do_action, yes
+      - set meta.set_rule, 1
+      Ingress.move_next(3, 4):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000000a
+      - next_table: 0
+      - {  }
+      - set meta.next_table, 1
+    default_action: Ingress.move_next
+stage 4 ingress:
+  dependency: match
+  exact_match Payload_check_0 0:
+    p4: { name: Ingress.Payload_check, size: 512 }
+    p4_param_order: 
+      hdr.ipv4.total_len: { type: exact, size: 16, full_size: 16 }
+      hdr.ipv4.ihl: { type: exact, size: 4, full_size: 4 }
+      hdr.tcp.data_offset: { type: exact, size: 4, full_size: 4 }
+    row: 7
+    bus: 0
+    column: [ 2, 3, 4, 5 ]
+    stash: 
+      row: [ 7 ]
+      col: [ 2 ]
+      unit: [ 0 ]
+    ways:
+      - [0, 0, 0x0, [7, 2]]
+      - [0, 1, 0x0, [7, 3]]
+      - [0, 2, 0x0, [7, 4]]
+      - [0, 3, 0x0, [7, 5]]
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.total_len, 20: hdr.tcp.data_offset, 24: hdr.ipv4.ihl }
+      hash 0:
+        0..1: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.total_len(0..1)
+        2..5: random(hdr.ipv4.total_len(2..15)) ^ hdr.tcp.data_offset
+        6..9: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl
+        11..12: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.total_len(0..1)
+        13..16: random(hdr.ipv4.total_len(2..15)) ^ hdr.tcp.data_offset
+        17..19: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(0..2)
+        10: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(3)
+        22..23: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.total_len(0..1)
+        24..27: random(hdr.ipv4.total_len(2..15)) ^ hdr.tcp.data_offset
+        28..29: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(0..1)
+        20..21: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(2..3)
+        33..34: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.total_len(0..1)
+        35..38: random(hdr.ipv4.total_len(2..15)) ^ hdr.tcp.data_offset
+        39: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(0)
+        30..32: random(hdr.ipv4.total_len(2..15)) ^ hdr.ipv4.ihl(1..3)
+      hash group 0:
+        table: [0]
+        seed: 0x7e5d00cc8d
+    format: { action(0): 0..1, immediate(0): 2..3, version(0): 112..115, match(0): [42..47, 32..39 ] }
+    match: [ hdr.ipv4.total_len(2..7), hdr.ipv4.total_len(8..15) ]
+    match_group_map: [ [ 0 ] ]
+    gateway:
+      name: cond-20
+      input_xbar:
+        exact group 0: { 37: meta.next_table }
+      row: 7
+      bus: 0
+      unit: 0
+      match: { 5: meta.next_table }
+      0b**1: run_table
+      miss:  tbl_hash3_do_hash_0
+      condition: 
+        expression: "(meta.next_table == 1)"
+        true:  Payload_check_0
+        false:  tbl_hash3_do_hash_0
+    hit: [  tbl_hash3_do_hash_0 ]
+    miss:  tbl_hash3_do_hash_0
+    action_bus: { 0 : immediate(0..1) }
+    instruction: Payload_check_0(action, $DEFAULT)
+    actions:
+      Ingress.set_forward_2(1, 1):
+      - p4_param_order: { yes: 2 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: false, reason: has_const_default_action }
+      - handle: 0x2000000b
+      - next_table: 0
+      - { yes_4: immediate(0..1), yes: yes_4 }
+      - set meta.do_action, yes
+      Ingress.unknown(2, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000000c
+      - next_table: 0
+      - {  }
+      - set meta.do_action, 0
+    default_action: Ingress.unknown
+stage 5 ingress:
+  dependency: match
+  hash_action tbl_hash3_do_hash_0 0:
+    p4: { name: tbl_hash3_do_hash_0, hidden: true }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0xffff, shift: 0 }
+      1: { hash: 0, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        0..15: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 0..15)
+      hash 1:
+        0..15: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 0:
+        table: [0, 1]
+        seed: 0x609d
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        16..16: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 16..16)
+      hash 1:
+        16..16: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 0:
+        table: [0, 1]
+        seed: 0x10000
+    gateway:
+      name: cond-21
+      input_xbar:
+        exact group 1: { 4: meta.do_action }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x1
+      format: { action: 0..0 }
+      match: { 4: meta.do_action }
+      0b**00:  tbl_hash2_do_hash_0
+      miss: run_table
+      condition: 
+        expression: "(meta.do_action > 0)"
+        true:  L3_forward_0
+        false:  tbl_hash2_do_hash_0
+    next:  L3_forward_0
+    action_bus: { 96..99 : hash_dist(0, 1) }
+    instruction: tbl_hash3_do_hash_0(action, $DEFAULT)
+    actions:
+      Ingress.hash3.do_hash(1, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000000f
+      - next_table: 0
+      - set W5(0..16), hash_dist(0, 1, 0..16)
+    default_action: Ingress.hash3.do_hash
+  exact_match L3_forward_0 3:
+    p4: { name: Ingress.L3_forward, size: 512 }
+    p4_param_order: 
+      hdr.ipv4.dst_addr: { type: exact, size: 32, full_size: 32 }
+    row: 7
+    bus: 0
+    column: [ 2, 3, 4, 5 ]
+    stash: 
+      row: [ 7 ]
+      col: [ 2 ]
+      unit: [ 0 ]
+    ways:
+      - [2, 0, 0x0, [7, 2]]
+      - [2, 1, 0x0, [7, 3]]
+      - [2, 2, 0x0, [7, 4]]
+      - [2, 3, 0x0, [7, 5]]
+    input_xbar:
+      exact group 2: { 0: hdr.ipv4.dst_addr }
+      hash 4:
+        0..7: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        8..9: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        11..18: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        19: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8)
+        10: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(9)
+        22..29: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..7)
+        20..21: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+        33..39: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(0..6)
+        30: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(7)
+        31..32: random(hdr.ipv4.dst_addr(10..31)) ^ hdr.ipv4.dst_addr(8..9)
+      hash group 2:
+        table: [4]
+        seed: 0x561c4e2439
+    format: { action(0): 0..0, immediate(0): 1..9, version(0): 112..115, match(0): [50..55, 32..47 ] }
+    match: [ hdr.ipv4.dst_addr(10..15), hdr.ipv4.dst_addr(16..23), hdr.ipv4.dst_addr(24..31) ]
+    match_group_map: [ [ 0 ] ]
+    gateway:
+      name: cond-22
+      input_xbar:
+        exact group 2: { 36: meta.do_action }
+      row: 7
+      bus: 0
+      unit: 0
+      match: { 4: meta.do_action }
+      0b**01: run_table
+      miss:  tbl_drop
+      condition: 
+        expression: "(meta.do_action == 1)"
+        true:  L3_forward_0
+        false:  tbl_drop
+    hit: [  tbl_hash3_do_hash ]
+    miss:  tbl_hash3_do_hash
+    action_bus: { 40..41 : immediate(0..8) }
+    instruction: L3_forward_0(action, $DEFAULT)
+    actions:
+      Ingress.forward(1, 4):
+      - p4_param_order: { port: 9 }
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true }
+      - handle: 0x20000018
+      - next_table: 0
+      - { port: immediate(0..8) }
+      - set ig_intr_md_for_tm.ucast_egress_port, port
+      NoAction(-1, 0):
+      - hit_allowed: { allowed: false, reason: user_indicated_default_only }
+      - default_only_action: { allowed: true }
+      - handle: 0x20000019
+      - next_table: 0
+      - {  }
+    default_only_action: NoAction
+  ternary_match tbl_drop 4:
+    p4: { name: tbl_drop, hidden: true }
+    gateway:
+      name: cond-23
+      input_xbar:
+        exact group 2: { 36: meta.do_action }
+      row: 0
+      bus: 1
+      unit: 1
+      match: { 4: meta.do_action }
+      0b**10: run_table
+      miss:  tbl_hash3_do_hash
+      condition: 
+        expression: "(meta.do_action == 2)"
+        true:  tbl_drop
+        false:  tbl_hash3_do_hash
+    hit: [  tbl_hash3_do_hash ]
+    miss:  tbl_hash3_do_hash
+    indirect: tbl_drop$tind
+  ternary_indirect tbl_drop$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_drop$tind(action, $DEFAULT)
+    actions:
+      Ingress.drop(1, 5):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001a
+      - next_table: 0
+      - set ig_intr_md_for_dprsr.drop_ctl, 1
+    default_action: Ingress.drop
+  hash_action tbl_hash2_do_hash_0 1:
+    p4: { name: tbl_hash2_do_hash_0, hidden: true }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      2: { hash: 0, mask: 0xffff, shift: 0 }
+      3: { hash: 1, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        32..47: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 0..15)
+      hash 1:
+        32..47: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 0:
+        table: [0, 1]
+        seed: 0xa5e400000000
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        0..0: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 16..16)
+      hash 3:
+        0..0: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x1
+    gateway:
+      name: tbl_hash2_do_hash_0-gateway
+      row: 1
+      bus: 0
+      unit: 1
+      0x0:  tbl_hash_do_hash_0
+      miss:  tbl_hash_do_hash_0
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_hash_do_hash_0
+        false:  tbl_hash_do_hash_0
+    next: []
+    action_bus: { 2 : hash_dist(3, 0..7, hi), 32..33 : hash_dist(2, lo) }
+    instruction: tbl_hash2_do_hash_0($DEFAULT, $DEFAULT)
+    actions:
+      Ingress.hash2.do_hash(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000000e
+      - next_table: 0
+      - set B7(7..7), hash_dist(3, 0..0)
+      - set H12, hash_dist(2, 0..15)
+    default_action: Ingress.hash2.do_hash
+  hash_action tbl_hash_do_hash_0 2:
+    p4: { name: tbl_hash_do_hash_0, hidden: true }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      4: { hash: 1, mask: 0xffff, shift: 0 }
+      5: { hash: 1, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        16..31: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 0..15)
+      hash 3:
+        16..31: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x46820000
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        32..32: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 16..16)
+      hash 3:
+        32..32: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x0
+    gateway:
+      name: tbl_hash_do_hash_0-gateway
+      row: 1
+      bus: 0
+      unit: 0
+      0x0:  tbl_P4Zeek611
+      miss:  tbl_P4Zeek611
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek611
+        false:  tbl_P4Zeek611
+    next: []
+    action_bus: { 6 : hash_dist(5, 0..7, hi), 36..37 : hash_dist(4, lo) }
+    instruction: tbl_hash_do_hash_0($DEFAULT, $DEFAULT)
+    actions:
+      Ingress.hash.do_hash(0, 3):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000000d
+      - next_table: 0
+      - set B1(7..7), hash_dist(5, 0..0)
+      - set H11, hash_dist(4, 0..15)
+    default_action: Ingress.hash.do_hash
+stage 6 ingress:
+  dependency: match
+  hash_action tbl_hash3_do_hash 0:
+    p4: { name: tbl_hash3_do_hash, hidden: true }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0xffff, shift: 0 }
+      1: { hash: 0, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        0..15: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 0..15)
+      hash 1:
+        0..15: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 0:
+        table: [0, 1]
+        seed: 0x609d
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        16..16: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 16..16)
+      hash 1:
+        16..16: slice(stripe(crc_rev(0xd419cc15, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 0:
+        table: [0, 1]
+        seed: 0x10000
+    gateway:
+      name: cond-24
+      input_xbar:
+        exact group 1: { 6: meta.set_rule }
+      row: 0
+      bus: 0
+      unit: 0
+      payload_row: 0
+      payload_unit: 0
+      payload: 0x1
+      format: { action: 0..0 }
+      match: { 6: meta.set_rule }
+      0b*1:  tbl_hash2_do_hash
+      miss: run_table
+      condition: 
+        expression: "(meta.set_rule == 1)"
+        true:  tbl_hash2_do_hash
+        false:  tbl_P4Zeek596
+    next:  tbl_P4Zeek596
+    action_bus: { 96..99 : hash_dist(0, 1) }
+    instruction: tbl_hash3_do_hash(action, $DEFAULT)
+    actions:
+      Ingress.hash3.do_hash(1, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001d
+      - next_table: 0
+      - set W5(0..16), hash_dist(0, 1, 0..16)
+    default_action: Ingress.hash3.do_hash
+  hash_action tbl_hash2_do_hash 1:
+    p4: { name: tbl_hash2_do_hash, hidden: true }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      2: { hash: 0, mask: 0xffff, shift: 0 }
+      3: { hash: 1, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 0: { 0: hdr.ipv4.src_addr, 32: hdr.ipv4.dst_addr, 64: meta.dst_port, 80: meta.src_port, 96: hdr.ipv4.protocol }
+      hash 0:
+        32..47: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 32: hdr.ipv4.dst_addr, 64: hdr.ipv4.src_addr }, { })), 0..15)
+      hash 1:
+        32..47: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port, 16: meta.src_port, 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 0:
+        table: [0, 1]
+        seed: 0xa5e400000000
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        0..0: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 16..16)
+      hash 3:
+        0..0: slice(stripe(crc_rev(0x8f6e37a0, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x1
+    gateway:
+      name: tbl_hash2_do_hash-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  tbl_hash_do_hash
+      miss:  tbl_hash_do_hash
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_hash_do_hash
+        false:  tbl_hash_do_hash
+    next: []
+    action_bus: { 2 : hash_dist(3, 0..7, hi), 32..33 : hash_dist(2, lo) }
+    instruction: tbl_hash2_do_hash($DEFAULT, $DEFAULT)
+    actions:
+      Ingress.hash2.do_hash(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001c
+      - next_table: 0
+      - set B7(7..7), hash_dist(3, 0..0)
+      - set H12, hash_dist(2, 0..15)
+    default_action: Ingress.hash2.do_hash
+  hash_action tbl_hash_do_hash 2:
+    p4: { name: tbl_hash_do_hash, hidden: true }
+    row: 1
+    result_bus: 0
+    hash_dist:
+      4: { hash: 1, mask: 0xffff, shift: 0 }
+      5: { hash: 1, mask: 0x1, shift: 0 }
+    input_xbar:
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        16..31: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 0..15)
+      hash 3:
+        16..31: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 0..15)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x46820000
+      exact group 1: { 8: hdr.ipv4.src_addr(8..31), 32: hdr.ipv4.src_addr(0..7), 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.dst_addr(0..7), 72: meta.dst_port(8..15), 80: meta.dst_port(0..7), 88: meta.src_port(8..15), 96: meta.src_port(0..7), 104: hdr.ipv4.protocol }
+      hash 2:
+        32..32: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 40: hdr.ipv4.dst_addr(8..31), 64: hdr.ipv4.src_addr(0..7), 72: hdr.ipv4.src_addr(8..31) }, { })), 16..16)
+      hash 3:
+        32..32: slice(stripe(crc_rev(0x82608edb, 0xffffffff, 0xffffffff, 104, { 0: meta.dst_port(0..7), 8: meta.dst_port(8..15), 16: meta.src_port(0..7), 24: meta.src_port(8..15), 32: hdr.ipv4.dst_addr(0..7), 96: hdr.ipv4.protocol }, { })), 16..16)
+      hash group 1:
+        table: [2, 3]
+        seed: 0x0
+    gateway:
+      name: tbl_hash_do_hash-gateway
+      row: 1
+      bus: 0
+      unit: 0
+      0x0:  tbl_P4Zeek578
+      miss:  tbl_P4Zeek578
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek578
+        false:  tbl_P4Zeek578
+    next: []
+    action_bus: { 6 : hash_dist(5, 0..7, hi), 36..37 : hash_dist(4, lo) }
+    instruction: tbl_hash_do_hash($DEFAULT, $DEFAULT)
+    actions:
+      Ingress.hash.do_hash(0, 3):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001b
+      - next_table: 0
+      - set B1(7..7), hash_dist(5, 0..0)
+      - set H11, hash_dist(4, 0..15)
+    default_action: Ingress.hash.do_hash
+stage 7 ingress:
+  dependency: match
+  hash_action tbl_P4Zeek578 0:
+    p4: { name: tbl_P4Zeek578, hidden: true }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value3 }
+      hash 0:
+        0..15: meta.hash_value3(0..15)
+        32: meta.hash_value3(16)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek578-gateway
+      row: 0
+      bus: 0
+      unit: 0
+      0x0:  tbl_P4Zeek577
+      miss:  tbl_P4Zeek577
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek577
+        false:  tbl_P4Zeek577
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek578$salu.Ingress.check_reg3(0..31) }
+    stateful: tbl_P4Zeek578$salu.Ingress.check_reg3(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek578($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek578(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000020
+      - next_table: 0
+      - set first_out3_0, tbl_P4Zeek578$salu.Ingress.check_reg3
+      - tbl_P4Zeek578$salu.Ingress.check_reg3(check_out_first3_0, $hash_dist)
+    default_action: P4Zeek578
+  stateful tbl_P4Zeek578$salu.Ingress.check_reg3:
+    p4: { name: Ingress.check_reg3, size: 131072 }
+    row: [ 15, 13, 11, 9, 7, 5 ]
+    logical_bus: [ S, O, O, O, O, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    format: { lo: 32 }
+    actions:
+      check_out_first3_0:
+      - equ lo, lo, -2
+      - equ hi, lo, -1
+      - alu_a (cmphi & !cmplo), hi, 1
+      - alu_a (cmphi & !cmplo), lo, 2
+      - output (cmphi & !cmplo), alu_hi
+      check_action3_0:
+      - equ lo, lo
+      - alu_a cmplo, lo, 1
+      - alu_a !cmplo, hi, 1
+      - output !cmplo, alu_hi
+  hash_action tbl_P4Zeek611 1:
+    p4: { name: tbl_P4Zeek611, hidden: true }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value3 }
+      hash 0:
+        0..15: meta.hash_value3(0..15)
+        32: meta.hash_value3(16)
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek611-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  tbl_P4Zeek610
+      miss:  tbl_P4Zeek610
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek610
+        false:  tbl_P4Zeek610
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek578$salu.Ingress.check_reg3(0..31) }
+    stateful: tbl_P4Zeek578$salu.Ingress.check_reg3(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek611($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek611(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000012
+      - next_table: 0
+      - set first_in3_0, tbl_P4Zeek578$salu.Ingress.check_reg3
+      - tbl_P4Zeek578$salu.Ingress.check_reg3(check_action3_0, $hash_dist)
+    default_action: P4Zeek611
+stage 8 ingress:
+  dependency: action
+  hash_action tbl_P4Zeek577 0:
+    p4: { name: tbl_P4Zeek577, hidden: true }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value2.0-15, 23: meta.hash_value2.16-16 }
+      hash 0:
+        0..15: meta.hash_value2.0-15
+        32: meta.hash_value2.16-16
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek577-gateway
+      row: 0
+      bus: 0
+      unit: 0
+      0x0:  tbl_P4Zeek576
+      miss:  tbl_P4Zeek576
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek576
+        false:  tbl_P4Zeek576
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek577$salu.Ingress.check_reg2(0..31) }
+    stateful: tbl_P4Zeek577$salu.Ingress.check_reg2(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek577($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek577(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001f
+      - next_table: 0
+      - set first_out2_0, tbl_P4Zeek577$salu.Ingress.check_reg2
+      - tbl_P4Zeek577$salu.Ingress.check_reg2(check_out_first2_0, $hash_dist)
+    default_action: P4Zeek577
+  stateful tbl_P4Zeek577$salu.Ingress.check_reg2:
+    p4: { name: Ingress.check_reg2, size: 131072 }
+    row: [ 15, 13, 11, 9, 7, 5 ]
+    logical_bus: [ S, O, O, O, O, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    format: { lo: 32 }
+    actions:
+      check_out_first2_0:
+      - equ lo, lo, -2
+      - equ hi, lo, -1
+      - alu_a (cmphi & !cmplo), hi, 1
+      - alu_a (cmphi & !cmplo), lo, 2
+      - output (cmphi & !cmplo), alu_hi
+      check_action2_0:
+      - equ lo, lo
+      - alu_a cmplo, lo, 1
+      - alu_a !cmplo, hi, 1
+      - output !cmplo, alu_hi
+  hash_action tbl_P4Zeek610 1:
+    p4: { name: tbl_P4Zeek610, hidden: true }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value2.0-15, 23: meta.hash_value2.16-16 }
+      hash 0:
+        0..15: meta.hash_value2.0-15
+        32: meta.hash_value2.16-16
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek610-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  tbl_P4Zeek609
+      miss:  tbl_P4Zeek609
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek609
+        false:  tbl_P4Zeek609
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek577$salu.Ingress.check_reg2(0..31) }
+    stateful: tbl_P4Zeek577$salu.Ingress.check_reg2(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek610($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek610(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000011
+      - next_table: 0
+      - set first_in2_0, tbl_P4Zeek577$salu.Ingress.check_reg2
+      - tbl_P4Zeek577$salu.Ingress.check_reg2(check_action2_0, $hash_dist)
+    default_action: P4Zeek610
+stage 9 ingress:
+  dependency: action
+  hash_action tbl_P4Zeek576 0:
+    p4: { name: tbl_P4Zeek576, hidden: true }
+    row: 0
+    result_bus: 0
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value.0-15, 23: meta.hash_value.16-16 }
+      hash 0:
+        0..15: meta.hash_value.0-15
+        32: meta.hash_value.16-16
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek576-gateway
+      row: 0
+      bus: 0
+      unit: 0
+      0x0:  tbl_P4Zeek591
+      miss:  tbl_P4Zeek591
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek591
+        false:  tbl_P4Zeek591
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek576$salu.Ingress.check_reg(0..31) }
+    stateful: tbl_P4Zeek576$salu.Ingress.check_reg(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek576($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek576(0, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x2000001e
+      - next_table: 0
+      - set first_out1_0, tbl_P4Zeek576$salu.Ingress.check_reg
+      - tbl_P4Zeek576$salu.Ingress.check_reg(check_out_first_0, $hash_dist)
+    default_action: P4Zeek576
+  stateful tbl_P4Zeek576$salu.Ingress.check_reg:
+    p4: { name: Ingress.check_reg, size: 131072 }
+    row: [ 15, 13, 11, 9, 7, 5 ]
+    logical_bus: [ S, O, O, O, O, O ]
+    column:
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    maprams: 
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2, 3, 4, 5 ]
+    - [ 0, 1, 2 ]
+    home_row: 15
+    format: { lo: 32 }
+    actions:
+      check_out_first_0:
+      - equ lo, lo, -2
+      - equ hi, lo, -1
+      - alu_a (cmphi & !cmplo), hi, 1
+      - alu_a (cmphi & !cmplo), lo, 2
+      - output (cmphi & !cmplo), alu_hi
+      check_action_0:
+      - equ lo, lo
+      - alu_a cmplo, lo, 1
+      - alu_a !cmplo, hi, 1
+      - output !cmplo, alu_hi
+  hash_action tbl_P4Zeek609 1:
+    p4: { name: tbl_P4Zeek609, hidden: true }
+    row: 0
+    result_bus: 1
+    hash_dist:
+      0: { hash: 0, mask: 0x1ffff, shift: 5, expand: 0 }
+    input_xbar:
+      exact group 0: { 0: meta.hash_value.0-15, 23: meta.hash_value.16-16 }
+      hash 0:
+        0..15: meta.hash_value.0-15
+        32: meta.hash_value.16-16
+      hash group 0:
+        table: [0]
+        seed: 0x0
+    gateway:
+      name: tbl_P4Zeek609-gateway
+      row: 0
+      bus: 0
+      unit: 1
+      0x0:  tbl_P4Zeek624
+      miss:  tbl_P4Zeek624
+      condition: 
+        expression: "true(always hit)"
+        true:  tbl_P4Zeek624
+        false:  tbl_P4Zeek624
+    next: []
+    action_bus: { 96..99 : tbl_P4Zeek576$salu.Ingress.check_reg(0..31) }
+    stateful: tbl_P4Zeek576$salu.Ingress.check_reg(hash_dist 0, $DEFAULT, $DEFAULT)
+    instruction: tbl_P4Zeek609($DEFAULT, $DEFAULT)
+    actions:
+      P4Zeek609(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000010
+      - next_table: 0
+      - set first_in1_0, tbl_P4Zeek576$salu.Ingress.check_reg
+      - tbl_P4Zeek576$salu.Ingress.check_reg(check_action_0, $hash_dist)
+    default_action: P4Zeek609
+stage 10 ingress:
+  dependency: match
+  ternary_match tbl_P4Zeek591 0:
+    p4: { name: tbl_P4Zeek591, hidden: true }
+    gateway:
+      name: cond-25
+      input_xbar:
+        exact group 0: { 17: first_out1_0, 18: first_out2_0 }
+      row: 1
+      bus: 0
+      unit: 0
+      match: { 1: first_out1_0, 2: first_out2_0 }
+      0b*****00:  tbl_P4Zeek584
+      miss: run_table
+      condition: 
+        expression: "(first_out1_0 == 0 && first_out2_0 == 0)"
+        true:  tbl_P4Zeek584
+        false:  tbl_P4Zeek591
+    hit: [  tbl_P4Zeek596 ]
+    miss:  tbl_P4Zeek596
+    indirect: tbl_P4Zeek591$tind
+  ternary_indirect tbl_P4Zeek591$tind:
+    row: 1
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek591$tind(action, $DEFAULT)
+    actions:
+      P4Zeek591(1, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000023
+      - next_table: 0
+      - set meta.first_out, 1
+    default_action: P4Zeek591
+  ternary_match tbl_P4Zeek584 1:
+    p4: { name: tbl_P4Zeek584, hidden: true }
+    gateway:
+      name: cond-26
+      input_xbar:
+        exact group 0: { 19: first_out3_0 }
+      row: 0
+      bus: 1
+      unit: 1
+      match: { 3: first_out3_0 }
+      0b****0: run_table
+      miss:  tbl_P4Zeek587
+      condition: 
+        expression: "(first_out3_0 == 0)"
+        true:  tbl_P4Zeek584
+        false:  tbl_P4Zeek587
+    hit: [  tbl_P4Zeek596 ]
+    miss:  tbl_P4Zeek596
+    indirect: tbl_P4Zeek584$tind
+  ternary_indirect tbl_P4Zeek584$tind:
+    row: 1
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek584$tind(action, $DEFAULT)
+    actions:
+      P4Zeek584(1, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000021
+      - next_table: 0
+      - set meta.first_out, 0
+    default_action: P4Zeek584
+  ternary_match tbl_P4Zeek587 2:
+    p4: { name: tbl_P4Zeek587, hidden: true }
+    hit: [  tbl_P4Zeek596 ]
+    miss:  tbl_P4Zeek596
+    indirect: tbl_P4Zeek587$tind
+  ternary_indirect tbl_P4Zeek587$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek587$tind(action, $DEFAULT)
+    actions:
+      P4Zeek587(0, 4):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000022
+      - next_table: 0
+      - set meta.first_out, 1
+    default_action: P4Zeek587
+  ternary_match tbl_P4Zeek624 3:
+    p4: { name: tbl_P4Zeek624, hidden: true }
+    gateway:
+      name: cond-28
+      input_xbar:
+        exact group 0: { 17: first_in1_0, 18: first_in2_0 }
+      row: 0
+      bus: 0
+      unit: 0
+      match: { 1: first_in1_0, 2: first_in2_0 }
+      0b*****11:  tbl_P4Zeek620
+      miss: run_table
+      condition: 
+        expression: "(first_in1_0 != 0 && first_in2_0 != 0)"
+        true:  tbl_P4Zeek620
+        false:  tbl_P4Zeek624
+    hit: [  tbl_P4Zeek629 ]
+    miss:  tbl_P4Zeek629
+    indirect: tbl_P4Zeek624$tind
+  ternary_indirect tbl_P4Zeek624$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek624$tind(action, $DEFAULT)
+    actions:
+      P4Zeek624(1, 6):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000014
+      - next_table: 0
+      - set meta.first_in, 1
+    default_action: P4Zeek624
+  ternary_match tbl_P4Zeek620 4:
+    p4: { name: tbl_P4Zeek620, hidden: true }
+    gateway:
+      name: cond-29
+      input_xbar:
+        exact group 0: { 19: first_in3_0 }
+      row: 1
+      bus: 1
+      unit: 1
+      match: { 3: first_in3_0 }
+      0b****1:  tbl_P4Zeek629
+      miss: run_table
+      condition: 
+        expression: "(first_in3_0 != 0)"
+        true:  tbl_P4Zeek629
+        false:  tbl_P4Zeek620
+    hit: [  tbl_P4Zeek629 ]
+    miss:  tbl_P4Zeek629
+    indirect: tbl_P4Zeek620$tind
+  ternary_indirect tbl_P4Zeek620$tind:
+    row: 2
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek620$tind(action, $DEFAULT)
+    actions:
+      P4Zeek620(1, 8):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000013
+      - next_table: 0
+      - set meta.first_in, 1
+    default_action: P4Zeek620
+stage 11 ingress:
+  dependency: match
+  ternary_match tbl_P4Zeek596 3:
+    p4: { name: tbl_P4Zeek596, hidden: true }
+    gateway:
+      name: cond-27
+      input_xbar:
+        exact group 0: { 6: meta.first_out }
+      row: 0
+      bus: 0
+      unit: 0
+      match: { 6: meta.first_out }
+      0b*1: run_table
+      miss:  END
+      condition: 
+        expression: "(meta.first_out == 1)"
+        true:  tbl_P4Zeek596
+        false:  END
+    hit: [  tbl_add_header ]
+    miss:  tbl_add_header
+    indirect: tbl_P4Zeek596$tind
+  ternary_indirect tbl_P4Zeek596$tind:
+    row: 0
+    bus: 0
+    format: { action: 0..0 }
+    instruction: tbl_P4Zeek596$tind(action, $DEFAULT)
+    actions:
+      P4Zeek596(1, 4):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000025
+      - next_table: 0
+      - set ig_intr_md_for_dprsr.drop_ctl, 0
+    default_action: P4Zeek596
+  ternary_match tbl_add_header 4:
+    p4: { name: tbl_add_header, hidden: true }
+    hit: [  END ]
+    miss:  END
+    indirect: tbl_add_header$tind
+  ternary_indirect tbl_add_header$tind:
+    row: 2
+    bus: 0
+    format: { action: 0..0, immediate: 1..9 }
+    action_bus: { 40..41 : immediate(0..8) }
+    instruction: tbl_add_header$tind(action, $DEFAULT)
+    actions:
+      Ingress.add_header(0, 5):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000024
+      - next_table: 0
+      - { $constant0: immediate(0..8), $constant0: 68 }
+      - set hdr.record.$valid, 1
+      - set hdr.ethernet.ether_type, 48899
+      - set hdr.record.in_time.0-31, ig_intr_md_from_prsr.global_tstamp.0-31
+      - set hdr.record.in_time.32-47, ig_intr_md_from_prsr.global_tstamp.32-47
+      - set ig_intr_md_for_tm.ucast_egress_port, $constant0
+    default_action: Ingress.add_header
+  ternary_match tbl_P4Zeek629 0:
+    p4: { name: tbl_P4Zeek629, hidden: true }
+    gateway:
+      name: cond-30
+      input_xbar:
+        exact group 0: { 6: meta.first_in }
+      row: 0
+      bus: 1
+      unit: 1
+      match: { 6: meta.first_in }
+      0b*1: run_table
+      miss:  tbl_set_recirculate
+      condition: 
+        expression: "(meta.first_in == 1)"
+        true:  tbl_P4Zeek629
+        false:  tbl_set_recirculate
+    hit: [  tbl_mirror_0 ]
+    miss:  tbl_mirror_0
+    indirect: tbl_P4Zeek629$tind
+  ternary_indirect tbl_P4Zeek629$tind:
+    row: 1
+    bus: 1
+    format: { action: 0..0, immediate: 1..9 }
+    action_bus: { 32..33 : immediate(0..8) }
+    instruction: tbl_P4Zeek629$tind(action, $DEFAULT)
+    actions:
+      P4Zeek629(1, 1):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000016
+      - next_table: 0
+      - { $constant0: immediate(0..8), $constant0: 52 }
+      - set meta.times, 1
+      - set ig_intr_md_for_tm.ucast_egress_port, $constant0
+    default_action: P4Zeek629
+  ternary_match tbl_set_recirculate 1:
+    p4: { name: tbl_set_recirculate, hidden: true }
+    hit: [  END ]
+    miss:  END
+    indirect: tbl_set_recirculate$tind
+  ternary_indirect tbl_set_recirculate$tind:
+    row: 1
+    bus: 0
+    format: { action: 0..0, immediate: 1..9 }
+    action_bus: { 36..37 : immediate(0..8) }
+    instruction: tbl_set_recirculate$tind(action, $DEFAULT)
+    actions:
+      Ingress.set_recirculate(0, 2):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000017
+      - next_table: 0
+      - { $constant0: immediate(0..8), $constant0: 68 }
+      - set ig_intr_md_for_tm.ucast_egress_port, $constant0
+    default_action: Ingress.set_recirculate
+  ternary_match tbl_mirror_0 2:
+    p4: { name: tbl_mirror_0, hidden: true }
+    hit: [  END ]
+    miss:  END
+    indirect: tbl_mirror_0$tind
+  ternary_indirect tbl_mirror_0$tind:
+    row: 0
+    bus: 1
+    format: { action: 0..0 }
+    instruction: tbl_mirror_0$tind(action, $DEFAULT)
+    actions:
+      Ingress.mirror(0, 3):
+      - hit_allowed: { allowed: true }
+      - default_action: { allowed: true, is_constant: true }
+      - handle: 0x20000015
+      - next_table: 0
+      - set ig_intr_md_for_dprsr.mirror_type, 0
+      - set meta.mirror_session, 5
+      - set meta.in_time.0-31, ig_intr_md_from_prsr.global_tstamp.0-31
+      - set meta.in_time.32-47, ig_intr_md_from_prsr.global_tstamp.32-47
+    default_action: Ingress.mirror
+
+
+primitives: "P4Zeek.prim.json"
+dynhash: "P4Zeek.dynhash.json"

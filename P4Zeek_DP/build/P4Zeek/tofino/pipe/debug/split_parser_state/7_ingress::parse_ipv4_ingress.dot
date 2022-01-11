@@ -1,0 +1,26 @@
+digraph states { 
+subgraph cluster_0 {
+label="iteration 0"size="8,5"
+cluster_0_State0x1523a000 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_ipv4:\l\l    extract inbuf bit[0\.\.3] to PHV-allocated hdr\.ipv4\.version;\l    extract inbuf bit[4\.\.7] to PHV-allocated hdr\.ipv4\.ihl;\l    extract inbuf bit[8\.\.15] to PHV-allocated hdr\.ipv4\.diffserv;\l    extract inbuf bit[16\.\.31] to PHV-allocated hdr\.ipv4\.total_len;\l    extract inbuf bit[32\.\.47] to PHV-allocated hdr\.ipv4\.identification;\l    extract inbuf bit[48\.\.50] to PHV-allocated hdr\.ipv4\.flags;\l    extract inbuf bit[51\.\.63] to PHV-allocated hdr\.ipv4\.frag_offset;\l    extract inbuf bit[64\.\.71] to PHV-allocated hdr\.ipv4\.ttl;\l    extract inbuf bit[72\.\.79] to PHV-allocated hdr\.ipv4\.protocol;\l    extract inbuf bit[80\.\.95] to PHV-allocated hdr\.ipv4\.hdr_checksum;\l    extract inbuf bit[96\.\.127] to PHV-allocated hdr\.ipv4\.src_addr;\l    extract inbuf bit[128\.\.159] to PHV-allocated hdr\.ipv4\.dst_addr;\l    extract constant 1 to PHV-allocated hdr\.ipv4\.\$valid;\l\l    select hdr\.ipv4/ipv4\.protocol; from [ inbuf bit[72\.\.79] ]\l}"];
+cluster_0_State0x1523a000 -> cluster_0_State0x14930c40 [ label="match const: 0x06: (shift=20)
+goto parse_tcp" ]
+cluster_0_State0x1523a000 -> cluster_0_State0x150ee540 [ label="match const: 0x11: (shift=20)
+goto parse_udp" ]
+cluster_0_State0x1523a000 -> cluster_0_ingress_pipe [ label="match const: 0x**: (shift=20)
+goto (end)" ]
+}
+subgraph cluster_1 {
+label="iteration 1"size="8,5"
+cluster_1_State0x1523a000 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_ipv4:\l\l    extract inbuf bit[0\.\.3] to PHV-allocated hdr\.ipv4\.version;\l    extract inbuf bit[4\.\.7] to PHV-allocated hdr\.ipv4\.ihl;\l    extract inbuf bit[8\.\.15] to PHV-allocated hdr\.ipv4\.diffserv;\l    extract inbuf bit[16\.\.31] to PHV-allocated hdr\.ipv4\.total_len;\l    extract inbuf bit[32\.\.47] to PHV-allocated hdr\.ipv4\.identification;\l    extract inbuf bit[48\.\.50] to PHV-allocated hdr\.ipv4\.flags;\l    extract inbuf bit[51\.\.63] to PHV-allocated hdr\.ipv4\.frag_offset;\l    extract inbuf bit[64\.\.71] to PHV-allocated hdr\.ipv4\.ttl;\l    extract inbuf bit[72\.\.79] to PHV-allocated hdr\.ipv4\.protocol;\l    extract inbuf bit[80\.\.95] to PHV-allocated hdr\.ipv4\.hdr_checksum;\l    extract inbuf bit[96\.\.127] to PHV-allocated hdr\.ipv4\.src_addr;\l    extract inbuf bit[128\.\.159] to PHV-allocated hdr\.ipv4\.dst_addr;\l\l}"];
+cluster_1_State0x14a09e00 [shape=record, style="filled,rounded", fillcolor=cornsilk, label="{parse_ipv4\.\$split_0:\l\l    extract constant 1 to PHV-allocated hdr\.ipv4\.\$valid;\l\l    select hdr\.ipv4/ipv4\.protocol; from [ inbuf bit[-88\.\.-81] ]\l}"];
+cluster_1_State0x1523a000 -> cluster_1_State0x14a09e00 [ label="match const: *: (shift=20)
+goto parse_ipv4\.\$split_0" ]
+cluster_1_State0x14a09e00 -> cluster_1_State0x14930c40 [ label="match const: 0x06: (shift=0)
+goto parse_tcp" ]
+cluster_1_State0x14a09e00 -> cluster_1_State0x150ee540 [ label="match const: 0x11: (shift=0)
+goto parse_udp" ]
+cluster_1_State0x14a09e00 -> cluster_1_ingress_pipe [ label="match const: 0x**: (shift=0)
+goto (end)" ]
+}
+cluster_0_State0x1523a000 -> cluster_1_State0x1523a000 [ color="red" ]
+}

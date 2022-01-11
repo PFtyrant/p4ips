@@ -1,0 +1,2177 @@
+Table Placement ignores container conflicts? 0
+table placement starting pipe
+ingress: [2457866] 1 11 111 1111 00000
+  cond-16(ingress::hdr.record.$valid == 1; => $true, 1 => $false)
+    $true: [2457872] 0 00 000
+      tbl_remove_header
+      tbl_mirror
+      tbl_P4Zeek512
+      tbl_bypass
+  cond-17(ingress::hdr.ipv4.protocol == 17; => $true, 1 => $false)
+    $true: [2458413]
+      tbl_take_UDP_port
+    $false: [2458415]
+      cond-18(ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+        $true: [2458409]
+          tbl_take_TCP_port
+        $false: [2458411]
+          tbl_bypass_0
+  cond-19(ingress::hdr.ipv4.protocol == 17; => $true, ingress::hdr.ipv4.protocol == 6; => $true, 1 => $false)
+    $true: [2458578]
+      malware_detection_0{ E 94+2, 1 97K }
+  cond-20(ingress::meta.next_table == 1; => $true, 1 => $false)
+    $true: [2458685]
+      Payload_check_0{ E 14+1, 1 0K }
+  cond-21(ingress::meta.do_action == 0; => $false, 1 => $true)
+    $true: [2458691] 0 11
+      cond-22(ingress::meta.do_action == 1; => $true, 1 => $false)
+        $true: [2458861]
+          L3_forward_0{ E 22+0, 2 0K }
+        $false: [2458863]
+          cond-23(ingress::meta.do_action == 2; => $true, 1 => $false)
+            $true: [2458859]
+              tbl_drop
+      cond-24(ingress::meta.set_rule == 1; => $true, 1 => $false)
+        $true: [2458869] 0 00 100 0100 00100 111111
+          tbl_hash_do_hash
+          tbl_hash2_do_hash
+          tbl_hash3_do_hash
+          tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          cond-25(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1 => $false)
+            $true: [2459573]
+              cond-26(ingress::first_out3_0 == 0; => $true, 1 => $false)
+                $true: [2459508]
+                  tbl_P4Zeek584
+                $false: [2459510]
+                  tbl_P4Zeek587
+            $false: [2459575]
+              tbl_P4Zeek591
+      cond-27(ingress::meta.first_out == 1; => $true, 1 => $false)
+        $true: [2459581] 0
+          tbl_add_header
+          tbl_P4Zeek596
+    $false: [2459737] 0 00 100 0100 00100 111111 1111111
+      tbl_hash_do_hash_0
+      tbl_hash2_do_hash_0
+      tbl_hash3_do_hash_0
+      tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      cond-28(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1 => $false)
+        $true: [2460441]
+          cond-29(ingress::first_in3_0 != 0; => $true, 1 => $false)
+            $true: [2460376]
+            $false: [2460378]
+              tbl_P4Zeek620
+        $false: [2460443]
+          tbl_P4Zeek624
+      cond-30(ingress::meta.first_in == 1; => $true, 1 => $false)
+        $true: [2460449] 0
+          tbl_mirror_0
+          tbl_P4Zeek629
+        $false: [2460664]
+          tbl_set_recirculate
+  tbl_P4Zeek636
+egress: [2467200]
+
+stage 0, work: [ 2457866 ], partly placed 0, placed 0
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-16
+  Group table: cond-17
+  Group table: cond-19
+  Group table: cond-20
+  Group table: cond-21
+  Group table: tbl_P4Zeek636
+try_place_table(cond-16, stage=0)
+  Merging with match table tbl_remove_header
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_remove_header
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 1 of tbl_remove_header in stage 0
+  Merging with match table tbl_mirror
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_mirror
+Trying to allocate imem for tbl_mirror
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 1 of tbl_mirror in stage 0
+  Merging with match table tbl_P4Zeek512
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek512
+Trying to allocate imem for tbl_P4Zeek512
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 1 of tbl_P4Zeek512 in stage 0
+  Merging with match table tbl_bypass
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_bypass
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 1 of tbl_bypass in stage 0
+    Pl vector: [ tbl_remove_header, tbl_mirror, tbl_P4Zeek512, tbl_bypass ]
+  - skipping cond-17 because it depends on tbl_bypass
+    - removing tbl_take_UDP_port from merge list because it depends on tbl_bypass
+    - skipping gateway cond-17 until mergeable tables are available
+  - skipping cond-19 because it depends on tbl_bypass
+    - removing malware_detection_0 from merge list because it depends on tbl_bypass
+    - skipping gateway cond-19 until mergeable tables are available
+  - skipping cond-20 due to in-sequence control dependence on cond-16
+  - skipping cond-21 due to in-sequence control dependence on cond-16
+tbl_P4Zeek636 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek636, stage=0)
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek636
+Trying to allocate imem for tbl_P4Zeek636
+  Selected stage: 0    Furthest stage: 0
+  try_place_table returning 1 of tbl_P4Zeek636 in stage 0
+    Pl vector: [ tbl_P4Zeek636 ]
+found 5 tables that could be placed: [ tbl_remove_header, tbl_mirror, tbl_P4Zeek512, tbl_bypass, tbl_P4Zeek636 ]
+Initial best is first table seen: tbl_remove_header
+For trial t : tbl_mirror with best: tbl_remove_header
+    Updating best to tbl_mirror from tbl_remove_header for reason: default choice
+For trial t : tbl_P4Zeek512 with best: tbl_mirror
+    Updating best to tbl_P4Zeek512 from tbl_mirror for reason: default choice
+For trial t : tbl_bypass with best: tbl_P4Zeek512
+    Updating best to tbl_bypass from tbl_P4Zeek512 for reason: longer downward prop control-included dependence tail chain
+For trial t : tbl_P4Zeek636 with best: tbl_bypass
+    Keeping best tbl_bypass for reason: longer downward prop control-included dependence tail chain
+placing 1 entries of tbl_bypass (with gw cond-16) in stage 0(0) FormatType(02)
+potential backfill tbl_P4Zeek636 before tbl_bypass
+stage 0, work: [ 2457872 ], partly placed 0, placed 1
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_remove_header
+  Group table: tbl_mirror
+  Group table: tbl_P4Zeek512
+  Group table: tbl_bypass
+tbl_remove_header is not a gateway! Aborting search for merge choices
+try_place_table(tbl_remove_header, stage=0)
+  - action dependency between tbl_bypass and table tbl_remove_header due to PHV allocation advances stage to 1
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_remove_header
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 1 of tbl_remove_header in stage 1
+    Pl vector: [ tbl_remove_header ]
+tbl_mirror is not a gateway! Aborting search for merge choices
+try_place_table(tbl_mirror, stage=0)
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_mirror
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_mirror
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 1 of tbl_mirror in stage 0
+    Pl vector: [ tbl_mirror ]
+tbl_P4Zeek512 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek512, stage=0)
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_P4Zeek512
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_P4Zeek512
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 1 of tbl_P4Zeek512 in stage 0
+    Pl vector: [ tbl_P4Zeek512 ]
+    - skipping tbl_bypass as its already done
+found 3 tables that could be placed: [ tbl_remove_header, tbl_mirror, tbl_P4Zeek512 ]
+Initial best is first table seen: tbl_remove_header
+For trial t : tbl_mirror with best: tbl_remove_header
+    Updating best to tbl_mirror from tbl_remove_header for reason: earlier stage calculated
+For trial t : tbl_P4Zeek512 with best: tbl_mirror
+    Updating best to tbl_P4Zeek512 from tbl_mirror for reason: default choice
+placing 1 entries of tbl_P4Zeek512 in stage 0(1) FormatType(02)
+stage 0, work: [ 2457872 ], partly placed 0, placed 2
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_remove_header
+  Group table: tbl_mirror
+  Group table: tbl_P4Zeek512
+  Group table: tbl_bypass
+tbl_remove_header is not a gateway! Aborting search for merge choices
+try_place_table(tbl_remove_header, stage=0)
+  - action dependency between tbl_bypass and table tbl_remove_header due to PHV allocation advances stage to 1
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_remove_header
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 1 of tbl_remove_header in stage 1
+    Pl vector: [ tbl_remove_header ]
+tbl_mirror is not a gateway! Aborting search for merge choices
+try_place_table(tbl_mirror, stage=0)
+  Initial stage is 0, initial entries is 1
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_P4Zeek512
+Trying to allocate imem for tbl_mirror
+Trying to allocate imem for tbl_bypass
+Trying to allocate imem for tbl_P4Zeek512
+Trying to allocate imem for tbl_mirror
+  Selected stage: 0    Furthest stage: 1
+  try_place_table returning 1 of tbl_mirror in stage 0
+    Pl vector: [ tbl_mirror ]
+    - skipping tbl_P4Zeek512 as its already done
+    - skipping tbl_bypass as its already done
+found 2 tables that could be placed: [ tbl_remove_header, tbl_mirror ]
+Initial best is first table seen: tbl_remove_header
+For trial t : tbl_mirror with best: tbl_remove_header
+    Updating best to tbl_mirror from tbl_remove_header for reason: earlier stage calculated
+placing 1 entries of tbl_mirror in stage 0(2) FormatType(02)
+stage 0, work: [ 2457872 ], partly placed 0, placed 3
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_remove_header
+  Group table: tbl_mirror
+  Group table: tbl_P4Zeek512
+  Group table: tbl_bypass
+tbl_remove_header is not a gateway! Aborting search for merge choices
+try_place_table(tbl_remove_header, stage=0)
+  - action dependency between tbl_bypass and table tbl_remove_header due to PHV allocation advances stage to 1
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_remove_header
+  Selected stage: 1    Furthest stage: 1
+  try_place_table returning 1 of tbl_remove_header in stage 1
+    Pl vector: [ tbl_remove_header ]
+    - skipping tbl_mirror as its already done
+    - skipping tbl_P4Zeek512 as its already done
+    - skipping tbl_bypass as its already done
+found 1 tables that could be placed: [ tbl_remove_header ]
+Initial best is first table seen: tbl_remove_header
+try to backfill tbl_P4Zeek636 before tbl_bypass
+placing 1 entries of tbl_remove_header in stage 1(10) FormatType(02)
+stage 1, work: [ 2457866 ], partly placed 0, placed 4
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-16
+  Group table: cond-17
+  Group table: cond-19
+  Group table: cond-20
+  Group table: cond-21
+  Group table: tbl_P4Zeek636
+    - skipping cond-16 as its already done
+try_place_table(cond-17, stage=1)
+  Merging with match table tbl_take_UDP_port
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_take_UDP_port
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_take_UDP_port
+  Selected stage: 1    Furthest stage: 2
+  try_place_table returning 1 of tbl_take_UDP_port in stage 1
+    Pl vector: [ tbl_take_UDP_port ]
+  - skipping cond-19 because it depends on tbl_take_UDP_port
+    - removing malware_detection_0 from merge list because it depends on tbl_take_UDP_port
+    - skipping gateway cond-19 until mergeable tables are available
+  - skipping cond-20 due to in-sequence control dependence on cond-17
+  - skipping cond-21 due to in-sequence control dependence on cond-17
+tbl_P4Zeek636 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek636, stage=1)
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_P4Zeek636
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_P4Zeek636
+  Selected stage: 1    Furthest stage: 2
+  try_place_table returning 1 of tbl_P4Zeek636 in stage 1
+    Pl vector: [ tbl_P4Zeek636 ]
+found 2 tables that could be placed: [ tbl_take_UDP_port, tbl_P4Zeek636 ]
+Initial best is first table seen: tbl_take_UDP_port
+For trial t : tbl_P4Zeek636 with best: tbl_take_UDP_port
+    Keeping best tbl_take_UDP_port for reason: longer downward prop control-included dependence tail chain
+placing 1 entries of tbl_take_UDP_port (with gw cond-17) in stage 1(11) FormatType(02)
+potential backfill tbl_P4Zeek636 before tbl_take_UDP_port
+stage 1, work: [ 2458415 ], partly placed 0, placed 5
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-18
+try_place_table(cond-18, stage=1)
+  Merging with match table tbl_bypass_0
+  - action dependency between tbl_remove_header and table tbl_bypass_0 due to PHV allocation advances stage to 2
+  Initial stage is 2, initial entries is 1
+Trying to allocate imem for tbl_bypass_0
+Trying to allocate imem for tbl_bypass_0
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 1 of tbl_bypass_0 in stage 2
+  Merging with match table tbl_take_TCP_port
+  Initial stage is 1, initial entries is 1
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_take_UDP_port
+Trying to allocate imem for tbl_take_TCP_port
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_take_UDP_port
+Trying to allocate imem for tbl_take_TCP_port
+  Selected stage: 1    Furthest stage: 2
+  try_place_table returning 1 of tbl_take_TCP_port in stage 1
+    Pl vector: [ tbl_bypass_0, tbl_take_TCP_port ]
+found 2 tables that could be placed: [ tbl_bypass_0, tbl_take_TCP_port ]
+Initial best is first table seen: tbl_bypass_0
+For trial t : tbl_take_TCP_port with best: tbl_bypass_0
+    Updating best to tbl_take_TCP_port from tbl_bypass_0 for reason: earlier stage calculated
+placing 1 entries of tbl_take_TCP_port (with gw cond-18) in stage 1(12) FormatType(02)
+stage 1, work: [ 2458411 ], partly placed 0, placed 6
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_bypass_0
+tbl_bypass_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_bypass_0, stage=1)
+  - action dependency between tbl_remove_header and table tbl_bypass_0 due to PHV allocation advances stage to 2
+  Initial stage is 2, initial entries is 1
+Trying to allocate imem for tbl_bypass_0
+Trying to allocate imem for tbl_bypass_0
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 1 of tbl_bypass_0 in stage 2
+    Pl vector: [ tbl_bypass_0 ]
+found 1 tables that could be placed: [ tbl_bypass_0 ]
+Initial best is first table seen: tbl_bypass_0
+try to backfill tbl_P4Zeek636 before tbl_take_UDP_port
+Trying to allocate imem for tbl_remove_header
+Trying to allocate imem for tbl_P4Zeek636
+Trying to allocate imem for tbl_take_UDP_port
+Trying to allocate imem for tbl_take_TCP_port
+placing 1 entries of tbl_P4Zeek636 in stage 1(11) FormatType(02) (backfilled)
+stage 1, work: [ 2458411 ], partly placed 0, placed 7
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_bypass_0
+tbl_bypass_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_bypass_0, stage=1)
+  - action dependency between tbl_P4Zeek636 and table tbl_bypass_0 due to PHV allocation advances stage to 2
+  Initial stage is 2, initial entries is 1
+Trying to allocate imem for tbl_bypass_0
+Trying to allocate imem for tbl_bypass_0
+  Selected stage: 2    Furthest stage: 2
+  try_place_table returning 1 of tbl_bypass_0 in stage 2
+    Pl vector: [ tbl_bypass_0 ]
+found 1 tables that could be placed: [ tbl_bypass_0 ]
+Initial best is first table seen: tbl_bypass_0
+placing 1 entries of tbl_bypass_0 in stage 2(20) FormatType(02)
+stage 2, work: [ 2457866 ], partly placed 0, placed 8
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-16
+  Group table: cond-17
+  Group table: cond-19
+  Group table: cond-20
+  Group table: cond-21
+  Group table: tbl_P4Zeek636
+    - skipping cond-16 as its already done
+    - skipping cond-17 as its already done
+try_place_table(cond-19, stage=2)
+  Merging with match table malware_detection_0
+  - dependency between tbl_bypass_0 and table advances stage
+  Initial stage is 3, initial entries is 100000
+Trying to allocate imem for malware_detection_0
+Trying to allocate imem for malware_detection_0
+  Selected stage: 3    Furthest stage: 3
+  try_place_table returning 102400 of malware_detection_0 in stage 3
+    Pl vector: [ malware_detection_0 ]
+  - skipping cond-20 due to in-sequence control dependence on cond-19
+  - skipping cond-21 due to in-sequence control dependence on cond-19
+    - skipping tbl_P4Zeek636 as its already done
+found 1 tables that could be placed: [ malware_detection_0 ]
+Initial best is first table seen: malware_detection_0
+placing 102400 entries of malware_detection_0 (with gw cond-19) in stage 3(30) FormatType(02)
+stage 3, work: [ 2457866 ], partly placed 0, placed 9
+    { id=1 ram=80 tcam=0 mram=0 eixb=13 tixb=0 malu=0 salu=0 }
+  Group table: cond-16
+  Group table: cond-17
+  Group table: cond-19
+  Group table: cond-20
+  Group table: cond-21
+  Group table: tbl_P4Zeek636
+    - skipping cond-16 as its already done
+    - skipping cond-17 as its already done
+    - skipping cond-19 as its already done
+try_place_table(cond-20, stage=3)
+  Merging with match table Payload_check_0
+  - dependency between malware_detection_0 and table advances stage
+  Initial stage is 4, initial entries is 512
+Trying to allocate imem for Payload_check_0
+Trying to allocate imem for Payload_check_0
+  Selected stage: 4    Furthest stage: 4
+  try_place_table returning 4096 of Payload_check_0 in stage 4
+    Pl vector: [ Payload_check_0 ]
+  - skipping cond-21 due to in-sequence control dependence on cond-20
+    - skipping tbl_P4Zeek636 as its already done
+found 1 tables that could be placed: [ Payload_check_0 ]
+Initial best is first table seen: Payload_check_0
+placing 4096 entries of Payload_check_0 (with gw cond-20) in stage 4(40) FormatType(02)
+stage 4, work: [ 2457866 ], partly placed 0, placed 10
+    { id=1 ram=4 tcam=0 mram=0 eixb=4 tixb=0 malu=0 salu=0 }
+  Group table: cond-16
+  Group table: cond-17
+  Group table: cond-19
+  Group table: cond-20
+  Group table: cond-21
+  Group table: tbl_P4Zeek636
+    - skipping cond-16 as its already done
+    - skipping cond-17 as its already done
+    - skipping cond-19 as its already done
+    - skipping cond-20 as its already done
+try_place_table(cond-21, stage=4)
+  Merging with match table tbl_hash_do_hash_0
+  - dependency between Payload_check_0 and table advances stage
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 1 of tbl_hash_do_hash_0 in stage 5
+  Merging with match table tbl_hash2_do_hash_0
+  - dependency between Payload_check_0 and table advances stage
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 1 of tbl_hash2_do_hash_0 in stage 5
+  Merging with match table tbl_hash3_do_hash_0
+  - dependency between Payload_check_0 and table advances stage
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+  Selected stage: 5    Furthest stage: 5
+  try_place_table returning 1 of tbl_hash3_do_hash_0 in stage 5
+    Pl vector: [ tbl_hash_do_hash_0, tbl_hash2_do_hash_0, tbl_hash3_do_hash_0 ]
+    - skipping tbl_P4Zeek636 as its already done
+found 3 tables that could be placed: [ tbl_hash_do_hash_0, tbl_hash2_do_hash_0, tbl_hash3_do_hash_0 ]
+Initial best is first table seen: tbl_hash_do_hash_0
+For trial t : tbl_hash2_do_hash_0 with best: tbl_hash_do_hash_0
+    Updating best to tbl_hash2_do_hash_0 from tbl_hash_do_hash_0 for reason: default choice
+For trial t : tbl_hash3_do_hash_0 with best: tbl_hash2_do_hash_0
+    Updating best to tbl_hash3_do_hash_0 from tbl_hash2_do_hash_0 for reason: default choice
+placing 1 entries of tbl_hash3_do_hash_0 (with gw cond-21) in stage 5(50) FormatType(02)
+stage 5, work: [ 2458691, 2459737 ], partly placed 0, placed 11
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+try_place_table(cond-22, stage=5)
+  Merging with match table L3_forward_0
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for L3_forward_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for L3_forward_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 4096 of L3_forward_0 in stage 5
+    Pl vector: [ L3_forward_0 ]
+try_place_table(cond-24, stage=5)
+  Merging with match table tbl_hash_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash in stage 5
+  Merging with match table tbl_hash2_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash2_do_hash in stage 5
+  Merging with match table tbl_hash3_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash3_do_hash in stage 5
+    Pl vector: [ tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash ]
+  - skipping cond-27 due to in-sequence control dependence on cond-24
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+tbl_hash_do_hash_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash_do_hash_0, stage=5)
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash_0 in stage 5
+    Pl vector: [ tbl_hash_do_hash_0 ]
+tbl_hash2_do_hash_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash2_do_hash_0, stage=5)
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash2_do_hash_0 in stage 5
+    Pl vector: [ tbl_hash2_do_hash_0 ]
+    - skipping tbl_hash3_do_hash_0 as its already done
+  - skipping tbl_P4Zeek609 due to in-sequence control dependence on tbl_hash_do_hash_0
+  - skipping tbl_P4Zeek610 due to in-sequence control dependence on tbl_hash2_do_hash_0
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=5)
+  - dependency between tbl_hash3_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_hash_do_hash_0
+  - skipping cond-30 due to in-sequence control dependence on tbl_hash_do_hash_0
+found 7 tables that could be placed: [ L3_forward_0, tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash, tbl_hash_do_hash_0, tbl_hash2_do_hash_0, tbl_P4Zeek611 ]
+Initial best is first table seen: L3_forward_0
+For trial t : tbl_hash_do_hash with best: L3_forward_0
+    Updating best to tbl_hash_do_hash from L3_forward_0 for reason: longer downward prop control-included dependence tail chain
+For trial t : tbl_hash2_do_hash with best: tbl_hash_do_hash
+    Updating best to tbl_hash2_do_hash from tbl_hash_do_hash for reason: default choice
+For trial t : tbl_hash3_do_hash with best: tbl_hash2_do_hash
+    Updating best to tbl_hash3_do_hash from tbl_hash2_do_hash for reason: default choice
+For trial t : tbl_hash_do_hash_0 with best: tbl_hash3_do_hash
+    Updating best to tbl_hash_do_hash_0 from tbl_hash3_do_hash for reason: longer downward dominance frontier dependence chain
+For trial t : tbl_hash2_do_hash_0 with best: tbl_hash_do_hash_0
+    Updating best to tbl_hash2_do_hash_0 from tbl_hash_do_hash_0 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_hash2_do_hash_0
+    Keeping best tbl_hash2_do_hash_0 for reason: earlier stage calculated
+placing 1 entries of tbl_hash2_do_hash_0 in stage 5(51) FormatType(02)
+stage 5, work: [ 2458691, 2459737 ], partly placed 0, placed 12
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+try_place_table(cond-22, stage=5)
+  Merging with match table L3_forward_0
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for L3_forward_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for L3_forward_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 4096 of L3_forward_0 in stage 5
+    Pl vector: [ L3_forward_0 ]
+try_place_table(cond-24, stage=5)
+  Merging with match table tbl_hash_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash in stage 5
+  Merging with match table tbl_hash2_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash2_do_hash in stage 5
+  Merging with match table tbl_hash3_do_hash
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash3_do_hash in stage 5
+    Pl vector: [ tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash ]
+  - skipping cond-27 due to in-sequence control dependence on cond-24
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+tbl_hash_do_hash_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash_do_hash_0, stage=5)
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash_0 in stage 5
+    Pl vector: [ tbl_hash_do_hash_0 ]
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+  - skipping tbl_P4Zeek609 due to in-sequence control dependence on tbl_hash_do_hash_0
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=5)
+  - dependency between tbl_hash2_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=5)
+  - dependency between tbl_hash3_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_hash_do_hash_0
+  - skipping cond-30 due to in-sequence control dependence on tbl_hash_do_hash_0
+found 7 tables that could be placed: [ L3_forward_0, tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash, tbl_hash_do_hash_0, tbl_P4Zeek610, tbl_P4Zeek611 ]
+Initial best is first table seen: L3_forward_0
+For trial t : tbl_hash_do_hash with best: L3_forward_0
+    Updating best to tbl_hash_do_hash from L3_forward_0 for reason: longer downward prop control-included dependence tail chain
+For trial t : tbl_hash2_do_hash with best: tbl_hash_do_hash
+    Updating best to tbl_hash2_do_hash from tbl_hash_do_hash for reason: default choice
+For trial t : tbl_hash3_do_hash with best: tbl_hash2_do_hash
+    Updating best to tbl_hash3_do_hash from tbl_hash2_do_hash for reason: default choice
+For trial t : tbl_hash_do_hash_0 with best: tbl_hash3_do_hash
+    Updating best to tbl_hash_do_hash_0 from tbl_hash3_do_hash for reason: longer downward dominance frontier dependence chain
+For trial t : tbl_P4Zeek610 with best: tbl_hash_do_hash_0
+    Keeping best tbl_hash_do_hash_0 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek611 with best: tbl_hash_do_hash_0
+    Keeping best tbl_hash_do_hash_0 for reason: earlier stage calculated
+placing 1 entries of tbl_hash_do_hash_0 in stage 5(52) FormatType(02)
+stage 5, work: [ 2458691, 2459737 ], partly placed 0, placed 13
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+try_place_table(cond-22, stage=5)
+  Merging with match table L3_forward_0
+  Initial stage is 5, initial entries is 512
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for L3_forward_0
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for L3_forward_0
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 4096 of L3_forward_0 in stage 5
+    Pl vector: [ L3_forward_0 ]
+try_place_table(cond-24, stage=5)
+  Merging with match table tbl_hash_do_hash
+  Initial stage is 5, initial entries is 1
+    The table tbl_hash_do_hash could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash in stage 6
+  Merging with match table tbl_hash2_do_hash
+  Initial stage is 5, initial entries is 1
+    The table tbl_hash2_do_hash could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash2_do_hash in stage 6
+  Merging with match table tbl_hash3_do_hash
+  Initial stage is 5, initial entries is 1
+    The table tbl_hash3_do_hash could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash3_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash3_do_hash in stage 6
+    Pl vector: [ tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash ]
+  - skipping cond-27 due to in-sequence control dependence on cond-24
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=5)
+  - dependency between tbl_hash_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=5)
+  - dependency between tbl_hash2_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=5)
+  - dependency between tbl_hash3_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+found 7 tables that could be placed: [ L3_forward_0, tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash, tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611 ]
+Initial best is first table seen: L3_forward_0
+For trial t : tbl_hash_do_hash with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+For trial t : tbl_hash2_do_hash with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+For trial t : tbl_hash3_do_hash with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek609 with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek610 with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek611 with best: L3_forward_0
+    Keeping best L3_forward_0 for reason: earlier stage calculated
+placing 4096 entries of L3_forward_0 (with gw cond-22) in stage 5(53) FormatType(02)
+stage 5, work: [ 2459737, 2458863 ], partly placed 0, placed 14
+    { id=1 ram=4 tcam=0 mram=0 eixb=4 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=5)
+  - dependency between tbl_hash_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=5)
+  - dependency between tbl_hash2_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=5)
+  - dependency between tbl_hash3_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: cond-23
+try_place_table(cond-23, stage=5)
+  Merging with match table tbl_drop
+  Initial stage is 5, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for L3_forward_0
+Trying to allocate imem for tbl_drop
+Trying to allocate imem for tbl_hash3_do_hash_0
+Trying to allocate imem for tbl_hash2_do_hash_0
+Trying to allocate imem for tbl_hash_do_hash_0
+Trying to allocate imem for L3_forward_0
+Trying to allocate imem for tbl_drop
+  Selected stage: 5    Furthest stage: 6
+  try_place_table returning 1 of tbl_drop in stage 5
+    Pl vector: [ tbl_drop ]
+found 4 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_drop ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_drop with best: tbl_P4Zeek611
+    Updating best to tbl_drop from tbl_P4Zeek611 for reason: earlier stage calculated
+placing 1 entries of tbl_drop (with gw cond-23) in stage 5(54) FormatType(02)
+stage 5, work: [ 2459737, 2458691 ], partly placed 0, placed 15
+    { id=1 ram=4 tcam=0 mram=0 eixb=4 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=5)
+  - dependency between tbl_hash_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=5)
+  - dependency between tbl_hash2_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=5)
+  - dependency between tbl_hash3_do_hash_0 and table advances stage
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 6 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+try_place_table(cond-24, stage=5)
+  Merging with match table tbl_hash_do_hash
+  - action dependency between tbl_drop and table tbl_hash_do_hash due to PHV allocation advances stage to 6
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash_do_hash in stage 6
+  Merging with match table tbl_hash2_do_hash
+  Initial stage is 5, initial entries is 1
+    The table tbl_hash2_do_hash could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash2_do_hash in stage 6
+  Merging with match table tbl_hash3_do_hash
+  Initial stage is 5, initial entries is 1
+    The table tbl_hash3_do_hash could not fit within a single input crossbar in an MAU stage
+    Min use ixbar allocation did not fit
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash3_do_hash
+  Selected stage: 6    Furthest stage: 6
+  try_place_table returning 1 of tbl_hash3_do_hash in stage 6
+    Pl vector: [ tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash ]
+  - skipping cond-27 due to in-sequence control dependence on cond-24
+found 6 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_hash_do_hash, tbl_hash2_do_hash, tbl_hash3_do_hash ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_hash_do_hash with best: tbl_P4Zeek611
+    Updating best to tbl_hash_do_hash from tbl_P4Zeek611 for reason: longer downward prop control-included dependence tail chain
+For trial t : tbl_hash2_do_hash with best: tbl_hash_do_hash
+    Updating best to tbl_hash2_do_hash from tbl_hash_do_hash for reason: default choice
+For trial t : tbl_hash3_do_hash with best: tbl_hash2_do_hash
+    Updating best to tbl_hash3_do_hash from tbl_hash2_do_hash for reason: default choice
+placing 1 entries of tbl_hash3_do_hash (with gw cond-24) in stage 6(60) FormatType(02)
+stage 6, work: [ 2459737, 2458869 ], partly placed 0, placed 16
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=6)
+  - action dependency between tbl_hash3_do_hash and table tbl_P4Zeek576 due to PHV allocation advances stage to 7
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=6)
+  - action dependency between tbl_hash3_do_hash and table tbl_P4Zeek577 due to PHV allocation advances stage to 7
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=6)
+  - dependency between tbl_hash3_do_hash and tbl_P4Zeek578 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+tbl_hash_do_hash is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash_do_hash, stage=6)
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 6    Furthest stage: 7
+  try_place_table returning 1 of tbl_hash_do_hash in stage 6
+    Pl vector: [ tbl_hash_do_hash ]
+tbl_hash2_do_hash is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash2_do_hash, stage=6)
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+  Selected stage: 6    Furthest stage: 7
+  try_place_table returning 1 of tbl_hash2_do_hash in stage 6
+    Pl vector: [ tbl_hash2_do_hash ]
+    - skipping tbl_hash3_do_hash as its already done
+  - skipping tbl_P4Zeek576 due to in-sequence control dependence on tbl_hash_do_hash
+  - skipping tbl_P4Zeek577 due to in-sequence control dependence on tbl_hash2_do_hash
+tbl_P4Zeek578 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek578, stage=6)
+  - dependency between tbl_hash3_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek578
+Trying to allocate imem for tbl_P4Zeek578
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek578 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek578 ]
+  - skipping cond-25 due to in-sequence control dependence on tbl_hash_do_hash
+found 6 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_hash_do_hash, tbl_hash2_do_hash, tbl_P4Zeek578 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_hash_do_hash with best: tbl_P4Zeek611
+    Updating best to tbl_hash_do_hash from tbl_P4Zeek611 for reason: earlier stage calculated
+For trial t : tbl_hash2_do_hash with best: tbl_hash_do_hash
+    Updating best to tbl_hash2_do_hash from tbl_hash_do_hash for reason: default choice
+For trial t : tbl_P4Zeek578 with best: tbl_hash2_do_hash
+    Keeping best tbl_hash2_do_hash for reason: earlier stage calculated
+placing 1 entries of tbl_hash2_do_hash in stage 6(61) FormatType(02)
+stage 6, work: [ 2459737, 2458869 ], partly placed 0, placed 17
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=6)
+  - action dependency between tbl_hash3_do_hash and table tbl_P4Zeek576 due to PHV allocation advances stage to 7
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=6)
+  - dependency between tbl_hash2_do_hash and tbl_P4Zeek577 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=6)
+  - dependency between tbl_hash3_do_hash and tbl_P4Zeek578 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+tbl_hash_do_hash is not a gateway! Aborting search for merge choices
+try_place_table(tbl_hash_do_hash, stage=6)
+  Initial stage is 6, initial entries is 1
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+Trying to allocate imem for tbl_hash3_do_hash
+Trying to allocate imem for tbl_hash2_do_hash
+Trying to allocate imem for tbl_hash_do_hash
+  Selected stage: 6    Furthest stage: 7
+  try_place_table returning 1 of tbl_hash_do_hash in stage 6
+    Pl vector: [ tbl_hash_do_hash ]
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+  - skipping tbl_P4Zeek576 due to in-sequence control dependence on tbl_hash_do_hash
+tbl_P4Zeek577 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek577, stage=6)
+  - dependency between tbl_hash2_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek577
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek577 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek577 ]
+tbl_P4Zeek578 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek578, stage=6)
+  - dependency between tbl_hash3_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek578
+Trying to allocate imem for tbl_P4Zeek578
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek578 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek578 ]
+  - skipping cond-25 due to in-sequence control dependence on tbl_hash_do_hash
+found 6 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_hash_do_hash, tbl_P4Zeek577, tbl_P4Zeek578 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_hash_do_hash with best: tbl_P4Zeek611
+    Updating best to tbl_hash_do_hash from tbl_P4Zeek611 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek577 with best: tbl_hash_do_hash
+    Keeping best tbl_hash_do_hash for reason: earlier stage calculated
+For trial t : tbl_P4Zeek578 with best: tbl_hash_do_hash
+    Keeping best tbl_hash_do_hash for reason: earlier stage calculated
+placing 1 entries of tbl_hash_do_hash in stage 6(62) FormatType(02)
+stage 6, work: [ 2459737, 2458869 ], partly placed 0, placed 18
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=6)
+  - dependency between tbl_hash_do_hash and tbl_P4Zeek576 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=6)
+  - dependency between tbl_hash2_do_hash and tbl_P4Zeek577 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=6)
+  - dependency between tbl_hash3_do_hash and tbl_P4Zeek578 advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=6)
+  - dependency between tbl_hash_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek576
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek576 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek576 ]
+tbl_P4Zeek577 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek577, stage=6)
+  - dependency between tbl_hash2_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek577
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek577 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek577 ]
+tbl_P4Zeek578 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek578, stage=6)
+  - dependency between tbl_hash3_do_hash and table advances stage
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek578
+Trying to allocate imem for tbl_P4Zeek578
+  Selected stage: 7    Furthest stage: 7
+  try_place_table returning 1 of tbl_P4Zeek578 in stage 7 (need more)
+    Pl vector: [ tbl_P4Zeek578 ]
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 6 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_P4Zeek576, tbl_P4Zeek577, tbl_P4Zeek578 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_P4Zeek576 with best: tbl_P4Zeek611
+    Updating best to tbl_P4Zeek576 from tbl_P4Zeek611 for reason: default choice
+For trial t : tbl_P4Zeek577 with best: tbl_P4Zeek576
+    Updating best to tbl_P4Zeek577 from tbl_P4Zeek576 for reason: default choice
+For trial t : tbl_P4Zeek578 with best: tbl_P4Zeek577
+    Updating best to tbl_P4Zeek578 from tbl_P4Zeek577 for reason: default choice
+placing 1 entries of tbl_P4Zeek578 in stage 7(70) FormatType(042) (need more)
+stage 7, work: [ 2459737, 2458869 ], partly placed 1, placed 19
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=7)
+  - action dependency between tbl_P4Zeek578 and table tbl_P4Zeek576 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=7)
+  - action dependency between tbl_P4Zeek578 and table tbl_P4Zeek577 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+tbl_P4Zeek611 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek611, stage=7)
+    tbl_P4Zeek578 is now also placed (1)
+  Initial stage is 7, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek578
+Trying to allocate imem for tbl_P4Zeek611
+Trying to allocate imem for tbl_P4Zeek578
+Trying to allocate imem for tbl_P4Zeek611
+  Selected stage: 7    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek611 in stage 7
+    Pl vector: [ tbl_P4Zeek611 ]
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=7)
+  - action dependency between tbl_P4Zeek578 and table tbl_P4Zeek576 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek576
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek576 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek576 ]
+tbl_P4Zeek577 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek577, stage=7)
+  - action dependency between tbl_P4Zeek578 and table tbl_P4Zeek577 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek577
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek577 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek577 ]
+tbl_P4Zeek578 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek578, stage=7)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 5 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek611, tbl_P4Zeek576, tbl_P4Zeek577 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek611 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek611 from tbl_P4Zeek610 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek576 with best: tbl_P4Zeek611
+    Keeping best tbl_P4Zeek611 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek577 with best: tbl_P4Zeek611
+    Keeping best tbl_P4Zeek611 for reason: earlier stage calculated
+placing 1 entries of tbl_P4Zeek611 in stage 7(71) FormatType(022)
+stage 7, work: [ 2459737, 2458869 ], partly placed 0, placed 20
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=7)
+  - action dependency between tbl_P4Zeek611 and table tbl_P4Zeek609 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=7)
+  - action dependency between tbl_P4Zeek611 and table tbl_P4Zeek610 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek610 ]
+    - skipping tbl_P4Zeek611 as its already done
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=7)
+  - action dependency between tbl_P4Zeek611 and table tbl_P4Zeek609 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek576
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek576 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek576 ]
+tbl_P4Zeek577 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek577, stage=7)
+  - action dependency between tbl_P4Zeek611 and table tbl_P4Zeek610 due to PHV allocation advances stage to 8
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek577
+  Selected stage: 8    Furthest stage: 8
+  try_place_table returning 1 of tbl_P4Zeek577 in stage 8 (need more)
+    Pl vector: [ tbl_P4Zeek577 ]
+    - skipping tbl_P4Zeek578 as its already done
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 4 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek576, tbl_P4Zeek577 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: default choice
+For trial t : tbl_P4Zeek576 with best: tbl_P4Zeek610
+    Updating best to tbl_P4Zeek576 from tbl_P4Zeek610 for reason: default choice
+For trial t : tbl_P4Zeek577 with best: tbl_P4Zeek576
+    Updating best to tbl_P4Zeek577 from tbl_P4Zeek576 for reason: default choice
+placing 1 entries of tbl_P4Zeek577 in stage 8(80) FormatType(042) (need more)
+stage 8, work: [ 2459737, 2458869 ], partly placed 1, placed 21
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=8)
+  - action dependency between tbl_P4Zeek577 and table tbl_P4Zeek576 due to PHV allocation advances stage to 9
+  Initial stage is 9, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 9    Furthest stage: 9
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 9 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+tbl_P4Zeek610 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek610, stage=8)
+    tbl_P4Zeek577 is now also placed (1)
+  Initial stage is 8, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek610
+Trying to allocate imem for tbl_P4Zeek577
+Trying to allocate imem for tbl_P4Zeek610
+  Selected stage: 8    Furthest stage: 9
+  try_place_table returning 1 of tbl_P4Zeek610 in stage 8
+    Pl vector: [ tbl_P4Zeek610 ]
+    - skipping tbl_P4Zeek611 as its already done
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=8)
+  - action dependency between tbl_P4Zeek577 and table tbl_P4Zeek576 due to PHV allocation advances stage to 9
+  Initial stage is 9, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek576
+  Selected stage: 9    Furthest stage: 9
+  try_place_table returning 1 of tbl_P4Zeek576 in stage 9 (need more)
+    Pl vector: [ tbl_P4Zeek576 ]
+tbl_P4Zeek577 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek577, stage=8)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+    - skipping tbl_P4Zeek578 as its already done
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 3 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek610, tbl_P4Zeek576 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek610 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek610 from tbl_P4Zeek609 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek576 with best: tbl_P4Zeek610
+    Keeping best tbl_P4Zeek610 for reason: earlier stage calculated
+placing 1 entries of tbl_P4Zeek610 in stage 8(81) FormatType(022)
+stage 8, work: [ 2459737, 2458869 ], partly placed 0, placed 22
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=8)
+  - action dependency between tbl_P4Zeek610 and table tbl_P4Zeek609 due to PHV allocation advances stage to 9
+  Initial stage is 9, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 9    Furthest stage: 9
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 9 (need more)
+    Pl vector: [ tbl_P4Zeek609 ]
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=8)
+  - action dependency between tbl_P4Zeek610 and table tbl_P4Zeek609 due to PHV allocation advances stage to 9
+  Initial stage is 9, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek576
+  Selected stage: 9    Furthest stage: 9
+  try_place_table returning 1 of tbl_P4Zeek576 in stage 9 (need more)
+    Pl vector: [ tbl_P4Zeek576 ]
+    - skipping tbl_P4Zeek577 as its already done
+    - skipping tbl_P4Zeek578 as its already done
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 2 tables that could be placed: [ tbl_P4Zeek609, tbl_P4Zeek576 ]
+Initial best is first table seen: tbl_P4Zeek609
+For trial t : tbl_P4Zeek576 with best: tbl_P4Zeek609
+    Updating best to tbl_P4Zeek576 from tbl_P4Zeek609 for reason: default choice
+placing 1 entries of tbl_P4Zeek576 in stage 9(90) FormatType(042) (need more)
+stage 9, work: [ 2459737, 2458869 ], partly placed 1, placed 23
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+tbl_P4Zeek609 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek609, stage=9)
+    tbl_P4Zeek576 is now also placed (1)
+  Initial stage is 9, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek609
+Trying to allocate imem for tbl_P4Zeek576
+Trying to allocate imem for tbl_P4Zeek609
+  Selected stage: 9    Furthest stage: 10
+  try_place_table returning 1 of tbl_P4Zeek609 in stage 9
+    Pl vector: [ tbl_P4Zeek609 ]
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+  - skipping cond-28 due to in-sequence control dependence on tbl_P4Zeek609
+  - skipping cond-30 due to in-sequence control dependence on tbl_P4Zeek609
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+tbl_P4Zeek576 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek576, stage=9)
+  Cannot place multiple sections of an individual table in the same stage
+    Pl vector: []
+    - skipping tbl_P4Zeek577 as its already done
+    - skipping tbl_P4Zeek578 as its already done
+  - skipping cond-25 due to in-sequence control dependence on tbl_P4Zeek576
+found 1 tables that could be placed: [ tbl_P4Zeek609 ]
+Initial best is first table seen: tbl_P4Zeek609
+placing 1 entries of tbl_P4Zeek609 in stage 9(91) FormatType(022)
+stage 9, work: [ 2459737, 2458869 ], partly placed 0, placed 24
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+    - skipping tbl_P4Zeek609 as its already done
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+try_place_table(cond-28, stage=9)
+  Merging with match table tbl_P4Zeek624
+  - dependency between tbl_P4Zeek609 and table advances stage
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek624
+  Selected stage: 10    Furthest stage: 10
+  try_place_table returning 1 of tbl_P4Zeek624 in stage 10
+    Pl vector: [ tbl_P4Zeek624 ]
+  - skipping cond-30 due to in-sequence control dependence on cond-28
+  Group table: tbl_hash_do_hash
+  Group table: tbl_hash2_do_hash
+  Group table: tbl_hash3_do_hash
+  Group table: tbl_P4Zeek576
+  Group table: tbl_P4Zeek577
+  Group table: tbl_P4Zeek578
+  Group table: cond-25
+    - skipping tbl_hash_do_hash as its already done
+    - skipping tbl_hash2_do_hash as its already done
+    - skipping tbl_hash3_do_hash as its already done
+    - skipping tbl_P4Zeek576 as its already done
+    - skipping tbl_P4Zeek577 as its already done
+    - skipping tbl_P4Zeek578 as its already done
+try_place_table(cond-25, stage=9)
+  Merging with match table tbl_P4Zeek591
+  - dependency between tbl_P4Zeek576 and table advances stage
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek591
+  Selected stage: 10    Furthest stage: 10
+  try_place_table returning 1 of tbl_P4Zeek591 in stage 10
+    Pl vector: [ tbl_P4Zeek591 ]
+found 2 tables that could be placed: [ tbl_P4Zeek624, tbl_P4Zeek591 ]
+Initial best is first table seen: tbl_P4Zeek624
+For trial t : tbl_P4Zeek591 with best: tbl_P4Zeek624
+    Updating best to tbl_P4Zeek591 from tbl_P4Zeek624 for reason: fewer total dependencies in dominance frontier
+placing 1 entries of tbl_P4Zeek591 (with gw cond-25) in stage 10(a0) FormatType(02)
+stage 10, work: [ 2459737, 2459573 ], partly placed 0, placed 25
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+    - skipping tbl_P4Zeek609 as its already done
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+try_place_table(cond-28, stage=10)
+  Merging with match table tbl_P4Zeek624
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek624
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek624 in stage 10
+    Pl vector: [ tbl_P4Zeek624 ]
+  - skipping cond-30 due to in-sequence control dependence on cond-28
+  Group table: cond-26
+try_place_table(cond-26, stage=10)
+  Merging with match table tbl_P4Zeek587
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek587
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek587 in stage 10
+  Merging with match table tbl_P4Zeek584
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek584 in stage 10
+    Pl vector: [ tbl_P4Zeek587, tbl_P4Zeek584 ]
+found 3 tables that could be placed: [ tbl_P4Zeek624, tbl_P4Zeek587, tbl_P4Zeek584 ]
+Initial best is first table seen: tbl_P4Zeek624
+For trial t : tbl_P4Zeek587 with best: tbl_P4Zeek624
+    Updating best to tbl_P4Zeek587 from tbl_P4Zeek624 for reason: average chain length of control dom set
+For trial t : tbl_P4Zeek584 with best: tbl_P4Zeek587
+    Updating best to tbl_P4Zeek584 from tbl_P4Zeek587 for reason: default choice
+placing 1 entries of tbl_P4Zeek584 (with gw cond-26) in stage 10(a1) FormatType(02)
+stage 10, work: [ 2459737, 2459510 ], partly placed 0, placed 26
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+    - skipping tbl_P4Zeek609 as its already done
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+try_place_table(cond-28, stage=10)
+  Merging with match table tbl_P4Zeek624
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek624
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek624 in stage 10
+    Pl vector: [ tbl_P4Zeek624 ]
+  - skipping cond-30 due to in-sequence control dependence on cond-28
+  Group table: tbl_P4Zeek587
+tbl_P4Zeek587 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_P4Zeek587, stage=10)
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek587 in stage 10
+    Pl vector: [ tbl_P4Zeek587 ]
+found 2 tables that could be placed: [ tbl_P4Zeek624, tbl_P4Zeek587 ]
+Initial best is first table seen: tbl_P4Zeek624
+For trial t : tbl_P4Zeek587 with best: tbl_P4Zeek624
+    Updating best to tbl_P4Zeek587 from tbl_P4Zeek624 for reason: longer control-excluded dependence tail chain
+placing 1 entries of tbl_P4Zeek587 in stage 10(a2) FormatType(02)
+stage 10, work: [ 2459737, 2458691 ], partly placed 0, placed 27
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+    - skipping tbl_P4Zeek609 as its already done
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+try_place_table(cond-28, stage=10)
+  Merging with match table tbl_P4Zeek624
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek624
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek624 in stage 10
+    Pl vector: [ tbl_P4Zeek624 ]
+  - skipping cond-30 due to in-sequence control dependence on cond-28
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=10)
+  Merging with match table tbl_add_header
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+found 3 tables that could be placed: [ tbl_P4Zeek624, tbl_add_header, tbl_P4Zeek596 ]
+Initial best is first table seen: tbl_P4Zeek624
+For trial t : tbl_add_header with best: tbl_P4Zeek624
+    Keeping best tbl_P4Zeek624 for reason: earlier stage calculated
+For trial t : tbl_P4Zeek596 with best: tbl_P4Zeek624
+    Keeping best tbl_P4Zeek624 for reason: earlier stage calculated
+placing 1 entries of tbl_P4Zeek624 (with gw cond-28) in stage 10(a3) FormatType(02)
+stage 10, work: [ 2458691, 2460441 ], partly placed 0, placed 28
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=10)
+  Merging with match table tbl_add_header
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+  Group table: cond-29
+try_place_table(cond-29, stage=10)
+  Merging with match table tbl_P4Zeek620
+  Initial stage is 10, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek620
+Trying to allocate imem for tbl_P4Zeek591
+Trying to allocate imem for tbl_P4Zeek584
+Trying to allocate imem for tbl_P4Zeek587
+Trying to allocate imem for tbl_P4Zeek624
+Trying to allocate imem for tbl_P4Zeek620
+  Selected stage: 10    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek620 in stage 10
+    Pl vector: [ tbl_P4Zeek620 ]
+found 3 tables that could be placed: [ tbl_add_header, tbl_P4Zeek596, tbl_P4Zeek620 ]
+Initial best is first table seen: tbl_add_header
+For trial t : tbl_P4Zeek596 with best: tbl_add_header
+    Updating best to tbl_P4Zeek596 from tbl_add_header for reason: default choice
+For trial t : tbl_P4Zeek620 with best: tbl_P4Zeek596
+    Updating best to tbl_P4Zeek620 from tbl_P4Zeek596 for reason: earlier stage calculated
+placing 1 entries of tbl_P4Zeek620 (with gw cond-29) in stage 10(a4) FormatType(02)
+stage 10, work: [ 2458691, 2459737 ], partly placed 0, placed 29
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=10)
+  Merging with match table tbl_add_header
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  - dependency between tbl_P4Zeek587 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+  Group table: tbl_hash_do_hash_0
+  Group table: tbl_hash2_do_hash_0
+  Group table: tbl_hash3_do_hash_0
+  Group table: tbl_P4Zeek609
+  Group table: tbl_P4Zeek610
+  Group table: tbl_P4Zeek611
+  Group table: cond-28
+  Group table: cond-30
+    - skipping tbl_hash_do_hash_0 as its already done
+    - skipping tbl_hash2_do_hash_0 as its already done
+    - skipping tbl_hash3_do_hash_0 as its already done
+    - skipping tbl_P4Zeek609 as its already done
+    - skipping tbl_P4Zeek610 as its already done
+    - skipping tbl_P4Zeek611 as its already done
+    - skipping cond-28 as its already done
+try_place_table(cond-30, stage=10)
+  Merging with match table tbl_set_recirculate
+  - dependency between tbl_P4Zeek620 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_set_recirculate
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_set_recirculate in stage 11
+  Merging with match table tbl_mirror_0
+  - dependency between tbl_P4Zeek620 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_mirror_0
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_mirror_0 in stage 11
+  Merging with match table tbl_P4Zeek629
+  - dependency between tbl_P4Zeek620 and table advances stage
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_P4Zeek629
+  Selected stage: 11    Furthest stage: 11
+  try_place_table returning 1 of tbl_P4Zeek629 in stage 11
+    Pl vector: [ tbl_set_recirculate, tbl_mirror_0, tbl_P4Zeek629 ]
+found 5 tables that could be placed: [ tbl_add_header, tbl_P4Zeek596, tbl_set_recirculate, tbl_mirror_0, tbl_P4Zeek629 ]
+Initial best is first table seen: tbl_add_header
+For trial t : tbl_P4Zeek596 with best: tbl_add_header
+    Updating best to tbl_P4Zeek596 from tbl_add_header for reason: default choice
+For trial t : tbl_set_recirculate with best: tbl_P4Zeek596
+    Updating best to tbl_set_recirculate from tbl_P4Zeek596 for reason: default choice
+For trial t : tbl_mirror_0 with best: tbl_set_recirculate
+    Updating best to tbl_mirror_0 from tbl_set_recirculate for reason: default choice
+For trial t : tbl_P4Zeek629 with best: tbl_mirror_0
+    Updating best to tbl_P4Zeek629 from tbl_mirror_0 for reason: default choice
+placing 1 entries of tbl_P4Zeek629 (with gw cond-30) in stage 11(b0) FormatType(02)
+stage 11, work: [ 2458691, 2460449, 2460664 ], partly placed 0, placed 30
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=11)
+  Merging with match table tbl_add_header
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+  Group table: tbl_mirror_0
+  Group table: tbl_P4Zeek629
+tbl_mirror_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_mirror_0, stage=11)
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_mirror_0
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_mirror_0 in stage 11
+    Pl vector: [ tbl_mirror_0 ]
+    - skipping tbl_P4Zeek629 as its already done
+  Group table: tbl_set_recirculate
+tbl_set_recirculate is not a gateway! Aborting search for merge choices
+try_place_table(tbl_set_recirculate, stage=11)
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_set_recirculate in stage 11
+    Pl vector: [ tbl_set_recirculate ]
+found 4 tables that could be placed: [ tbl_add_header, tbl_P4Zeek596, tbl_mirror_0, tbl_set_recirculate ]
+Initial best is first table seen: tbl_add_header
+For trial t : tbl_P4Zeek596 with best: tbl_add_header
+    Updating best to tbl_P4Zeek596 from tbl_add_header for reason: default choice
+For trial t : tbl_mirror_0 with best: tbl_P4Zeek596
+    Updating best to tbl_mirror_0 from tbl_P4Zeek596 for reason: direct control dependency difference
+For trial t : tbl_set_recirculate with best: tbl_mirror_0
+    Updating best to tbl_set_recirculate from tbl_mirror_0 for reason: default choice
+placing 1 entries of tbl_set_recirculate in stage 11(b1) FormatType(02)
+stage 11, work: [ 2458691, 2460449 ], partly placed 0, placed 31
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=11)
+  Merging with match table tbl_add_header
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+  Group table: tbl_mirror_0
+  Group table: tbl_P4Zeek629
+tbl_mirror_0 is not a gateway! Aborting search for merge choices
+try_place_table(tbl_mirror_0, stage=11)
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_mirror_0 in stage 11
+    Pl vector: [ tbl_mirror_0 ]
+    - skipping tbl_P4Zeek629 as its already done
+found 3 tables that could be placed: [ tbl_add_header, tbl_P4Zeek596, tbl_mirror_0 ]
+Initial best is first table seen: tbl_add_header
+For trial t : tbl_P4Zeek596 with best: tbl_add_header
+    Updating best to tbl_P4Zeek596 from tbl_add_header for reason: default choice
+For trial t : tbl_mirror_0 with best: tbl_P4Zeek596
+    Updating best to tbl_mirror_0 from tbl_P4Zeek596 for reason: direct control dependency difference
+placing 1 entries of tbl_mirror_0 in stage 11(b2) FormatType(02)
+stage 11, work: [ 2458691 ], partly placed 0, placed 32
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: cond-22
+  Group table: cond-24
+  Group table: cond-27
+    - skipping cond-22 as its already done
+    - skipping cond-24 as its already done
+try_place_table(cond-27, stage=11)
+  Merging with match table tbl_add_header
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_add_header in stage 11
+  Merging with match table tbl_P4Zeek596
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek596
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_P4Zeek596 in stage 11
+    Pl vector: [ tbl_add_header, tbl_P4Zeek596 ]
+found 2 tables that could be placed: [ tbl_add_header, tbl_P4Zeek596 ]
+Initial best is first table seen: tbl_add_header
+For trial t : tbl_P4Zeek596 with best: tbl_add_header
+    Updating best to tbl_P4Zeek596 from tbl_add_header for reason: default choice
+placing 1 entries of tbl_P4Zeek596 (with gw cond-27) in stage 11(b3) FormatType(02)
+stage 11, work: [ 2459581 ], partly placed 0, placed 33
+    { id=0 ram=0 tcam=0 mram=0 eixb=0 tixb=0 malu=0 salu=0 }
+  Group table: tbl_add_header
+  Group table: tbl_P4Zeek596
+tbl_add_header is not a gateway! Aborting search for merge choices
+try_place_table(tbl_add_header, stage=11)
+  Initial stage is 11, initial entries is 1
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_add_header
+Trying to allocate imem for tbl_P4Zeek629
+Trying to allocate imem for tbl_set_recirculate
+Trying to allocate imem for tbl_mirror_0
+Trying to allocate imem for tbl_P4Zeek596
+Trying to allocate imem for tbl_add_header
+  Selected stage: 11    Furthest stage: 12
+  try_place_table returning 1 of tbl_add_header in stage 11
+    Pl vector: [ tbl_add_header ]
+    - skipping tbl_P4Zeek596 as its already done
+found 1 tables that could be placed: [ tbl_add_header ]
+Initial best is first table seen: tbl_add_header
+placing 1 entries of tbl_add_header in stage 11(b4) FormatType(02)
+Adding complete placement for resource mode:0
+Found a complete solution that fit the number of stages required
+Evaluating complete solution with resource:0
+Placement error(s):0 stages required:12
+Updating best final placement with this one
+Table placement placed 34 tables in 12 stages
+  Table tbl_add_header logical id 0xb4 entries=1
+  Table tbl_P4Zeek596 logical id 0xb3 entries=1
+  Gateway cond-27 is also logical id 0xb3
+  Table tbl_mirror_0 logical id 0xb2 entries=1
+  Table tbl_set_recirculate logical id 0xb1 entries=1
+  Table tbl_P4Zeek629 logical id 0xb0 entries=1
+  Gateway cond-30 is also logical id 0xb0
+  Table tbl_P4Zeek620 logical id 0xa4 entries=1
+  Gateway cond-29 is also logical id 0xa4
+  Table tbl_P4Zeek624 logical id 0xa3 entries=1
+  Gateway cond-28 is also logical id 0xa3
+  Table tbl_P4Zeek587 logical id 0xa2 entries=1
+  Table tbl_P4Zeek584 logical id 0xa1 entries=1
+  Gateway cond-26 is also logical id 0xa1
+  Table tbl_P4Zeek591 logical id 0xa0 entries=1
+  Gateway cond-25 is also logical id 0xa0
+  Table tbl_P4Zeek609 logical id 0x91 entries=1
+    attached table Ingress.check_reg entries=131072
+  Table tbl_P4Zeek576 logical id 0x90 entries=1
+    attached table Ingress.check_reg entries=131072
+  Table tbl_P4Zeek610 logical id 0x81 entries=1
+    attached table Ingress.check_reg2 entries=131072
+  Table tbl_P4Zeek577 logical id 0x80 entries=1
+    attached table Ingress.check_reg2 entries=131072
+  Table tbl_P4Zeek611 logical id 0x71 entries=1
+    attached table Ingress.check_reg3 entries=131072
+  Table tbl_P4Zeek578 logical id 0x70 entries=1
+    attached table Ingress.check_reg3 entries=131072
+  Table tbl_hash_do_hash logical id 0x62 entries=1
+  Table tbl_hash2_do_hash logical id 0x61 entries=1
+  Table tbl_hash3_do_hash logical id 0x60 entries=1
+  Gateway cond-24 is also logical id 0x60
+  Table tbl_drop logical id 0x54 entries=1
+  Gateway cond-23 is also logical id 0x54
+  Table L3_forward_0 logical id 0x53 entries=4096
+  Gateway cond-22 is also logical id 0x53
+  Table tbl_hash_do_hash_0 logical id 0x52 entries=1
+  Table tbl_hash2_do_hash_0 logical id 0x51 entries=1
+  Table tbl_hash3_do_hash_0 logical id 0x50 entries=1
+  Gateway cond-21 is also logical id 0x50
+  Table Payload_check_0 logical id 0x40 entries=4096
+  Gateway cond-20 is also logical id 0x40
+  Table malware_detection_0 logical id 0x30 entries=102400
+  Gateway cond-19 is also logical id 0x30
+  Table tbl_bypass_0 logical id 0x20 entries=1
+  Table tbl_take_TCP_port logical id 0x13 entries=1
+  Gateway cond-18 is also logical id 0x13
+  Table tbl_take_UDP_port logical id 0x12 entries=1
+  Gateway cond-17 is also logical id 0x12
+  Table tbl_P4Zeek636 logical id 0x11 entries=1
+  Table tbl_remove_header logical id 0x10 entries=1
+  Table tbl_mirror logical id 0x2 entries=1
+  Table tbl_P4Zeek512 logical id 0x1 entries=1
+  Table tbl_bypass logical id 0x0 entries=1
+  Gateway cond-16 is also logical id 0x0
+Finished table placement decisions pipe
+folding gateway cond-16 onto tbl_bypass
+  Adding Ternary Indirect table to tbl_bypass
+  Adding Ternary Indirect table to tbl_remove_header
+  Adding Ternary Indirect table to tbl_mirror
+  Adding Ternary Indirect table to tbl_P4Zeek512
+folding gateway cond-17 onto tbl_take_UDP_port
+  Adding Ternary Indirect table to tbl_take_UDP_port
+folding gateway cond-18 onto tbl_take_TCP_port
+  Adding Ternary Indirect table to tbl_take_TCP_port
+  Adding Ternary Indirect table to tbl_bypass_0
+folding gateway cond-19 onto malware_detection_0
+folding gateway cond-20 onto Payload_check_0
+folding gateway cond-21 onto tbl_hash3_do_hash_0
+folding gateway cond-22 onto L3_forward_0
+folding gateway cond-23 onto tbl_drop
+  Adding Ternary Indirect table to tbl_drop
+folding gateway cond-24 onto tbl_hash3_do_hash
+folding gateway cond-25 onto tbl_P4Zeek591
+  Adding Ternary Indirect table to tbl_P4Zeek591
+folding gateway cond-26 onto tbl_P4Zeek584
+  Adding Ternary Indirect table to tbl_P4Zeek584
+  Adding Ternary Indirect table to tbl_P4Zeek587
+folding gateway cond-27 onto tbl_P4Zeek596
+  Adding Ternary Indirect table to tbl_P4Zeek596
+  Adding Ternary Indirect table to tbl_add_header
+folding gateway cond-28 onto tbl_P4Zeek624
+  Adding Ternary Indirect table to tbl_P4Zeek624
+folding gateway cond-29 onto tbl_P4Zeek620
+  Adding Ternary Indirect table to tbl_P4Zeek620
+folding gateway cond-30 onto tbl_P4Zeek629
+  Adding Ternary Indirect table to tbl_P4Zeek629
+  Adding Ternary Indirect table to tbl_set_recirculate
+  Adding Ternary Indirect table to tbl_mirror_0
+  Adding Ternary Indirect table to tbl_P4Zeek636
+table placement completed pipe
+ingress: [2457866] 0 00 000 0000 00000
+  0: tbl_bypass(ingress::hdr.record.$valid == 1;, 1 => $false)
+    $default: [2457872] 0 00
+      1: tbl_P4Zeek512
+      2: tbl_mirror
+      10: tbl_remove_header
+    $false: [2792770]
+  11: tbl_P4Zeek636
+  12: tbl_take_UDP_port(ingress::hdr.ipv4.protocol == 17;, 1 => $false)
+    $false: [2458415]
+      13: tbl_take_TCP_port(ingress::hdr.ipv4.protocol == 6;, 1 => $false)
+        $false: [2458411]
+          20: tbl_bypass_0
+  30: malware_detection_0(ingress::hdr.ipv4.protocol == 17;, ingress::hdr.ipv4.protocol == 6;, 1 => $false){ GE 94+4, 1 [4x5 20K 20K 20K 20K 20K] }
+    $false: [2793214]
+  40: Payload_check_0(ingress::meta.next_table == 1;, 1 => $false){ GE 14+3, 1 [1x1 1K 1K 1K 1K] }
+    $false: [2793345]
+  50: tbl_hash3_do_hash_0(ingress::meta.do_action == 0;, 1 => $true)
+    $true: [2458691] 0 00
+      53: L3_forward_0(ingress::meta.do_action == 1;, 1 => $false){ GE 22+9, 2 [1x1 1K 1K 1K 1K] }
+        $false: [2458863]
+          54: tbl_drop(ingress::meta.do_action == 2;, 1 => $false)
+            $false: [2793452]
+      60: tbl_hash3_do_hash(ingress::meta.set_rule == 1;, 1 => $false)
+        $default: [2458869] 0 00 000 0000 00000
+          61: tbl_hash2_do_hash
+          62: tbl_hash_do_hash
+          70: tbl_P4Zeek578
+            stateful Ingress.check_reg3 131K
+          80: tbl_P4Zeek577
+            stateful Ingress.check_reg2 131K
+          90: tbl_P4Zeek576
+            stateful Ingress.check_reg 131K
+          a0: tbl_P4Zeek591(ingress::first_out1_0 == 0 && ingress::first_out2_0 == 0; => $true, 1)
+            $true: [2459573]
+              a1: tbl_P4Zeek584(ingress::first_out3_0 == 0;, 1 => $false)
+                $false: [2459510]
+                  a2: tbl_P4Zeek587
+        $false: [2793571]
+      b3: tbl_P4Zeek596(ingress::meta.first_out == 1;, 1 => $false)
+        $default: [2459581]
+          b4: tbl_add_header{ E 0+9, 2 0K }
+        $false: [2794068]
+    $default: [2459737] 0 00 000 0000 00000 000000
+      51: tbl_hash2_do_hash_0
+      52: tbl_hash_do_hash_0
+      71: tbl_P4Zeek611
+        stateful Ingress.check_reg3 131K
+      81: tbl_P4Zeek610
+        stateful Ingress.check_reg2 131K
+      91: tbl_P4Zeek609
+        stateful Ingress.check_reg 131K
+      a3: tbl_P4Zeek624(ingress::first_in1_0 != 0 && ingress::first_in2_0 != 0; => $true, 1)
+        $true: [2460441]
+          a4: tbl_P4Zeek620(ingress::first_in3_0 != 0; => $true, 1)
+            $true: [2460376]
+      b0: tbl_P4Zeek629(ingress::meta.first_in == 1;, 1 => $false){ GE 0+9, 2 0K }
+        $false: [2460664]
+          b1: tbl_set_recirculate{ E 0+9, 2 0K }
+        $default: [2460449]
+          b2: tbl_mirror_0
+egress: [2467200]
+
