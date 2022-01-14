@@ -5,10 +5,10 @@ endif
 
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 CP_SRC_DIR:=$(ROOT_DIR)/src
-
+OUT_DIR:=$(ROOT_DIR)/build
 P4_PROG = P4Zeek
 ARCH = tofino
-SOURCES = P4Zeek.cpp
+SOURCE = P4Zeek.cpp
 
 CC = g++
 
@@ -32,13 +32,11 @@ LDLIBS = -L$(SDE_INSTALL)/lib -L$(SDE_INSTALL)/lib/$(ARCH)pd/$(P4_PROG)
 LDLIBS += -Wl,--start-group $(BF_LIBS) -Wl,--end-group
 LDLIBS += -lm -pthread -lstdc++ -ldl -levent -lthrift -lpthread
 
-all: $(P4_PROG)_cp
+all: clean $(P4_PROG)_cp
 
-test:
-	@echo $(CP_SRC_DIR)
-
-$(P4_PROG)_cp: $(CP_SRC_DIR)/*
-	$(CC) $(CFLAGS) $(CP_SRC_DIR)/$(SOURCES) -o $(P4_PROG)_cp $(LDLIBS) $(LDFLAGS)
+$(P4_PROG)_cp: $(CP_SRC_DIR)/$(SOURCE)
+	@mkdir -p build
+	$(CC) $(CFLAGS) $^ -o $(OUT_DIR)/$@ $(LDLIBS) $(LDFLAGS)
 
 clean:
-	rm $(P4_PROG)_cp *.log zlog-cfg-cur
+	@rm -rf build 

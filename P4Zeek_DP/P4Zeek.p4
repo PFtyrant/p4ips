@@ -627,7 +627,7 @@ control Ingress(
             if(meta.first_in == 1){
                 mirror();
                 meta.times = 1;
-                ig_tm_md.ucast_egress_port = 52;
+                ig_tm_md.ucast_egress_port = RE_PORT;
             }
             else{
                 set_recirculate();
