@@ -1,22 +1,14 @@
 ucli
 pm
 port-del -/-
-port-add 9/- 10G NONE
-port-dis 9/-
-port-enb 9/-
-port-add 23/- 10G NONE
-port-dis 23/-
-port-enb 23/-
-port-add 24/- 10G NONE
-port-dis 24/-
-port-enb 24/-
+
+port-add 1/2 10G NONE
+port-add 1/3 10G NONE
+an-set 1/- 2
 
 port-add 33/0 10G NONE
 port-add 33/2 10G NONE
-port-dis 33/0
-port-dis 33/2
-port-enb 33/0
-port-enb 33/2
+port-enb -/-
 
 show
 exit
